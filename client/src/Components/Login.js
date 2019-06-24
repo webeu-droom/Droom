@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { compose, bindActionCreators } from "redux";
 import { firebaseConnect, withFirestore, isEmpty } from "react-redux-firebase";
 import CreatedByBar from "../ReusableComponents/CreatedByBar";
+import CompanyBar from "../ReusableComponents/CompanyBar";
 
 class Login extends React.Component {
   static propTypes = {
@@ -39,12 +40,15 @@ class Login extends React.Component {
       this.props.history.push("/home");
     }
     return (
-      <div>
-        <input name="email" value={this.state.email} onChange={this.onChangeHandler} />
-        <input name="password" value={this.state.password} onChange={this.onChangeHandler} />
-        <button onClick={this.handleLogin}>Login</button>
+      <StyledLogin>
+        <CompanyBar />
+        <StyledLoginForm onSubmit={this.handleLogin}>
+          <StyledLoginInput name="email" value={this.state.email} onChange={this.onChangeHandler} />
+          <StyledLoginInput name="password" value={this.state.password} onChange={this.onChangeHandler} />
+          <StyledButton onClick={this.handleLogin}>Login</StyledButton>
+        </StyledLoginForm>
         <CreatedByBar />
-      </div>
+      </StyledLogin>
     );
   }
 }
@@ -73,3 +77,27 @@ export default compose(
   ),
   firebaseConnect()
 )(Login);
+
+const StyledLogin = styled.div`
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+`;
+
+const StyledLoginForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  margin: 0 auto;
+`;
+
+const StyledLoginInput = styled.input`
+  width: 50%;
+`;
+
+const StyledButton = styled.button`
+  background: #0076ff;
+  color: white;
+  border: none;
+`;
