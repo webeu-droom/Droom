@@ -7,6 +7,7 @@ import { firebaseConnect, withFirestore } from "react-redux-firebase";
 import Login from "./Components/Login";
 import Register from "./Components/Register";
 import Home from "./Components/Home";
+import Match from "./Components/Match/Match"
 import Landing from "./Components/Landing/Landing";
 
 class App extends React.Component {
@@ -17,6 +18,7 @@ class App extends React.Component {
         <Route exact path="/login" render={props => <Login {...props} />} />
         <Route exact path="/register" render={props => <Register {...props} />} />
         <Route exact path="/home" render={props => <Home {...props} />} />
+        <Route exact path="/match" render={props => <Match {...props} />} />
       </div>
     );
   }
