@@ -44,11 +44,13 @@ class Register extends React.Component {
         .collection("users")
         .doc(userId)
         .set({
-          name: this.state.name,
+          name: this.props.user.name,
           userEmail: res.user.user.email,
-          likedJobListings: [],
-          pastExperience: [],
-          knowledge: []
+          title: "",
+          experience: [],
+          location: "",
+          biography: "",
+          education: ""
         })
         .then(() => {
           console.log("account was created");

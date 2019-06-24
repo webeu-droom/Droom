@@ -16,7 +16,7 @@ class App extends React.Component {
         <Route exact path="/login" render={props => <Login {...props} />} />
         <Route exact path="/register" render={props => <Register {...props} />} />
         <Route exact path="/home" render={props => <Home {...props} />} />
-        <Route exact path="/profile" render={props => <ProfilePage />} />
+        <Route exact path="/profile" render={props => <ProfilePage {...props} />} />
       </div>
     );
   }
