@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { compose, bindActionCreators } from "redux";
 import { firebaseConnect, withFirestore, isEmpty } from "react-redux-firebase";
+import CreatedByBar from "../ReusableComponents/CreatedByBar";
 
 class Login extends React.Component {
   static propTypes = {
@@ -42,6 +43,7 @@ class Login extends React.Component {
         <input name="email" value={this.state.email} onChange={this.onChangeHandler} />
         <input name="password" value={this.state.password} onChange={this.onChangeHandler} />
         <button onClick={this.handleLogin}>Login</button>
+        <CreatedByBar />
       </div>
     );
   }
