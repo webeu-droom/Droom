@@ -20,8 +20,8 @@ const StyledImage = styled.div`
     div {
         border-radius: 50%;
         border: 3px solid ${white};
-        width: 96px;
-        height: 96px;
+        width: 80px;
+        height: 80px;
 
         img {
             border-radius: inherit;
