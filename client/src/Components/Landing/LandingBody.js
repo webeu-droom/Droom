@@ -11,7 +11,6 @@ import {
   small_space,
   medium_space_1
 } from "../~reusables/variables/spacing";
-// import { slate_grey } from '../variables/colors'
 
 const LandingBody = () => {
   return (
@@ -83,6 +82,11 @@ const StyledBody = styled.div`
       margin-bottom: ${medium_space_1};
     }
 
+    .buttons-container {
+      display: flex;
+      flex-wrap: wrap;
+    }
+    
     .image {
       width: 90%;
     }
