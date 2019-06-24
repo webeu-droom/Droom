@@ -7,7 +7,7 @@ import { firebaseConnect, withFirestore } from "react-redux-firebase";
 import Login from "./Components/Login";
 import Register from "./Components/Register";
 import Home from "./Components/Home";
-import Landing from "./Components/Landing";
+import Landing from "./Components/Landing/Landing";
 
 class App extends React.Component {
   render() {

@@ -17,7 +17,7 @@ const LandingHeader = props => {
         </div>
         <ul className="links">
           <Link to="/login"><ButtonSecondary>Login</ButtonSecondary></Link>
-          <Link to="/register"><ButtonPrimary>Sign Up</ButtonPrimary></Link>
+          <Link to="/register"><ButtonPrimary className="last-button">Sign Up</ButtonPrimary></Link>
         </ul>
       </nav>
     </StyledHeader>
@@ -30,13 +30,15 @@ const StyledHeader = styled.div`
   nav {
     display: flex;
     height: 12vh;
+    min-height: 60px;
+    max-height: 90px;
     max-width: 1280px;
     margin: 0 auto;
     padding: 0 ${small_space};
     justify-content: space-between;
     align-items: center;
 
-    button:last-of-type {
+    .last-button{
         margin-left: ${large_space};
     }
 
