@@ -1,12 +1,12 @@
 import styled from 'styled-components';
-import { small_space } from '../variables/spacing';
+import { extra_small_space } from '../variables/spacing';
 import { white, blue, black } from '../variables/colors';
 import { button_text } from '../variables/font-sizes'
 import { source_sans_pro } from '../variables/font-family';
 
 export const Button = styled.button`
   font-size: ${button_text};
-  padding: 6px ${small_space};
+  padding: 6px ${extra_small_space};
   font-family: ${source_sans_pro};
   font-weight: 600;
   min-width: 160px;
