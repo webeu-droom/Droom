@@ -3,10 +3,9 @@ import mockdata from '../../mock'
 
 const initialState = {
   joblistings: mockdata.businessList,
-  candidates: mockdata.candidateList,
+  candidatesList: mockdata.candidateList,
   fetching: false,
-  error: null,
-  accessStatus: false
+  error: null
 };
 
 export const Listings = (state = initialState, action) => {

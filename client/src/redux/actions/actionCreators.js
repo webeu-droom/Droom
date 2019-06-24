@@ -1,7 +1,5 @@
-import axios from 'axios';
 import * as types from './actionTypes';
 
-const baseUrl = 'https://droom-bw.herokuapp.com'; //remote
 
 export const fetching = status => {
     return {
@@ -24,9 +22,3 @@ export const failure = mssg =>{
         payload: mssg
     }
 }
-
-
-
-/**
- * action api
- */
