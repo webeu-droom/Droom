@@ -1,9 +1,8 @@
 import * as types from "../actions";
-import mockdata from '../../mock'
+import listingsData from '../../mock'
 
 const initialState = {
-  joblistings: mockdata.businessList,
-  candidatesList: mockdata.candidateList,
+  listings: listingsData,
   fetching: false,
   error: null
 };

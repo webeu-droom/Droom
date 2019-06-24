@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import { Route } from "react-router-dom";
+import { Route, Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { compose, bindActionCreators } from "redux";
 import { firebaseConnect, withFirestore } from "react-redux-firebase";
@@ -13,8 +13,10 @@ class App extends React.Component {
   render() {
     return (
       <div>
-      <Discover />
-        <Route exact path="/login" render={props => <Login {...props} />} />
+      <Link to="/discover/jobs">Jobs</Link>
+      <Link to="/discover/candidates">Candidates</Link>
+        <Route exact path="/discover/:type" render={props=> <Discover {...props}/>} />
+        <Route exact path="/login" render={props => <Login/>} />
         <Route exact path="/register" render={props => <Register {...props} />} />
         <Route exact path="/home" render={props => <Home {...props} />} />
       </div>

@@ -10,4 +10,3 @@ export const rootReducer = combineReducers({
   firestore: firestoreReducer,
   listings: Listings
 });
-debugger
