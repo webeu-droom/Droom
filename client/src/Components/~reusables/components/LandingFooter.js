@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { extra_small_space, small_space, large_space } from '../variables/spacing';
+import { small_space } from '../variables/spacing';
 import { slate_grey, black, blue } from '../variables/colors';
 import { body_1 }  from '../variables/font-sizes'
 

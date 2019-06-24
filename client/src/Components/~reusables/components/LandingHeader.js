@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { ButtonPrimary, ButtonSecondary } from '../atoms/Buttons'
-import { extra_small_space, small_space, large_space } from '../variables/spacing'
+import { small_space, large_space } from '../variables/spacing'
 import { slate_grey } from '../variables/colors'
 import logo from "../assets/logo.png";
 
