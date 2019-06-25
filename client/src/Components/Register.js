@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { compose, bindActionCreators } from "redux";
-import { firebaseConnect, withFirestore } from "react-redux-firebase";
+import { firebaseConnect, withFirestore, isEmpty } from "react-redux-firebase";
 import styled from "styled-components";
 import uuid from "uuid";
 import PropTypes from "prop-types";
@@ -55,9 +55,12 @@ class Register extends React.Component {
         .set({
           name: this.state.name,
           userEmail: res.user.user.email,
-          likedJobListings: [],
-          pastExperience: [],
-          knowledge: []
+          title: "",
+          experience: [],
+          location: "",
+          biography: "",
+          education: "",
+          imgUrl: ""
         })
         .then(() => {
           console.log("account was created");
@@ -72,8 +75,8 @@ class Register extends React.Component {
         .set({
           name: this.state.name,
           companyEmail: res.user.user.email,
-          jobListings: [],
-          companyDescription: ""
+          companyDescription: "",
+          imgUrl: ""
         })
         .then(() => {
           console.log("account was created");
@@ -94,20 +97,22 @@ class Register extends React.Component {
       createCompany: false,
       createUser: false
     };
-    this.props.firebase
-      .createUser({ email, password }, { name, email })
-      .then(() => {
-        this.props.firebase.login({ email, password }).then(res => {
-          this.saveUserToDatabase(res);
-        });
+    this.props.firebase.createUser({ email, password }, { name, email }).then(() => {
+      this.props.firebase.login({ email, password }).then(res => {
+        this.saveUserToDatabase(res);
       });
+    });
   };
   render() {
+    if (!isEmpty(this.props.auth)) {
+      this.props.history.push("/home");
+    }
     return (
       <StyledRegister>
         <LandingHeader />
         <form onSubmit={this.handleRegister}>
           <h1>Register for your Account</h1>
+
           <Input
             placeholder="Name"
             name="name"
@@ -121,6 +126,7 @@ class Register extends React.Component {
             value={this.state.email}
             onChange={this.onChangeHandler}
           />
+
           <Input
             placeholder="Password"
             name="password"

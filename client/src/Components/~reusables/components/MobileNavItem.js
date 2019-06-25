@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { NavLink } from "react-router-dom";
-import { small_space, medium_space_2 } from "../variables/spacing";
+import { small_space } from "../variables/spacing";
 import { blue, slate_grey } from "../variables/colors";
 
 const MobileNavItem = ({ icon, text, path }) => {
