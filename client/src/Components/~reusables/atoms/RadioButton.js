@@ -13,18 +13,21 @@ export const RadioButton = styled.fieldset`
   font-family: ${source_sans_pro};
   box-shadow: 0 0.8rem 2.5rem 0 rgba(40, 51, 63, 0.05);
   transition: all 100ms ease-in-out;
-  width: 100%;
+  width: 70%;
   background-color: transparent;
   border: 1px solid #eaeaea;
   border-radius: 4px;
-  padding-left: ${small_space};
   font-size: 16px;
   margin-bottom: ${medium_space_1};
-  color: ${black};
+  color: grey;
 
   div {
     display: inline-block;
     margin-right: ${small_space};
+
+    input {
+        margin-right: ${extra_small_space}
+    }
 
     input,
     label {
