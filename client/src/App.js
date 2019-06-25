@@ -21,8 +21,8 @@ class App extends React.Component {
         <Route exact path="/register" render={props => <Register {...props} />} />
         <Route exact path="/home" render={props => <Home {...props} />} />
         <Route exact path="/match" render={props => <Match {...props} />} />
-        <Route exact path="/match/chat" render={props => <Chat {...props} />} />
-        <Route exact path="/profile/listing" render={props => <Listing {...props} />} />
+        <Route exact path="/match/chat/:id" render={props => <Chat {...props} />} />
+        <Route exact path="/profile/listing/:id" render={props => <Listing {...props} />} />
       </div>
     );
   }
