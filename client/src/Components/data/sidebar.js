@@ -1,23 +1,11 @@
-export const candSidebarIcons = {
-  search: "search",
-  match: "location_city",
-  settings: "settings"
-};
-
-export const candSidebarTexts = {
-  search: "Discover",
-  match: "Companies",
-  settings: "Settings"
-};
-
-export const compSidebarIcons = {
+export const sidebarIcons = {
   search: "search",
   match: "record_voice_over",
   settings: "settings"
 };
 
-export const compSidebarTexts = {
+export const sidebarTexts = {
   search: "Discover",
-  match: "Candidates",
+  match: "Matches",
   settings: "Settings"
 };

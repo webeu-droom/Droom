@@ -5,19 +5,15 @@ import { medium_space_3 } from "../~reusables/variables/spacing";
 import { Dropdown } from "../~reusables/atoms/Dropdowns";
 import { tablet_max_width } from "../~reusables/variables/media-queries";
 
-const MatchHeader = () => {
+const ChatHeader = () => {
   return (
-    <StyleMH>
-      {/* Needs a conditional checking for company or candidate */}
-      <h1>Matches</h1>
-      <Dropdown>
-        <option value="">Full Stack Web Developer</option>
-      </Dropdown>
-    </StyleMH>
+    <StyleCH>
+      <h1>Add Listing</h1>
+    </StyleCH>
   );
 };
 
-const StyleMH = styled.div`
+const StyleCH = styled.div`
   width: 100%;
   min-height: 100px;
   max-height: 200px;
@@ -44,4 +40,4 @@ const StyleMH = styled.div`
   }
 `;
 
-export default MatchHeader;
+export default ChatHeader;
