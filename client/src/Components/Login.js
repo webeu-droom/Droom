@@ -42,7 +42,7 @@ class Login extends React.Component {
   };
   render() {
     if (!isEmpty(this.props.auth)) {
-      this.props.history.push("/home");
+      this.props.history.push("/profile");
     }
     return (
       <StyledLogin>

@@ -8,6 +8,7 @@ import Login from "./Components/Login";
 import Register from "./Components/Register";
 import Home from "./Components/Home";
 import ProfilePage from "./Components/ProfilePage";
+import Profile from "./Components/Profile/Profile"
 
 import { Discover } from "./Components/Discover";
 
@@ -25,7 +26,7 @@ class App extends React.Component {
         <Route exact path="/login" render={props => <Login {...props} />} />
         <Route exact path="/register" render={props => <Register {...props} />} />
         <Route exact path="/home" render={props => <Home {...props} />} />
-        <Route exact path="/profile" render={props => <ProfilePage {...props} />} />
+        <Route exact path="/profile" render={props => <Profile {...props} />} />
         <Route exact path="/match" render={props => <Match {...props} />} />
         <Route exact path="/match/chat/:id" render={props => <Chat {...props} />} />
         <Route exact path="/profile/listing/:id" render={props => <Listing {...props} />} />
