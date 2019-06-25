@@ -6,7 +6,6 @@ import DiscoverCard from "./DiscoverCard";
 import LayoutSidebar from "./~reusables/components/Sidebar";
 import { sidebarIcons, sidebarTexts } from "./data/sidebar";
 import { ButtonPrimary, ButtonTertiary } from "./~reusables/atoms/Buttons";
-import { body_2, body_1 } from "./~reusables/variables/font-sizes";
 
 const DiscoverWrapper = styled.div`
   width: 100%;
