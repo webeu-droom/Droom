@@ -2,8 +2,17 @@ import React from "react";
 import { connect } from "react-redux";
 import { compose, bindActionCreators } from "redux";
 import { firebaseConnect, withFirestore } from "react-redux-firebase";
+import styled from "styled-components";
 import uuid from "uuid";
 import PropTypes from "prop-types";
+import { heading_2 } from "./~reusables/variables/font-sizes";
+import { source_sans_pro } from "./~reusables/variables/font-family";
+import { medium_space_1 } from "./~reusables/variables/spacing";
+import LandingHeader from "./~reusables/components/LandingHeader";
+import LandingFooter from "./~reusables/components/LandingFooter";
+import { Input } from "./~reusables/atoms/Inputs";
+import { ButtonPrimary } from "./~reusables/atoms/Buttons";
+import { RadioButton } from "./~reusables/atoms/RadioButton";
 
 class Register extends React.Component {
   static propTypes = {
@@ -85,38 +94,65 @@ class Register extends React.Component {
       createCompany: false,
       createUser: false
     };
-    this.props.firebase.createUser({ email, password }, { name, email }).then(() => {
-      this.props.firebase.login({ email, password }).then(res => {
-        this.saveUserToDatabase(res);
+    this.props.firebase
+      .createUser({ email, password }, { name, email })
+      .then(() => {
+        this.props.firebase.login({ email, password }).then(res => {
+          this.saveUserToDatabase(res);
+        });
       });
-    });
   };
   render() {
     return (
-      <div>
-        <input name="email" value={this.state.email} onChange={this.onChangeHandler} />
-        <input name="password" type="password" value={this.state.password} onChange={this.onChangeHandler} />
-        <input name="name" value={this.state.fullName} onChange={this.onChangeHandler} />
-        <fieldset>
-          <input
-            type="radio"
-            id="company"
-            name="type Account"
-            onClick={this.onClickHandler}
-            checked={this.state.createCompany}
+      <StyledRegister>
+        <LandingHeader />
+        <form onSubmit={this.handleRegister}>
+          <h1>Register for your Account</h1>
+          <Input
+            placeholder="Name"
+            name="name"
+            value={this.state.fullName}
+            onChange={this.onChangeHandler}
           />
-          <label htmlFor="company">Company</label>
-          <input
-            type="radio"
-            id="user"
-            name="type Account"
-            onClick={this.onClickHandler}
-            checked={this.state.createUser}
+          <Input
+            placeholder="Email"
+            name="email"
+            value={this.state.email}
+            onChange={this.onChangeHandler}
           />
-          <label htmlFor="user">User</label>
-        </fieldset>
-        <button onClick={this.handleRegister}>Register</button>
-      </div>
+          <Input
+            placeholder="Password"
+            name="password"
+            type="password"
+            value={this.state.password}
+            onChange={this.onChangeHandler}
+          />
+          <RadioButton>
+            <div>
+              <input
+                type="radio"
+                id="company"
+                name="type Account"
+                onChange={this.onClickHandler}
+                checked={this.state.createCompany}
+              />
+              <label htmlFor="company">Company</label>
+            </div>
+            <div>
+              <input
+                type="radio"
+                id="user"
+                name="type Account"
+                onChange={this.onClickHandler}
+                checked={this.state.createUser}
+              />
+              <label htmlFor="user">User</label>
+            </div>
+          </RadioButton>
+          <ButtonPrimary onClick={this.handleRegister}>Register</ButtonPrimary>
+        </form>
+        <LandingFooter />
+      </StyledRegister>
     );
   }
 }
@@ -145,3 +181,23 @@ export default compose(
   ),
   firebaseConnect()
 )(Register);
+
+const StyledRegister = styled.div`
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  h1 {
+    font-size: ${heading_2};
+    font-family: ${source_sans_pro};
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 auto;
+    padding: 0 ${medium_space_1};
+  }
+`;
