@@ -4,6 +4,13 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { compose, bindActionCreators } from "redux";
 import { firebaseConnect, withFirestore, isEmpty } from "react-redux-firebase";
+import LandingHeader from "./~reusables/components/LandingHeader";
+import LandingFooter from "./~reusables/components/LandingFooter";
+import { ButtonPrimary } from "./~reusables/atoms/Buttons";
+import { heading_2 } from "./~reusables/variables/font-sizes";
+import { source_sans_pro } from "./~reusables/variables/font-family";
+import { Input } from "./~reusables/atoms/Inputs";
+import { medium_space_1 } from "./~reusables/variables/spacing";
 
 class Login extends React.Component {
   static propTypes = {
@@ -38,11 +45,26 @@ class Login extends React.Component {
       this.props.history.push("/home");
     }
     return (
-      <div>
-        <input name="email" value={this.state.email} onChange={this.onChangeHandler} />
-        <input name="password" value={this.state.password} onChange={this.onChangeHandler} />
-        <button onClick={this.handleLogin}>Login</button>
-      </div>
+      <StyledLogin>
+        <LandingHeader />
+        <form onSubmit={this.handleLogin}>
+          <h1>Login to your Account</h1>
+          <Input
+            placeholder="Email"
+            name="email"
+            value={this.state.email}
+            onChange={this.onChangeHandler}
+          />
+          <Input
+            placeholder="Password"
+            name="password"
+            value={this.state.password}
+            onChange={this.onChangeHandler}
+          />
+          <ButtonPrimary onClick={this.handleLogin}>Login</ButtonPrimary>
+        </form>
+        <LandingFooter />
+      </StyledLogin>
     );
   }
 }
@@ -71,3 +93,23 @@ export default compose(
   ),
   firebaseConnect()
 )(Login);
+
+const StyledLogin = styled.div`
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  h1 {
+    font-size: ${heading_2};
+    font-family: ${source_sans_pro};
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 auto;
+    padding: 0 ${medium_space_1};
+  }
+`;
