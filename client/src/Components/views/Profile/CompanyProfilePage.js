@@ -2,6 +2,24 @@ import React, { Component } from "react";
 import { compose, bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { firestoreConnect, isEmpty } from "react-redux-firebase";
+import styled from 'styled-components';
+import {
+  ButtonSecondary,
+  ButtonPrimary,
+  TextButton,
+  ButtonTertiary
+} from "../../~reusables/atoms/Buttons";
+import { Input } from "../../~reusables/atoms/Inputs";
+import { source_sans_pro } from "../../~reusables/variables/font-family";
+import { body_1 } from "../../~reusables/variables/font-sizes";
+import { black, slate_grey } from "../../~reusables/variables/colors";
+import { tablet_max_width } from "../../~reusables/variables/media-queries";
+import {
+  medium_space_1,
+  medium_space_3,
+  small_space
+} from "../../~reusables/variables/spacing";
+
 import { NONAME } from "dns";
 
 class CompanyProfilePage extends Component {
@@ -36,23 +54,38 @@ class CompanyProfilePage extends Component {
   render() {
     console.log(this.props.company);
     return (
-      <div>
+      <StyledCompany>
+      <section>
         {!this.state.editingProfile ? (
+          <>
+              <p className="label">Company Description</p>
           <p>{this.props.company.name}</p>
+          </>
         ) : (
-          <input value={this.state.name} onChange={this.onChangeHandler} name="name" />
+          <Input placeholder="Company Name" value={this.state.name} onChange={this.onChangeHandler} name="name" />
         )}
         {!this.state.editingProfile ? (
           <p>{this.props.company.companyDescription}</p>
         ) : (
-          <input value={this.state.description} onChange={this.onChangeHandler} name="description" />
+          <Input placeholder="Company Description" value={this.state.description} onChange={this.onChangeHandler} name="description" />
         )}
-        <p>Job Listings</p>
+        <ButtonSecondary className="edit" onClick={() => this.setState({ editingProfile: true })}>Edit</ButtonSecondary>
+        <ButtonPrimary onClick={this.updateHandler}>Save</ButtonPrimary>
+        <ButtonTertiary
+            className="logout-button-mobile"
+            onClick={this.props.handleLogout}
+          >
+            Log out
+          </ButtonTertiary>
+        </section>
+        <section className="right">
+              <p className="label">Job Listings</p>
         {this.props.jobListing && this.props.jobListing.map(job => <div>{job}</div>)}
-        <button onClick={this.updateHandler}>Save</button>
-        <button onClick={() => this.setState({ editingProfile: true })}>Edit</button>
-
-      </div>
+        <TextButton className="text-button">
+            Add Job Listing
+          </TextButton>
+          </section>
+      </StyledCompany>
     );
   }
 }
@@ -85,3 +118,65 @@ export default compose(
     ];
   })
 )(CompanyProfilePage);
+
+const StyledCompany = styled.div`
+  margin: ${medium_space_1};
+  display: flex;
+  justify-content: space-between;
+
+  section {
+    width: 50%;
+    flex-grow: 1;
+    margin-right: ${small_space};
+  }
+
+  .right {
+    margin-left: ${medium_space_3};
+  }
+
+  .edit {
+    margin-right: ${small_space};
+    margin-bottom: ${small_space};
+  }
+
+  .text-button {
+    margin-bottom: ${small_space};
+  }
+
+  .logout-button-mobile {
+    display: none;
+  }
+
+  p {
+    margin-bottom: 24px;
+    font-family: ${source_sans_pro};
+    font-size: ${body_1};
+    color: ${black};
+  }
+
+  .label {
+    margin-bottom: 16px;
+    line-height: 0;
+    color: ${slate_grey};
+    font-size: ${body_1};
+  }
+
+  @media only screen and (max-width: ${tablet_max_width}) {
+    .logout-button-mobile {
+      display: block;
+      margin-top: ${small_space};
+    }
+  }
+
+  @media only screen and (max-width: 500px) {
+    flex-direction: column;
+
+    section {
+      width: 95%;
+    }
+
+    .right {
+      margin-left: 0;
+    }
+  }
+`;

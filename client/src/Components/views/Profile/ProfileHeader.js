@@ -10,7 +10,7 @@ const ProfileHeader = ({handleLogout}) => {
     <StyleMH>
       <h1>Profile</h1>
       <ButtonTertiary onClick={handleLogout}>
-        Sign Out
+        Log out
       </ButtonTertiary>
     </StyleMH>
   );

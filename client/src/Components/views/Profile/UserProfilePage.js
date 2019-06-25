@@ -61,6 +61,7 @@ class UserProfilePage extends React.Component {
         .update({
           name: this.state.name,
           title: this.state.title,
+          experience: this.state.experience,
           location: this.state.location,
           biography: this.state.biography,
           education: this.state.education
@@ -177,9 +178,9 @@ class UserProfilePage extends React.Component {
           </ButtonPrimary>
           <ButtonTertiary
             className="logout-button-mobile"
-            onClick={this.handleLogout}
+            onClick={this.props.handleLogout}
           >
-            Logout
+            Log out
           </ButtonTertiary>
         </section>
       </StyledCandidate>
@@ -249,6 +250,7 @@ const StyledCandidate = styled.div`
   }
 
   .label {
+    margin-bottom: 16px;
     line-height: 0;
     color: ${slate_grey};
     font-size: ${body_1};

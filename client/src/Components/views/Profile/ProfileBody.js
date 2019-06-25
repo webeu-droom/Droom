@@ -28,8 +28,8 @@ class ProfileBody extends React.Component {
       });
     } else {
       this.setState({
-        name: this.props.user.name,
-        description: this.props.user.companyDescription,
+        name: this.props.company.name,
+        description: this.props.company.companyDescription,
         listings: this.props.jobListings
       });
     }
@@ -51,9 +51,9 @@ class ProfileBody extends React.Component {
       <StyledMatchBody>
         <ProfileHeader handleLogout={this.handleLogout} />
         <div>
-          {this.props.user && <UserProfilePage user={this.props.user} />}
+          {this.props.user && <UserProfilePage user={this.props.user} handleLogout={this.handleLogout} />}
           {this.props.company && (
-            <CompanyProfilePage company={this.props.company} />
+            <CompanyProfilePage company={this.props.company} handleLogout={this.handleLogout} />
           )}
         </div>
       </StyledMatchBody>

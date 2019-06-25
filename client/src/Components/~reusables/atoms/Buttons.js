@@ -6,10 +6,10 @@ import { source_sans_pro } from '../variables/font-family';
 
 export const Button = styled.button`
   font-size: ${button_text};
-  padding: 6px ${extra_small_space};
+  padding: 5px ${extra_small_space};
   font-family: ${source_sans_pro};
   font-weight: 600;
-  min-width: 160px;
+  min-width: 140px;
   border: none;
   outline: none;
   border-radius: 4px;
