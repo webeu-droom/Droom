@@ -4,10 +4,9 @@ import { Link } from "react-router-dom";
 import hero from "../~reusables/assets/hero.png";
 import { ButtonPrimary, ButtonSecondary } from "../~reusables/atoms/Buttons";
 import { source_sans_pro } from "../~reusables/variables/font-family";
-import { heading_1, body_hero, heading_3, body_1, heading_2 } from "../~reusables/variables/font-sizes";
+import { heading_1, body_hero, heading_2 } from "../~reusables/variables/font-sizes";
 import { tablet_max_width } from "../~reusables/variables/media-queries";
 import {
-  extra_small_space,
   small_space,
   medium_space_1
 } from "../~reusables/variables/spacing";

@@ -6,7 +6,11 @@ const MatchBody = () => {
   return (
     <StyledMatchBody>
       <MatchHeader />
-      {/* CODE HERE */}
+
+      {/* If Employee, Render Employee Body Components */}
+
+      {/* If Company, Render Employee Body Components */}
+
     </StyledMatchBody>
   );
 };
