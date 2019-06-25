@@ -4,7 +4,6 @@ import {
   small_space,
   medium_space_1
 } from "../variables/spacing";
-import { white, blue, black } from "../variables/colors";
 import { button_text } from "../variables/font-sizes";
 import { source_sans_pro } from "../variables/font-family";
 
