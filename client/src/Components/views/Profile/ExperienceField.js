@@ -1,5 +1,5 @@
 import React from "react";
-import { Input } from "../~reusables/atoms/Inputs";
+import { Input } from "../../~reusables/atoms/Inputs";
 
 export default function ExperienceField(props) {
   console.log(props);

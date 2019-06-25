@@ -8,18 +8,18 @@ import {
   medium_space_1,
   medium_space_3,
   small_space
-} from "../~reusables/variables/spacing";
+} from "../../~reusables/variables/spacing";
 import {
   ButtonSecondary,
   ButtonPrimary,
   TextButton,
   ButtonTertiary
-} from "../~reusables/atoms/Buttons";
-import { Input } from "../~reusables/atoms/Inputs";
-import { source_sans_pro } from "../~reusables/variables/font-family";
-import { body_1 } from "../~reusables/variables/font-sizes";
-import { black, slate_grey } from "../~reusables/variables/colors";
-import { tablet_max_width } from "../~reusables/variables/media-queries";
+} from "../../~reusables/atoms/Buttons";
+import { Input } from "../../~reusables/atoms/Inputs";
+import { source_sans_pro } from "../../~reusables/variables/font-family";
+import { body_1 } from "../../~reusables/variables/font-sizes";
+import { black, slate_grey } from "../../~reusables/variables/colors";
+import { tablet_max_width } from "../../~reusables/variables/media-queries";
 
 class UserProfilePage extends React.Component {
   state = {
