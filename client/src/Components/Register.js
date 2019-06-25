@@ -112,8 +112,21 @@ class Register extends React.Component {
         <LandingHeader />
         <form onSubmit={this.handleRegister}>
           <h1>Register for your Account</h1>
-          <Input placeholder="Name" name="name" value={this.state.fullName} onChange={this.onChangeHandler} />
-          <Input placeholder="Email" name="email" value={this.state.email} onChange={this.onChangeHandler} />
+
+          <Input
+            placeholder="Name"
+            name="name"
+            value={this.state.fullName}
+            onChange={this.onChangeHandler}
+          />
+          <Input
+            placeholder="Email"
+            name="email"
+            type="email"
+            value={this.state.email}
+            onChange={this.onChangeHandler}
+          />
+
           <Input
             placeholder="Password"
             name="password"

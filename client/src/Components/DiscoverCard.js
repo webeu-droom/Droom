@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import {slate_grey} from './~reusables/variables/colors';
 import {body_2, body_1} from './~reusables/variables/font-sizes';
+import ProfileImages from './~reusables/components/ProfileImage';
 
 
 const Wrap = styled.div`
