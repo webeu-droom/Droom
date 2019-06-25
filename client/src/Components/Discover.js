@@ -1,8 +1,10 @@
 import React, { useState, useEffect} from 'react';
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import listings from '../mock';
 import DiscoverCard from './DiscoverCard';
 import {ButtonPrimary, ButtonTertiary} from './~reusables/atoms/Buttons';
+import {body_2, body_1} from './~reusables/variables/font-sizes';
 
 const Container = styled.div`
 margin: 0 auto;
@@ -15,6 +17,22 @@ width: 40%;
   overflow: hidden;
   padding: 3rem;
 
+`;
+const NavBar = styled.div`
+display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: row;
+  position: relative;
+  overflow: hidden;
+  a{
+    padding: 3rem;
+    text-decoration: none;
+  }
+`;
+const Header = styled.div`
+  font-size: ${body_1};
+  text-align: center;
 `;
 
 export const Discover =(props)=>{
@@ -47,7 +65,12 @@ export const Discover =(props)=>{
     
     return (
         <div>
-            Discover Business and people...
+        <NavBar>
+        <Link to="/discover/jobs">Jobs</Link>
+      <Link to="/discover/candidates">Candidates</Link>
+        </NavBar>
+        <Header>Discover Business and people</Header>
+            
             <Container>
             <ButtonTertiary onClick={leftClick}>
     REJECT
