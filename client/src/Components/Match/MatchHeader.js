@@ -9,7 +9,7 @@ const MatchHeader = () => {
   return (
     <StyleMH>
       {/* Needs a conditional checking for company or candidate */}
-      <h1>Companies</h1>
+      <h1>Matches</h1>
       <Dropdown>
         <option value="">Full Stack Web Developer</option>
       </Dropdown>

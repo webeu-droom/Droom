@@ -1,26 +1,26 @@
 import React from "react";
 import styled from "styled-components";
-import LayoutBody from "./MatchBody";
+import ListingBody from "./ListingBody";
 import LayoutSidebar from "../~reusables/components/Sidebar";
 import { sidebarIcons, sidebarTexts } from "../data/sidebar";
 import MobileNavbar from "../~reusables/components/MobileNavbar";
 import { tablet_max_width } from "../~reusables/variables/media-queries";
 
-const Match = () => {
+const Listing = () => {
   return (
-    <StyledMatch>
+    <StyledListing>
       <LayoutSidebar icons={sidebarIcons} texts={sidebarTexts} />
       <MobileNavbar icons={sidebarIcons} texts={sidebarTexts} />
-      <LayoutBody>Page Specific Content</LayoutBody>
-    </StyledMatch>
+      <ListingBody>Page Specific Content</ListingBody>
+    </StyledListing>
   );
 };
 
-const StyledMatch = styled.div`
+const StyledListing = styled.div`
   display: flex;
   @media only screen and (max-width: ${tablet_max_width}) {
     flex-direction: column;
   }
 `;
 
-export default Match;
+export default Listing;

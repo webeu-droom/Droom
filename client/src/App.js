@@ -9,7 +9,7 @@ import Register from "./Components/Register";
 import Home from "./Components/Home";
 import Match from "./Components/Match/Match"
 import Landing from "./Components/Landing/Landing";
-import Listing from "./Components/JobListing/Match";
+import Listing from "./Components/JobListing/Listing";
 
 class App extends React.Component {
   render() {
@@ -20,7 +20,7 @@ class App extends React.Component {
         <Route exact path="/register" render={props => <Register {...props} />} />
         <Route exact path="/home" render={props => <Home {...props} />} />
         <Route exact path="/match" render={props => <Match {...props} />} />
-        <Route exact path="/listing" render={props => <Listing {...props} />} />
+        <Route exact path="/profile/listing" render={props => <Listing {...props} />} />
       </div>
     );
   }

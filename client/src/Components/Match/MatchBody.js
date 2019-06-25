@@ -6,6 +6,7 @@ const MatchBody = () => {
   return (
     <StyledMatchBody>
       <MatchHeader />
+      {/* CODE HERE */}
     </StyledMatchBody>
   );
 };
