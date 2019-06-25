@@ -3,7 +3,6 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { ButtonPrimary, ButtonSecondary } from "../atoms/Buttons";
 import { small_space, large_space } from "../variables/spacing";
-import { slate_grey } from "../variables/colors";
 import logo from "../assets/logo.png";
 import { tablet_max_width } from "../variables/media-queries";
 
@@ -30,7 +29,7 @@ const LandingHeader = props => {
 };
 
 const StyledHeader = styled.div`
-  border-bottom: 1px solid ${slate_grey};
+  border-bottom: 1px solid #eaeaea;
 
   nav {
     display: flex;

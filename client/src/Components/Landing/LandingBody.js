@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import hero from "../~reusables/assets/hero.png";
 import { ButtonPrimary, ButtonSecondary } from "../~reusables/atoms/Buttons";
 import { source_sans_pro } from "../~reusables/variables/font-family";
-import { heading_1, body_hero } from "../~reusables/variables/font-sizes";
+import { heading_1, body_hero, heading_3, body_1, heading_2 } from "../~reusables/variables/font-sizes";
 import { tablet_max_width } from "../~reusables/variables/media-queries";
 import {
   extra_small_space,
@@ -56,9 +56,10 @@ const StyledBody = styled.div`
     }
   }
 
-  .last-button {
-    margin-left: ${extra_small_space};
-  }
+  .buttons-container {
+      display: flex;
+      justify-content: space-evenly;
+    }
 
   h1,
   p {
@@ -80,11 +81,23 @@ const StyledBody = styled.div`
     .text {
       width: 90%;
       margin-bottom: ${medium_space_1};
+
+      h1 {
+        font-size: ${heading_2};
+      }
+
+      p {
+        font-size: ${body_hero}
+      }
     }
 
     .buttons-container {
-      display: flex;
       flex-wrap: wrap;
+      justify-content: flex-start;
+      button {
+        margin-bottom: ${small_space};
+        margin-right: ${small_space};
+      }
     }
     
     .image {
