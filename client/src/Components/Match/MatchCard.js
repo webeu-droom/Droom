@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import {
@@ -9,10 +9,25 @@ import {
 import { slate_grey, white, black } from "../~reusables/variables/colors";
 import { source_sans_pro } from "../~reusables/variables/font-family";
 import { heading_4, body_1 } from "../~reusables/variables/font-sizes";
+import { useSpring, animated } from "react-spring";
 
 const MatchCard = ({ image, message, name, title, location, chatId }) => {
+  const [hovered, setHovered] = useState(false);
+  const hoverEffect = useSpring({
+    to: {
+      transform: `scale(${hovered ? 1.05 : 1})`,
+      boxShadow: hovered
+        ? "-1px 8px 8px 0px rgba(0, 0, 0, 0.3)"
+        : "0px 0px 0px 0px rgba(0, 0, 0, 0.2)"
+    }
+  });
+
   return (
-    <StyledMatchCard>
+    <StyledMatchCard
+      style={hoverEffect}
+      onMouseOver={() => setHovered(true)}
+      onMouseOut={() => setHovered(false)}
+    >
       <Link to={`/match/chat/${chatId}`}>
         <div className="img">
           <img src={image} alt="" />
@@ -30,14 +45,14 @@ const MatchCard = ({ image, message, name, title, location, chatId }) => {
   );
 };
 
-const StyledMatchCard = styled.div`
+const StyledMatchCard = styled(animated.div)`
+  border: 1px solid ${slate_grey};
+  border-radius: 2px;
+  margin: ${medium_space_1};
+  padding: ${small_space};
   a {
     text-decoration: none;
     color: ${black};
-    border: 1px solid ${slate_grey};
-    border-radius: 2px;
-    margin: ${medium_space_1};
-    padding: ${small_space};
     display: flex;
     align-items: center;
     cursor: pointer;
