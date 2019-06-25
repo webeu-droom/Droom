@@ -54,7 +54,8 @@ const mapStateToProps = state => {
     auth: state.firebase.auth,
     profile: state.firebase.profile,
     user: state.firestore.ordered.currentUser ? state.firestore.ordered.currentUser[0] : "",
-    company: state.firestore.ordered.currentCompany ? state.firestore.ordered.currentCompany[0] : ""
+    company: state.firestore.ordered.currentCompany ? state.firestore.ordered.currentCompany[0] : "",
+    matches: state.firestore.ordered.matches ? state.firestore.ordered.matches : []
   };
 };
 
@@ -84,6 +85,10 @@ export default compose(
         collection: "companies",
         where: ["companyEmail", "==", `${props.auth.email}`],
         storeAs: "currentCompany"
+      },
+      {
+        collection: "matches",
+        where: ["userId", "==", `${props.user.id}`]
       }
     ];
   })

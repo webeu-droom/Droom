@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { compose, bindActionCreators } from "redux";
-import { firebaseConnect, withFirestore } from "react-redux-firebase";
+import { firebaseConnect, withFirestore, isEmpty } from "react-redux-firebase";
 import uuid from "uuid";
 import PropTypes from "prop-types";
 
@@ -44,13 +44,14 @@ class Register extends React.Component {
         .collection("users")
         .doc(userId)
         .set({
-          name: this.props.user.name,
+          name: this.state.name,
           userEmail: res.user.user.email,
           title: "",
           experience: [],
           location: "",
           biography: "",
-          education: ""
+          education: "",
+          imgUrl: ""
         })
         .then(() => {
           console.log("account was created");
@@ -65,8 +66,8 @@ class Register extends React.Component {
         .set({
           name: this.state.name,
           companyEmail: res.user.user.email,
-          jobListings: [],
-          companyDescription: ""
+          companyDescription: "",
+          imgUrl: ""
         })
         .then(() => {
           console.log("account was created");
@@ -94,6 +95,9 @@ class Register extends React.Component {
     });
   };
   render() {
+    if (!isEmpty(this.props.auth)) {
+      this.props.history.push("/home");
+    }
     return (
       <div>
         <input name="email" value={this.state.email} onChange={this.onChangeHandler} />
@@ -104,7 +108,7 @@ class Register extends React.Component {
             type="radio"
             id="company"
             name="type Account"
-            onClick={this.onClickHandler}
+            onChange={this.onClickHandler}
             checked={this.state.createCompany}
           />
           <label htmlFor="company">Company</label>
@@ -112,7 +116,7 @@ class Register extends React.Component {
             type="radio"
             id="user"
             name="type Account"
-            onClick={this.onClickHandler}
+            onChange={this.onClickHandler}
             checked={this.state.createUser}
           />
           <label htmlFor="user">User</label>
