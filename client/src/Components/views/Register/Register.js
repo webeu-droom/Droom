@@ -5,14 +5,14 @@ import { firebaseConnect, withFirestore, isEmpty } from "react-redux-firebase";
 import styled from "styled-components";
 import uuid from "uuid";
 import PropTypes from "prop-types";
-import { heading_2 } from "./~reusables/variables/font-sizes";
-import { source_sans_pro } from "./~reusables/variables/font-family";
-import { medium_space_1 } from "./~reusables/variables/spacing";
-import LandingHeader from "./~reusables/components/LandingHeader";
-import LandingFooter from "./~reusables/components/LandingFooter";
-import { Input } from "./~reusables/atoms/Inputs";
-import { ButtonPrimary } from "./~reusables/atoms/Buttons";
-import { RadioButton } from "./~reusables/atoms/RadioButton";
+import { heading_2 } from "../../~reusables/variables/font-sizes";
+import { source_sans_pro } from "../../~reusables/variables/font-family";
+import { medium_space_1 } from "../../~reusables/variables/spacing";
+import LandingHeader from "../../~reusables/components/LandingHeader";
+import LandingFooter from "../../~reusables/components/LandingFooter";
+import { Input } from "../../~reusables/atoms/Inputs";
+import { ButtonPrimary } from "../../~reusables/atoms/Buttons";
+import { RadioButton } from "../../~reusables/atoms/RadioButton";
 
 class Register extends React.Component {
   static propTypes = {
@@ -105,7 +105,7 @@ class Register extends React.Component {
   };
   render() {
     if (!isEmpty(this.props.auth)) {
-      this.props.history.push("/home");
+      this.props.history.push("/profile");
     }
     return (
       <StyledRegister>
