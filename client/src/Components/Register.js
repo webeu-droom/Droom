@@ -117,6 +117,7 @@ class Register extends React.Component {
           <Input
             placeholder="Email"
             name="email"
+            type="email"
             value={this.state.email}
             onChange={this.onChangeHandler}
           />
