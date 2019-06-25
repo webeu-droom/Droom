@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import { small_space } from '../variables/spacing';
-import { slate_grey, black, blue } from '../variables/colors';
-import { body_1 }  from '../variables/font-sizes'
+import { small_space } from "../variables/spacing";
+import { black, blue } from "../variables/colors";
+import { body_1 } from "../variables/font-sizes";
 
 const Footer = () => {
   return (
@@ -17,7 +17,9 @@ const Footer = () => {
           <span role="img" aria-label="love">
             🤘🏼️
           </span>{" "}
-          by <a href='https://github.com/ThorbenBender'>Thorben</a>, <a href='https://github.com/IsaacAderogba'>Isaac</a> and <a href='https://github.com/PascalUlor'>Pascal</a>
+          by <a href="https://github.com/ThorbenBender">Thorben</a>,{" "}
+          <a href="https://github.com/IsaacAderogba">Isaac</a> and{" "}
+          <a href="https://github.com/PascalUlor">Pascal</a>
         </p>
       </footer>
     </StyledFooter>
@@ -25,7 +27,7 @@ const Footer = () => {
 };
 
 const StyledFooter = styled.div`
-  border-top: 1px solid ${slate_grey};
+  border-top: 1px solid #eaeaea;
 
   footer {
     height: 12vh;
@@ -43,15 +45,14 @@ const StyledFooter = styled.div`
     }
 
     a {
-    text-decoration: none;
+      text-decoration: none;
       color: ${blue};
       cursor: pointer;
       transition-duration: 0.3s;
-
     }
 
     a:hover {
-      opacity: .8;
+      opacity: 0.8;
       transition: color 0.3s ease-in-out;
     }
   }

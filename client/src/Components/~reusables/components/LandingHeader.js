@@ -1,23 +1,29 @@
 import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { ButtonPrimary, ButtonSecondary } from '../atoms/Buttons'
-import { small_space, large_space } from '../variables/spacing'
-import { slate_grey } from '../variables/colors'
+import { ButtonPrimary, ButtonSecondary } from "../atoms/Buttons";
+import { small_space, large_space } from "../variables/spacing";
 import logo from "../assets/logo.png";
+import { tablet_max_width } from "../variables/media-queries";
 
 const LandingHeader = props => {
   return (
     <StyledHeader>
       <nav>
         <div>
-          <div className="LogoIcon">
-            <img src={logo} alt="Droom Logo" />
-          </div>
+          <Link to="/">
+            <div className="LogoIcon">
+              <img src={logo} alt="Droom Logo" />
+            </div>
+          </Link>
         </div>
         <ul className="links">
-          <Link to="/login"><ButtonSecondary>Login</ButtonSecondary></Link>
-          <Link to="/register"><ButtonPrimary className="last-button">Sign Up</ButtonPrimary></Link>
+          <Link to="/login">
+            <ButtonSecondary>Login</ButtonSecondary>
+          </Link>
+          <Link to="/register">
+            <ButtonPrimary className="last-button">Sign Up</ButtonPrimary>
+          </Link>
         </ul>
       </nav>
     </StyledHeader>
@@ -25,7 +31,7 @@ const LandingHeader = props => {
 };
 
 const StyledHeader = styled.div`
-  border-bottom: 1px solid ${slate_grey};
+  border-bottom: 1px solid #eaeaea;
 
   nav {
     display: flex;
@@ -38,22 +44,24 @@ const StyledHeader = styled.div`
     justify-content: space-between;
     align-items: center;
 
-    .last-button{
-        margin-left: ${large_space};
+    .last-button {
+      margin-left: ${large_space};
     }
 
     .LogoIcon {
-        height: 60px;
-        margin-right: 16px;
-        padding-right: 16px;
+      height: 60px;
+      margin-right: 16px;
+      padding-right: 16px;
 
-        img {
+      img {
         height: inherit;
-        }
+      }
+    }
 
-        @media only screen and (max-width: 700px) {
-            border: none;
-        }
+    @media only screen and (max-width: ${tablet_max_width}) {
+      button {
+        display: none;
+      }
     }
   }
 `;
