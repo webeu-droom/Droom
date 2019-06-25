@@ -2,8 +2,6 @@ import React from "react";
 import { compose } from "redux";
 import { connect } from "react-redux";
 import { firebaseConnect, isEmpty, isLoaded } from "react-redux-firebase";
-import MainScreen from "./MainScreen";
-import NavBar from "./NavBar";
 
 class Home extends React.Component {
   handleLogout = () => {
@@ -17,8 +15,7 @@ class Home extends React.Component {
     }
     return (
       <div>
-        <NavBar handleLogout={this.handleLogout} />
-        <MainScreen />
+
       </div>
     );
   }

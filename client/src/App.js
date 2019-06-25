@@ -4,10 +4,9 @@ import { Route } from "react-router-dom";
 import { connect } from "react-redux";
 import { compose, bindActionCreators } from "redux";
 import { firebaseConnect, withFirestore } from "react-redux-firebase";
-import Login from "./Components/Login";
-import Register from "./Components/Register";
+import Login from "./Components/views/Login/Login";
+import Register from "./Components/views/Register/Register";
 import Home from "./Components/Home";
-import ProfilePage from "./Components/ProfilePage";
 import Profile from "./Components/Profile/Profile"
 
 import { Discover } from "./Components/Discover";

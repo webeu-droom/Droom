@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import listings from "../mock";
+import listings from "./data/mock";
 import DiscoverCard from "./DiscoverCard";
 import LayoutSidebar from "./~reusables/components/Sidebar";
 import { sidebarIcons, sidebarTexts } from "./data/sidebar";
