@@ -11,7 +11,7 @@ const Match = () => {
     <StyledMatch>
       <LayoutSidebar icons={sidebarIcons} texts={sidebarTexts} />
       <MobileNavbar icons={sidebarIcons} texts={sidebarTexts} />
-      <LayoutBody>Page Specific Content</LayoutBody>
+      <LayoutBody></LayoutBody>
     </StyledMatch>
   );
 };

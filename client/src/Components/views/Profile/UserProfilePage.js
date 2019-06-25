@@ -263,7 +263,7 @@ const StyledCandidate = styled.div`
     }
   }
 
-  @media only screen and (max-width: 500px) {
+  @media only screen and (max-width: 600px) {
     flex-direction: column;
 
     section {

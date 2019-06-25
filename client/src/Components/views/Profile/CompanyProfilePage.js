@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import { compose, bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { firestoreConnect, isEmpty } from "react-redux-firebase";
-import styled from 'styled-components';
+import styled from "styled-components";
+import ListingSummary from "./ListingSummary";
 import {
   ButtonSecondary,
   ButtonPrimary,
@@ -20,13 +21,13 @@ import {
   small_space
 } from "../../~reusables/variables/spacing";
 
-import { NONAME } from "dns";
-
 class CompanyProfilePage extends Component {
   state = {
     editingProfile: false,
     name: this.props.company.name ? this.props.company.name : "None",
-    description: !isEmpty(this.props.company.description) ? this.props.company.description : "None",
+    description: !isEmpty(this.props.company.description)
+      ? this.props.company.description
+      : "None",
     error: null
   };
   componentDidMount() {
@@ -40,7 +41,9 @@ class CompanyProfilePage extends Component {
 
   updateHandler = e => {
     if (this.state.name && this.state.description) {
-      const ref = this.props.firestore.collection("companies").doc(this.props.company.id);
+      const ref = this.props.firestore
+        .collection("companies")
+        .doc(this.props.company.id);
       ref
         .update({
           name: this.state.name,
@@ -55,36 +58,61 @@ class CompanyProfilePage extends Component {
     console.log(this.props.company);
     return (
       <StyledCompany>
-      <section>
-        {!this.state.editingProfile ? (
-          <>
+        <section>
+          {!this.state.editingProfile ? (
+            <>
+              <p className="label">Company Name</p>
+              <p>{this.props.company.name}</p>
+            </>
+          ) : (
+            <Input
+              placeholder="Company Name"
+              value={this.state.name}
+              onChange={this.onChangeHandler}
+              name="name"
+            />
+          )}
+          {!this.state.editingProfile ? (
+            <>
               <p className="label">Company Description</p>
-          <p>{this.props.company.name}</p>
-          </>
-        ) : (
-          <Input placeholder="Company Name" value={this.state.name} onChange={this.onChangeHandler} name="name" />
-        )}
-        {!this.state.editingProfile ? (
-          <p>{this.props.company.companyDescription}</p>
-        ) : (
-          <Input placeholder="Company Description" value={this.state.description} onChange={this.onChangeHandler} name="description" />
-        )}
-        <ButtonSecondary className="edit" onClick={() => this.setState({ editingProfile: true })}>Edit</ButtonSecondary>
-        <ButtonPrimary onClick={this.updateHandler}>Save</ButtonPrimary>
-        <ButtonTertiary
+              <p>{this.props.company.companyDescription}</p>
+            </>
+          ) : (
+            <Input
+              placeholder="Company Description"
+              value={this.state.description}
+              onChange={this.onChangeHandler}
+              name="description"
+            />
+          )}
+          <ButtonSecondary
+            className="edit"
+            onClick={() => this.setState({ editingProfile: true })}
+          >
+            Edit
+          </ButtonSecondary>
+          <ButtonPrimary className="save" onClick={this.updateHandler}>Save</ButtonPrimary>
+        </section>
+        <section className="right">
+          <p className="label">Job Listings</p>
+
+          {/* // Listing Summary Array */}
+          <ListingSummary title="Full Stack Software Developer" listingId="1" />
+          <ListingSummary title="Front-End Developer" listingId="2" />
+          <ListingSummary title="Back-End Developer" listingId="3" />
+
+          {/* // Listing Summary Array */}
+
+          {this.props.jobListing &&
+            this.props.jobListing.map(job => <div>{job}</div>)}
+          <TextButton className="text-button">Add Job Listing</TextButton>
+          <ButtonTertiary
             className="logout-button-mobile"
             onClick={this.props.handleLogout}
           >
             Log out
           </ButtonTertiary>
         </section>
-        <section className="right">
-              <p className="label">Job Listings</p>
-        {this.props.jobListing && this.props.jobListing.map(job => <div>{job}</div>)}
-        <TextButton className="text-button">
-            Add Job Listing
-          </TextButton>
-          </section>
       </StyledCompany>
     );
   }
@@ -92,7 +120,9 @@ class CompanyProfilePage extends Component {
 
 const mapStateToProps = state => {
   return {
-    jobListing: state.firestore.ordered.jobListing ? state.firestore.ordered.jobListing : ""
+    jobListing: state.firestore.ordered.jobListing
+      ? state.firestore.ordered.jobListing
+      : ""
   };
 };
 const mapDispatchToProps = dispatch => {
@@ -139,6 +169,10 @@ const StyledCompany = styled.div`
     margin-bottom: ${small_space};
   }
 
+  .save {
+    margin-bottom: ${small_space};
+  }
+
   .text-button {
     margin-bottom: ${small_space};
   }
@@ -148,7 +182,7 @@ const StyledCompany = styled.div`
   }
 
   p {
-    margin-bottom: 24px;
+    margin-bottom: ${medium_space_3};
     font-family: ${source_sans_pro};
     font-size: ${body_1};
     color: ${black};
@@ -164,11 +198,11 @@ const StyledCompany = styled.div`
   @media only screen and (max-width: ${tablet_max_width}) {
     .logout-button-mobile {
       display: block;
-      margin-top: ${small_space};
+      margin: ${small_space} 0;
     }
   }
 
-  @media only screen and (max-width: 500px) {
+  @media only screen and (max-width: 600px) {
     flex-direction: column;
 
     section {
