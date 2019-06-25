@@ -1,17 +1,17 @@
 import React from "react";
 import styled from "styled-components";
-import LayoutBody from "./MatchBody";
+import ProfileBody from "./ProfileBody";
 import LayoutSidebar from "../~reusables/components/Sidebar";
 import { sidebarIcons, sidebarTexts } from "../data/sidebar";
 import MobileNavbar from "../~reusables/components/MobileNavbar";
 import { tablet_max_width } from "../~reusables/variables/media-queries";
 
-const Match = () => {
+const Profile = () => {
   return (
     <StyledMatch>
       <LayoutSidebar icons={sidebarIcons} texts={sidebarTexts} />
       <MobileNavbar icons={sidebarIcons} texts={sidebarTexts} />
-      <LayoutBody>Page Specific Content</LayoutBody>
+      <ProfileBody>Page Specific Content</ProfileBody>
     </StyledMatch>
   );
 };
@@ -23,4 +23,4 @@ const StyledMatch = styled.div`
   }
 `;
 
-export default Match;
+export default Profile;

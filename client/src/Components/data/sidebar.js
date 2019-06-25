@@ -7,5 +7,5 @@ export const sidebarIcons = {
 export const sidebarTexts = {
   search: "Discover",
   match: "Matches",
-  settings: "Settings"
+  settings: "Profile"
 };

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { extra_small_space } from '../variables/spacing';
 import { white, blue, black } from '../variables/colors';
-import { button_text } from '../variables/font-sizes'
+import { button_text, body_1 } from '../variables/font-sizes'
 import { source_sans_pro } from '../variables/font-family';
 
 export const Button = styled.button`
@@ -33,8 +33,17 @@ export const ButtonSecondary = styled(Button)`
   color: ${white};
 `;
 
+export const TextButton = styled(Button)`
+  background-color: transparent;
+  color: ${blue};
+  padding: 0;
+  min-width: auto;
+  box-shadow: none;
+`;
+
 export const ButtonTertiary = styled(Button)`
   background-color: ${white};
   color: ${black};
   border: 1px solid ${black};
+  font-size: ${body_1};
 `;
