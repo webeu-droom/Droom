@@ -26,16 +26,24 @@ class UserProfilePage extends React.Component {
   changeExperienceField = e => {};
 
   updateHandler = e => {
-    const ref = this.props.firestore.collection("users").doc(this.props.user.id);
-    ref
-      .update({
-        name: this.state.name,
-        title: this.state.title,
-        location: this.state.location,
-        biography: this.state.biography,
-        education: this.state.education
-      })
-      .then(() => this.setState({ editingProfile: false }));
+    if (
+      this.state.name &&
+      this.state.title &&
+      (this.state.experience.length > 0 && this.state.location && this.state.biography && this.state.education)
+    ) {
+      const ref = this.props.firestore.collection("users").doc(this.props.user.id);
+      ref
+        .update({
+          name: this.state.name,
+          title: this.state.title,
+          location: this.state.location,
+          biography: this.state.biography,
+          education: this.state.education
+        })
+        .then(() => this.setState({ editingProfile: false }));
+    } else {
+      this.setState({ error: "Please fill out everything" });
+    }
   };
 
   addExperience = () => {

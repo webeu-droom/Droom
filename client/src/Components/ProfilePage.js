@@ -85,10 +85,6 @@ export default compose(
         collection: "companies",
         where: ["companyEmail", "==", `${props.auth.email}`],
         storeAs: "currentCompany"
-      },
-      {
-        collection: "matches",
-        where: ["userId", "==", `${props.user.id}`]
       }
     ];
   })
