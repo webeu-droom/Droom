@@ -1,5 +1,5 @@
 import React from "react";
-import { isEmpty, firestoreConnect, withFirestore } from "react-redux-firebase";
+import { isEmpty, firestoreConnect, withFirestore, isLoaded } from "react-redux-firebase";
 import { compose, bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import ExperienceField from "./ExperienceField";
@@ -9,7 +9,10 @@ class UserProfilePage extends React.Component {
     editingProfile: false,
     name: this.props.user.name,
     title: this.props.user.title,
-    experience: this.props.user.experience.length > 0 ? this.props.user.experience : ["None"],
+    experience:
+      this.props.user.experience.length > 0 && isLoaded(this.props.user.experience)
+        ? this.props.user.experience
+        : ["None"],
     location: this.props.user.location,
     biography: this.props.user.biography,
     education: this.props.user.education
