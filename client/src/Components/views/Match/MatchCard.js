@@ -5,10 +5,10 @@ import {
   medium_space_1,
   small_space,
   extra_small_space
-} from "../~reusables/variables/spacing";
-import { slate_grey, white, black } from "../~reusables/variables/colors";
-import { source_sans_pro } from "../~reusables/variables/font-family";
-import { heading_4, body_1 } from "../~reusables/variables/font-sizes";
+} from "../../~reusables/variables/spacing";
+import { slate_grey, white, black } from "../../~reusables/variables/colors";
+import { source_sans_pro } from "../../~reusables/variables/font-family";
+import { heading_4, body_1 } from "../../~reusables/variables/font-sizes";
 import { useSpring, animated } from "react-spring";
 
 const MatchCard = ({ image, message, name, title, location, chatId }) => {

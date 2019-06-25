@@ -7,20 +7,19 @@ import { firebaseConnect, withFirestore } from "react-redux-firebase";
 import Login from "./Components/views/Login/Login";
 import Register from "./Components/views/Register/Register";
 import Home from "./Components/Home";
-import Profile from "./Components/Profile/Profile"
+import Profile from "./Components/views/Profile/Profile"
 
 import { Discover } from "./Components/Discover";
 
-import Match from "./Components/Match/Match";
-import Chat from "./Components/Chat/Chat";
-import Landing from "./Components/Landing/Landing";
-import Listing from "./Components/JobListing/Listing";
+import Match from "./Components/views/Match/Match";
+import Chat from "./Components/views/Chat/Chat";
+import Landing from "./Components/views/Landing/Landing";
+import Listing from "./Components/views/JobListing/Listing";
 
 class App extends React.Component {
   render() {
     return (
       <div>
-
         <Route
           exact
           path="/discover/:type?"

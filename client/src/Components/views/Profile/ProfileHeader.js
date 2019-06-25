@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-import { light_grey, black } from "../~reusables/variables/colors";
-import { medium_space_3 } from "../~reusables/variables/spacing";
-import { ButtonTertiary } from "../~reusables/atoms/Buttons";
-import { tablet_max_width } from "../~reusables/variables/media-queries";
+import { light_grey, black } from "../../~reusables/variables/colors";
+import { medium_space_3 } from "../../~reusables/variables/spacing";
+import { ButtonTertiary } from "../../~reusables/atoms/Buttons";
+import { tablet_max_width } from "../../~reusables/variables/media-queries";
 
 const ProfileHeader = ({handleLogout}) => {
   return (
