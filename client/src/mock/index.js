@@ -11,10 +11,11 @@ const listings = [
         location: "123 V.I Lagos",
         jobs: [{
             id: uuid(),
-            title: "software-deve",
+            title: "software-developer",
             description: "Business Details must be between 20 to 1000 characters",
             experience: "2 years"
-            }],
+            }
+          ],
         about: "Business Details must be between 20 to 1000 characters"
       },
       {

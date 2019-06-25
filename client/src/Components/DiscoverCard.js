@@ -3,34 +3,31 @@ import styled from "styled-components";
 import {slate_grey} from './~reusables/variables/colors';
 import {body_2, body_1} from './~reusables/variables/font-sizes';
 
+
 const Wrap = styled.div`
+
   /* Rectangle */
 
   margin: 0 auto;
   width: 1260px;
   height: 680px;
-  left: 180px;
-  top: 220px;
 
   /* White */
   background: #ffffff;
 `;
 const Card = styled.div`
   /* Background */
-
-  position: absolute;
+  ${props => (props.display === "on" ? `display: block;` : `display: none;`)}
+  position: relative;
   width: 350px;
   height: 560px;
-  left: 636px;
-  top: 292px;
-
+  margin: 0 auto;
   /* White */
   background: #ffffff;
   /* Faded Black */
   border: 1px solid ${slate_grey};
   box-sizing: border-box;
   border-radius: 8px;
-  margin: 0 auto;
   text-align: center;
   line-height: 20px;
   font-size: ${body_2};
@@ -60,16 +57,22 @@ border-top: 1px solid ${slate_grey};
   font-size: ${body_2};
 `;
 
-const DiscoverCard = ({ data }) => {
+
+const DiscoverCard = ({ data, display }) => {
+
+
   const infoHeader = data.qualifications ? "Qualifications" : 'Category';
   const info = data.qualifications ? data.qualifications : data.category;
   const listView = data.jobs ? data.jobs : data.experience;
-  console.log(listView);
+  
+
 
   return (
     <Wrap>
-      {listView.map(item => {
-        return( <Card>
+    
+    
+      {listView.map((item, index) => {
+        return( <Card key={index} display={display}>
           <ImageContainer />
           
             <Header>{data.name}</Header>
@@ -97,6 +100,7 @@ const DiscoverCard = ({ data }) => {
         </Card>
         )
       })}
+      
     </Wrap>
   );
 };
