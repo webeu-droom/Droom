@@ -3,7 +3,7 @@ import styled from "styled-components";
 import ProfileHeader from "./ProfileHeader";
 import { compose, bindActionCreators } from "redux";
 import { connect } from "react-redux";
-import { withRouter } from 'react-router'
+import { withRouter } from "react-router";
 
 import {
   firestoreConnect,
@@ -16,7 +16,7 @@ import CompanyProfilePage from "./CompanyProfilePage";
 
 class ProfileBody extends React.Component {
   componentDidMount() {
-    console.log(this.props)
+    console.log(this.props);
     if (this.props.user) {
       this.setState({
         name: this.props.user.name,
@@ -50,12 +50,7 @@ class ProfileBody extends React.Component {
     return (
       <StyledMatchBody>
         <ProfileHeader handleLogout={this.handleLogout} />
-
         <div>
-          <div>
-            <p>Profile</p>
-            <button onClick={this.handleLogout}>Logout</button>
-          </div>
           {this.props.user && <UserProfilePage user={this.props.user} />}
           {this.props.company && (
             <CompanyProfilePage company={this.props.company} />
@@ -91,27 +86,29 @@ const mapDispatchToProps = dispatch => {
   );
 };
 
-export default withRouter(compose(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  ),
-  firebaseConnect(),
-  firestoreConnect(props => {
-    return [
-      {
-        collection: "users",
-        where: ["userEmail", "==", `${props.auth.email}`],
-        storeAs: "currentUser"
-      },
-      {
-        collection: "companies",
-        where: ["companyEmail", "==", `${props.auth.email}`],
-        storeAs: "currentCompany"
-      }
-    ];
-  })
-)(ProfileBody));
+export default withRouter(
+  compose(
+    connect(
+      mapStateToProps,
+      mapDispatchToProps
+    ),
+    firebaseConnect(),
+    firestoreConnect(props => {
+      return [
+        {
+          collection: "users",
+          where: ["userEmail", "==", `${props.auth.email}`],
+          storeAs: "currentUser"
+        },
+        {
+          collection: "companies",
+          where: ["companyEmail", "==", `${props.auth.email}`],
+          storeAs: "currentCompany"
+        }
+      ];
+    })
+  )(ProfileBody)
+);
 
 const StyledMatchBody = styled.div`
   min-height: 100vh;

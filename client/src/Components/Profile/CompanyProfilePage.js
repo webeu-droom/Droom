@@ -50,6 +50,8 @@ class CompanyProfilePage extends Component {
         <p>Job Listings</p>
         {this.props.jobListing && this.props.jobListing.map(job => <div>{job}</div>)}
         <button onClick={this.updateHandler}>Save</button>
+        <button onClick={() => this.setState({ editingProfile: true })}>Edit</button>
+
       </div>
     );
   }

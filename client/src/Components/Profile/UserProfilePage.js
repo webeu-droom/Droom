@@ -2,14 +2,20 @@ import React from "react";
 import { isEmpty, firestoreConnect, withFirestore } from "react-redux-firebase";
 import { compose, bindActionCreators } from "redux";
 import { connect } from "react-redux";
+import styled from "styled-components";
 import ExperienceField from "./ExperienceField";
+import { medium_space_1 } from "../~reusables/variables/spacing";
+import { ButtonSecondary, ButtonPrimary, TextButton } from "../~reusables/atoms/Buttons";
 
 class UserProfilePage extends React.Component {
   state = {
     editingProfile: false,
     name: this.props.user.name,
     title: this.props.user.title,
-    experience: this.props.user.experience.length > 0 ? this.props.user.experience : ["None"],
+    experience:
+      this.props.user.experience.length > 0
+        ? this.props.user.experience
+        : ["None"],
     location: this.props.user.location,
     biography: this.props.user.biography,
     education: this.props.user.education
@@ -29,9 +35,14 @@ class UserProfilePage extends React.Component {
     if (
       this.state.name &&
       this.state.title &&
-      (this.state.experience.length > 0 && this.state.location && this.state.biography && this.state.education)
+      (this.state.experience.length > 0 &&
+        this.state.location &&
+        this.state.biography &&
+        this.state.education)
     ) {
-      const ref = this.props.firestore.collection("users").doc(this.props.user.id);
+      const ref = this.props.firestore
+        .collection("users")
+        .doc(this.props.user.id);
       ref
         .update({
           name: this.state.name,
@@ -57,16 +68,26 @@ class UserProfilePage extends React.Component {
   };
   render() {
     return (
-      <div>
+      <StyledCandidate>
         {!this.state.editingProfile ? (
           <p>{this.props.user.name}</p>
         ) : (
-          <input value={this.state.name} onChange={this.onChangeHandler} placeholder="Name" name="name" />
+          <input
+            value={this.state.name}
+            onChange={this.onChangeHandler}
+            placeholder="Your name"
+            name="name"
+          />
         )}
         {!this.state.editingProfile ? (
           <p>{this.props.user.title}</p>
         ) : (
-          <input value={this.state.title} onChange={this.onChangeHandler} placeholder="Title" name="title" />
+          <input
+            value={this.state.title}
+            onChange={this.onChangeHandler}
+            placeholder="Your title"
+            name="title"
+          />
         )}
         {this.state.experience.map((ex, idx) => (
           <ExperienceField
@@ -77,11 +98,16 @@ class UserProfilePage extends React.Component {
             saveExperience={this.saveExperience}
           />
         ))}
-        <button onClick={this.addExperience}>Add Experience</button>
+        <TextButton onClick={this.addExperience}>Add Experience</TextButton>
         {!this.state.editingProfile ? (
           <p>{this.props.user.location}</p>
         ) : (
-          <input value={this.state.location} onChange={this.onChangeHandler} placeholder="Location" name="location" />
+          <input
+            value={this.state.location}
+            onChange={this.onChangeHandler}
+            placeholder="Your location"
+            name="location"
+          />
         )}
         {!this.state.editingProfile ? (
           <p>{this.props.user.biography}</p>
@@ -89,7 +115,7 @@ class UserProfilePage extends React.Component {
           <input
             value={this.state.biography}
             onChange={this.onChangeHandler}
-            placeholder="Biography"
+            placeholder="Your biography"
             name="biography"
           />
         )}
@@ -99,20 +125,24 @@ class UserProfilePage extends React.Component {
           <input
             value={this.state.education}
             onChange={this.onChangeHandler}
-            placeholder="Education"
+            placeholder="Your education"
             name="education"
           />
         )}
-        <button onClick={this.updateHandler}>Save changes</button>
-        <button onClick={() => this.setState({ editingProfile: true })}>Edit</button>
-      </div>
+        <ButtonSecondary onClick={() => this.setState({ editingProfile: true })}>
+          Edit
+        </ButtonSecondary>
+        <ButtonPrimary onClick={this.updateHandler}>Save changes</ButtonPrimary>
+      </StyledCandidate>
     );
   }
 }
 
 const mapStateToProps = state => {
   return {
-    jobListings: state.firestore.ordered.jobListings ? state.firestore.ordered.jobListings : ""
+    jobListings: state.firestore.ordered.jobListings
+      ? state.firestore.ordered.jobListings
+      : ""
   };
 };
 
@@ -133,3 +163,7 @@ export default compose(
   ),
   firestoreConnect()
 )(UserProfilePage);
+
+const StyledCandidate = styled.div`
+  margin: ${medium_space_1};
+`;

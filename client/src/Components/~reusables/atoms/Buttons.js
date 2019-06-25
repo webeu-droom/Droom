@@ -33,6 +33,14 @@ export const ButtonSecondary = styled(Button)`
   color: ${white};
 `;
 
+export const TextButton = styled(Button)`
+  background-color: transparent;
+  color: ${blue};
+  padding: 0;
+  min-width: auto;
+  box-shadow: none;
+`;
+
 export const ButtonTertiary = styled(Button)`
   background-color: ${white};
   color: ${black};
