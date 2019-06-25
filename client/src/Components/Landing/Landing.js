@@ -15,13 +15,7 @@ const Landing = () => {
 };
 
 const StyledLanding = styled.div`
-  html {
     min-height: 100%;
-  }
-
-  body {
-    min-height: 100%;
-  }
 `;
 
 export default Landing;

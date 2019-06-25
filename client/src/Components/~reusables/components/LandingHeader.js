@@ -11,9 +11,11 @@ const LandingHeader = props => {
     <StyledHeader>
       <nav>
         <div>
-          <div className="LogoIcon">
-            <img src={logo} alt="Droom Logo" />
-          </div>
+          <Link to="/">
+            <div className="LogoIcon">
+              <img src={logo} alt="Droom Logo" />
+            </div>
+          </Link>
         </div>
         <ul className="links">
           <Link to="/login">
