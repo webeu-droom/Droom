@@ -11,7 +11,7 @@ const Chat = () => {
     <StyledChat>
       <LayoutSidebar icons={sidebarIcons} texts={sidebarTexts} />
       <MobileNavbar icons={sidebarIcons} texts={sidebarTexts} />
-      <ChatBody>Page Specific Content</ChatBody>
+      <ChatBody></ChatBody>
     </StyledChat>
   );
 };

@@ -11,7 +11,7 @@ const MatchBody = () => {
       {/* If Employee, Render Employee Body Components */}
       <div className="match-cards">
       <MatchCard
-        chatId="1"
+        matchesId="123"
         image="https://randomuser.me/api/portraits/men/86.jpg"
         name="Felix Hawke"
         message="We're a group of highly-motivated individuals making the tech industry more accessible by providing educational opportunities to underserved individuals."
@@ -19,7 +19,7 @@ const MatchBody = () => {
         location="Dublin, Ireland"
       />
       <MatchCard
-        chatId="2"
+        matchesId="2"
         image="https://randomuser.me/api/portraits/men/86.jpg"
         name="Felix Hawke"
         message="Accessible by providing educational opportunities to underserved individuals."
@@ -27,7 +27,7 @@ const MatchBody = () => {
         location="Dublin, Ireland"
       />
       <MatchCard
-        chatId="3"
+        matchesId="3"
         image="https://randomuser.me/api/portraits/men/86.jpg"
         name="Felix Hawke"
         message="We're a group of highly-motivated individuals making the tech industry more accessible by providing educational opportunities to underserved individuals."
@@ -35,7 +35,7 @@ const MatchBody = () => {
         location="Dublin, Ireland"
       />
       <MatchCard
-        chatId="4"
+        matchesId="4"
         image="https://randomuser.me/api/portraits/men/86.jpg"
         name="Felix Hawke"
         message="Individuals making the tech industry more accessible by providing educational opportunities to underserved individuals."
