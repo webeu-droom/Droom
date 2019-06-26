@@ -21,7 +21,6 @@ import { button_text, body_hero } from "../../~reusables/variables/font-sizes";
 import { source_sans_pro } from "../../~reusables/variables/font-family";
 
 const ChatBody = props => {
-  console.log(props);
   const [textMessage, setTextMessage] = useState("");
   // props passed from firestore and route
   const matchId = props.match.params.id;
@@ -34,20 +33,24 @@ const ChatBody = props => {
     });
   }
 
-  const userOrCompId = props.company ? props.company.id : props.user.id;
-  console.log(userOrCompId)
+  let userOrCompId;
+  if (props.company) {
+    userOrCompId = props.company.id;
+  } else if (props.user) {
+    userOrCompId = props.user.id;
+  }
 
   const sendMessage = () => {
-    if(textMessage){
-    const ref = props.firestore.collection("messages");
-    ref.add({
-      createdAt: + new Date(),
-      createdById: userOrCompId,
-      matchId: matchId,
-      messageBody: textMessage
-    });
-  }
-  }
+    if (textMessage) {
+      const ref = props.firestore.collection("messages");
+      ref.add({
+        createdAt: +new Date(),
+        createdById: userOrCompId,
+        matchId: matchId,
+        messageBody: textMessage
+      });
+    }
+  };
 
   return (
     <StyledListingBody>
