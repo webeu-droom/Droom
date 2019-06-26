@@ -14,7 +14,6 @@ import {
   extra_small_space
 } from "../../~reusables/variables/spacing";
 import {
-  body_1,
   button_text,
   body_hero
 } from "../../~reusables/variables/font-sizes";

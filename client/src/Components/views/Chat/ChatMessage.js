@@ -3,7 +3,6 @@ import styled from "styled-components";
 import {
   extra_small_space,
   small_space,
-  medium_space_1
 } from "../../~reusables/variables/spacing";
 import {
   white,
@@ -11,7 +10,7 @@ import {
   faded_blue,
   black
 } from "../../~reusables/variables/colors";
-import { body_1, body_2 } from "../../~reusables/variables/font-sizes";
+import { body_1 } from "../../~reusables/variables/font-sizes";
 import { source_sans_pro } from "../../~reusables/variables/font-family";
 
 const ChatMessage = ({ isUser, message, image }) => {
