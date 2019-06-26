@@ -16,6 +16,10 @@ export const Button = styled.button`
   box-shadow: 0 .8rem 2.5rem 0 rgba(40, 51, 63, .11);
   transition: all 100ms ease-in-out;
   cursor: pointer;
+
+  &:hover {
+    opacity: .9;
+  }
   
   &:active {
     opacity: .8;
