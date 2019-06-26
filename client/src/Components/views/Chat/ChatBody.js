@@ -1,13 +1,23 @@
 import React from "react";
 import styled from "styled-components";
 import ChatHeader from "./ChatHeader";
-import { slate_grey, black, blue, white } from "../../~reusables/variables/colors";
+import ChatMessage from "./ChatMessage";
+import {
+  slate_grey,
+  black,
+  blue,
+  white
+} from "../../~reusables/variables/colors";
 import {
   medium_space_1,
   small_space,
   extra_small_space
 } from "../../~reusables/variables/spacing";
-import { body_1, button_text, body_hero } from "../../~reusables/variables/font-sizes";
+import {
+  body_1,
+  button_text,
+  body_hero
+} from "../../~reusables/variables/font-sizes";
 import { source_sans_pro } from "../../~reusables/variables/font-family";
 
 const ChatBody = () => {
@@ -15,7 +25,28 @@ const ChatBody = () => {
     <StyledListingBody>
       <ChatHeader />
       <div className="chat-window">
-        <div className="messages" />
+        <div className="messages">
+          <ChatMessage
+            isUser={true}
+            image="https://randomuser.me/api/portraits/men/86.jpg"
+            message="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+          />
+          <ChatMessage
+            isUser={true}
+            image="https://randomuser.me/api/portraits/men/86.jpg"
+            message="Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+          />
+          <ChatMessage
+            isUser={false}
+            image="https://randomuser.me/api/portraits/men/86.jpg"
+            message="Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+          />
+          <ChatMessage
+            isUser={false}
+            image="https://randomuser.me/api/portraits/men/86.jpg"
+            message="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+          />
+        </div>
         <div className="message-input">
           <input placeholder="Type your message here..." />
           <div>
@@ -33,14 +64,15 @@ const StyledListingBody = styled.div`
   width: 100%;
 
   .chat-window {
-    height: 600px;
+    height: 500px;
     border: 1px solid ${slate_grey};
     border-radius: 8px;
     margin: ${medium_space_1};
   }
 
   .messages {
-    height: 540px;
+    height: 440px;
+    padding: ${small_space};
   }
 
   .message-input {
@@ -63,7 +95,9 @@ const StyledListingBody = styled.div`
 
     > div {
       margin-left: ${extra_small_space};
-      box-shadow: 0px 1px 5px rgba(151, 162, 185, 0.2), 0px 3px 4px rgba(151, 162, 185, 0.12), 0px 2px 4px rgba(151, 162, 185, 0.14);
+      box-shadow: 0px 1px 5px rgba(151, 162, 185, 0.2),
+        0px 3px 4px rgba(151, 162, 185, 0.12),
+        0px 2px 4px rgba(151, 162, 185, 0.14);
       border-radius: 50%;
       background-color: ${blue};
       padding: ${extra_small_space};
