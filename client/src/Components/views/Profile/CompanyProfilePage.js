@@ -18,7 +18,7 @@ import { tablet_max_width } from "../../~reusables/variables/media-queries";
 import {
   medium_space_1,
   medium_space_3,
-  small_space
+  small_space,
 } from "../../~reusables/variables/spacing";
 
 class CompanyProfilePage extends Component {
@@ -59,11 +59,9 @@ class CompanyProfilePage extends Component {
     return (
       <StyledCompany>
         <section>
+          <p className="label">Company Name</p>
           {!this.state.editingProfile ? (
-            <>
-              <p className="label">Company Name</p>
-              <p>{this.props.company.name}</p>
-            </>
+            <p className="divider">{this.props.company.name}</p>
           ) : (
             <Input
               placeholder="Company Name"
@@ -72,11 +70,9 @@ class CompanyProfilePage extends Component {
               name="name"
             />
           )}
+          <p className="label">Company Description</p>
           {!this.state.editingProfile ? (
-            <>
-              <p className="label">Company Description</p>
-              <p>{this.props.company.companyDescription}</p>
-            </>
+            <p className="divider">{this.props.company.companyDescription}</p>
           ) : (
             <Input
               placeholder="Company Description"
@@ -91,7 +87,9 @@ class CompanyProfilePage extends Component {
           >
             Edit
           </ButtonSecondary>
-          <ButtonPrimary className="save" onClick={this.updateHandler}>Save</ButtonPrimary>
+          <ButtonPrimary className="save" onClick={this.updateHandler}>
+            Save
+          </ButtonPrimary>
         </section>
         <section className="right">
           <p className="label">Job Listings</p>
@@ -160,6 +158,11 @@ const StyledCompany = styled.div`
     margin-right: ${small_space};
   }
 
+  p.divider {
+    padding-bottom: ${small_space};
+    border-bottom: 1px solid #eaeaea;
+  }
+
   .right {
     margin-left: ${medium_space_3};
   }
@@ -189,7 +192,7 @@ const StyledCompany = styled.div`
   }
 
   .label {
-    margin-bottom: 16px;
+    margin-bottom: ${medium_space_1};
     line-height: 0;
     color: ${slate_grey};
     font-size: ${body_1};

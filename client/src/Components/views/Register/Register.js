@@ -205,6 +205,6 @@ const StyledRegister = styled.div`
     flex-direction: column;
     align-items: center;
     margin: 0 auto;
-    padding: 0 ${medium_space_1};
+    padding: ${medium_space_1};
   }
 `;
