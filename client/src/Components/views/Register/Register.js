@@ -7,7 +7,7 @@ import uuid from "uuid";
 import PropTypes from "prop-types";
 import { heading_2 } from "../../~reusables/variables/font-sizes";
 import { source_sans_pro } from "../../~reusables/variables/font-family";
-import { medium_space_1 } from "../../~reusables/variables/spacing";
+import { medium_space_1, small_space } from "../../~reusables/variables/spacing";
 import LandingHeader from "../../~reusables/components/LandingHeader";
 import LandingFooter from "../../~reusables/components/LandingFooter";
 import { Input } from "../../~reusables/atoms/Inputs";
@@ -205,6 +205,6 @@ const StyledRegister = styled.div`
     flex-direction: column;
     align-items: center;
     margin: 0 auto;
-    padding: 0 ${medium_space_1};
+    padding: ${medium_space_1};
   }
 `;

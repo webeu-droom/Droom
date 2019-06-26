@@ -46,6 +46,8 @@ const MatchCard = ({ image, message, name, title, location, chatId }) => {
 };
 
 const StyledMatchCard = styled(animated.div)`
+  flex: 1 1 500px;
+
   border: 1px solid ${slate_grey};
   border-radius: 2px;
   margin: ${medium_space_1};
@@ -84,6 +86,7 @@ const StyledMatchCard = styled(animated.div)`
   }
 
   .content {
+    width: 100%;
     .message {
       font-size: ${body_1};
       margin-top: ${extra_small_space};

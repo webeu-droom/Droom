@@ -49,7 +49,7 @@ const StyledHeader = styled.div`
     }
 
     .LogoIcon {
-      height: 60px;
+      height: 50px;
       margin-right: 16px;
       padding-right: 16px;
 
