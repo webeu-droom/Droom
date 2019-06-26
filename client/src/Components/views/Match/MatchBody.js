@@ -8,7 +8,6 @@ import MatchHeader from "./MatchHeader";
 import MatchCard from "./MatchCard";
 
 const MatchBody = props => {
-  console.log(props);
   let fetchedCompanies, fetchedJobListings, fetchedUsers;
   if (props.companies) {
     fetchedCompanies = Object.values(props.companies);
@@ -42,32 +41,49 @@ const MatchBody = props => {
 
   // If I'm a company, pull the corresponding user's data that matches one of my listings
   if (props.company && props.matches && fetchedUsers) {
-    let companyListings = fetchedJobListings.filter(listing => listing.companyId === userOrCompId);
+    let companyListings = fetchedJobListings.filter(
+      listing => listing.companyId === userOrCompId
+    );
 
     matches.forEach(match => {
       let foundUser = fetchedUsers.find(user => user.id === match.userId);
 
       foundUser.likedJobListings.forEach(likedListing => {
-        let matchedUser = companyListings.find(companyListing => companyListing.id === likedListing)
-        if(matchedUser) {
+        let matchedUser = companyListings.find(
+          companyListing => companyListing.id === likedListing
+        );
+        if (matchedUser) {
           users = [...users, { user: foundUser, matchId: match.id }];
         }
-      })
+      });
     });
   }
 
   // If I'm a user, check the company's listing data to see if I'm a liked user
-  if(props.user && props.matches && fetchedCompanies && fetchedJobListings) {
+  if (props.user && props.matches && fetchedCompanies && fetchedJobListings) {
     matches.forEach(match => {
-      let foundCompany = fetchedCompanies.find(company => company.id === match.companyId);
-      let foundListings = fetchedJobListings.filter(listing => listing.companyId === foundCompany.id);
-       foundListings.forEach(listing => {
-         let matchedListing = listing.likedUser.find(user => user === userOrCompId);
-         if(matchedListing) {
-           listings = [...listings, {listing: listing, matchId: match.id, associatedCompany: foundCompany}]
-         }
-       })
-    })
+      let foundCompany = fetchedCompanies.find(
+        company => company.id === match.companyId
+      );
+      let foundListings = fetchedJobListings.filter(
+        listing => listing.companyId === foundCompany.id
+      );
+      foundListings.forEach(listing => {
+        let matchedListing = listing.likedUser.find(
+          user => user === userOrCompId
+        );
+        if (matchedListing) {
+          listings = [
+            ...listings,
+            {
+              listing: listing,
+              matchId: match.id,
+              associatedCompany: foundCompany
+            }
+          ];
+        }
+      });
+    });
   }
 
   return (
@@ -77,9 +93,10 @@ const MatchBody = props => {
       {/* If Employee, Render Employee Body Components */}
       <div className="match-cards">
         {props.company &&
-          users.map(user => {
+          users.map((user, idx) => {
             return (
               <MatchCard
+                key={idx}
                 matchesId={user.matchId}
                 name={user.user.name}
                 message={user.user.biography}
@@ -88,16 +105,18 @@ const MatchBody = props => {
               />
             );
           })}
-          {props.user && listings.map(listing => {
+        {props.user &&
+          listings.map((listing, idx) => {
             return (
-              <MatchCard 
+              <MatchCard
+                key={idx}
                 matchesId={listing.matchId}
                 name={listing.associatedCompany.name}
                 message={listing.associatedCompany.companyDescription}
                 title={listing.listing.position}
                 location={listing.listing.location}
               />
-            )
+            );
           })}
         {/* <MatchCard
         matchesId="123"
