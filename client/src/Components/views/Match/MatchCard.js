@@ -10,6 +10,7 @@ import { slate_grey, white, black } from "../../~reusables/variables/colors";
 import { source_sans_pro } from "../../~reusables/variables/font-family";
 import { heading_4, body_1 } from "../../~reusables/variables/font-sizes";
 import { useSpring, animated } from "react-spring";
+import { tablet_max_width } from "../../~reusables/variables/media-queries";
 
 const MatchCard = ({ image, message, name, title, location, chatId }) => {
   const [hovered, setHovered] = useState(false);
@@ -47,11 +48,11 @@ const MatchCard = ({ image, message, name, title, location, chatId }) => {
 
 const StyledMatchCard = styled(animated.div)`
   flex: 1 1 500px;
-
   border: 1px solid ${slate_grey};
   border-radius: 2px;
   margin: ${medium_space_1};
   padding: ${small_space};
+
   a {
     text-decoration: none;
     color: ${black};
@@ -104,6 +105,12 @@ const StyledMatchCard = styled(animated.div)`
       }
     }
   }
+
+  @media only screen and (max-width: ${tablet_max_width}) {
+    margin: ${medium_space_1} ${medium_space_1} 0 ${medium_space_1};
+  }
+
 `;
 
 export default MatchCard;
+
