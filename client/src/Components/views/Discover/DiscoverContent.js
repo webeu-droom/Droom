@@ -46,8 +46,17 @@ const DiscoverContent = ({props}) => {
     }
   };
 
+  const handleKeyPress = (event) => {
+    if(event.key === 'ArrowLeft'){
+      leftClick();
+    }
+    if(event.key === 'ArrowRight'){
+      rightClick();
+    }
+  }
+
   return (
-    <StyledMatchBody>
+    <StyledMatchBody onKeyDown={handleKeyPress} tabIndex="0">
       <DiscoverHeader props={props}/>
       <CardWrap>
       <ButtonTertiary onClick={leftClick}>REJECT</ButtonTertiary>
@@ -57,6 +66,7 @@ const DiscoverContent = ({props}) => {
                   data={arr}
                   key={arr.id}
                   display={selected === index ? "on" : "off"}
+                  handleKeyPress={handleKeyPress}
                 />
               );
             })}
