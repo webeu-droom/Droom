@@ -7,7 +7,9 @@ import ExperienceField from "./ExperienceField";
 import {
   medium_space_1,
   medium_space_3,
-  small_space
+  small_space,
+  extra_small_space,
+  medium_space_2
 } from "../../~reusables/variables/spacing";
 import {
   ButtonSecondary,
@@ -88,7 +90,7 @@ class UserProfilePage extends React.Component {
           {!this.state.editingProfile ? (
             <>
               <p className="label">Name</p>
-              <p>{this.props.user.name}</p>
+              <p className="divider">{this.props.user.name}</p>
             </>
           ) : (
             <Input
@@ -101,7 +103,7 @@ class UserProfilePage extends React.Component {
           {!this.state.editingProfile ? (
             <>
               <p className="label">Title</p>
-              <p>{this.props.user.title}</p>
+              <p className="divider">{this.props.user.title}</p>
             </>
           ) : (
             <Input
@@ -131,7 +133,7 @@ class UserProfilePage extends React.Component {
           {!this.state.editingProfile ? (
             <>
               <p className="label">Location</p>
-              <p>{this.props.user.location}</p>
+              <p className="divider">{this.props.user.location}</p>
             </>
           ) : (
             <Input
@@ -144,7 +146,7 @@ class UserProfilePage extends React.Component {
           {!this.state.editingProfile ? (
             <>
               <p className="label">Biography</p>
-              <p>{this.props.user.biography}</p>
+              <p className="divider">{this.props.user.biography}</p>
             </>
           ) : (
             <Input
@@ -157,7 +159,7 @@ class UserProfilePage extends React.Component {
           {!this.state.editingProfile ? (
             <>
               <p className="label">Education</p>
-              <p>{this.props.user.education}</p>
+              <p className="divider">{this.props.user.education}</p>
             </>
           ) : (
             <Input
@@ -223,6 +225,11 @@ const StyledCandidate = styled.div`
     width: 50%;
     flex-grow: 1;
     margin-right: ${small_space};
+  }
+
+  p.divider {
+    margin-bottom: ${medium_space_2};
+    border-bottom: 1px solid #eaeaea;
   }
 
   .right {

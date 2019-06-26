@@ -6,7 +6,7 @@ export default function ExperienceField(props) {
   return (
     <div>
       {!props.editingProfile ? (
-        <p>{props.ex}</p>
+        <p className="divider">{props.ex}</p>
       ) : (
         <Input value={props.ex} id={props.id} placeholder="Experience" onChange={props.saveExperience} />
       )}

@@ -50,7 +50,7 @@ const StyledMatchCard = styled(animated.div)`
   flex: 1 1 500px;
   border: 1px solid ${slate_grey};
   border-radius: 2px;
-  margin: ${medium_space_1};
+  margin: ${medium_space_1} ${medium_space_1} 0 ${medium_space_1};
   padding: ${small_space};
 
   a {
@@ -105,11 +105,6 @@ const StyledMatchCard = styled(animated.div)`
       }
     }
   }
-
-  @media only screen and (max-width: ${tablet_max_width}) {
-    margin: ${medium_space_1} ${medium_space_1} 0 ${medium_space_1};
-  }
-
 `;
 
 export default MatchCard;
