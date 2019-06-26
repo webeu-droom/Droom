@@ -61,8 +61,6 @@ const StyledSidebar = styled.aside`
   @media only screen and (max-width: ${tablet_max_width}) {
     display: none;
   }
-
-
 `;
 
 export default SidebarContainer;

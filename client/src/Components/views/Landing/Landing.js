@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import LandingHeader from "../~reusables/components/LandingHeader";
-import LandingFooter from "../~reusables/components/LandingFooter";
+import LandingHeader from "../../~reusables/components/LandingHeader";
+import LandingFooter from "../../~reusables/components/LandingFooter";
 import LandingBody from "./LandingBody";
 
 const Landing = () => {

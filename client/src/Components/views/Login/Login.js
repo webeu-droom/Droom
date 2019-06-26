@@ -4,13 +4,13 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { compose, bindActionCreators } from "redux";
 import { firebaseConnect, withFirestore, isEmpty } from "react-redux-firebase";
-import LandingHeader from "./~reusables/components/LandingHeader";
-import LandingFooter from "./~reusables/components/LandingFooter";
-import { ButtonPrimary } from "./~reusables/atoms/Buttons";
-import { heading_2 } from "./~reusables/variables/font-sizes";
-import { source_sans_pro } from "./~reusables/variables/font-family";
-import { Input } from "./~reusables/atoms/Inputs";
-import { medium_space_1 } from "./~reusables/variables/spacing";
+import LandingHeader from "../../~reusables/components/LandingHeader";
+import LandingFooter from "../../~reusables/components/LandingFooter";
+import { ButtonPrimary } from "../../~reusables/atoms/Buttons";
+import { heading_2 } from "../../~reusables/variables/font-sizes";
+import { source_sans_pro } from "../../~reusables/variables/font-family";
+import { Input } from "../../~reusables/atoms/Inputs";
+import { medium_space_1 } from "../../~reusables/variables/spacing";
 
 class Login extends React.Component {
   static propTypes = {
@@ -33,7 +33,7 @@ class Login extends React.Component {
         password: this.state.password
       })
       .then(() => {
-        this.props.history.push("/home");
+        this.props.history.push("/discover");
       });
   };
 
@@ -42,7 +42,7 @@ class Login extends React.Component {
   };
   render() {
     if (!isEmpty(this.props.auth)) {
-      this.props.history.push("/home");
+      this.props.history.push("/discover");
     }
     return (
       <StyledLogin>
@@ -52,12 +52,14 @@ class Login extends React.Component {
           <Input
             placeholder="Email"
             name="email"
+            type="email"
             value={this.state.email}
             onChange={this.onChangeHandler}
           />
           <Input
             placeholder="Password"
             name="password"
+            type="password"
             value={this.state.password}
             onChange={this.onChangeHandler}
           />

@@ -5,14 +5,14 @@ import { firebaseConnect, withFirestore, isEmpty } from "react-redux-firebase";
 import styled from "styled-components";
 import uuid from "uuid";
 import PropTypes from "prop-types";
-import { heading_2 } from "./~reusables/variables/font-sizes";
-import { source_sans_pro } from "./~reusables/variables/font-family";
-import { medium_space_1 } from "./~reusables/variables/spacing";
-import LandingHeader from "./~reusables/components/LandingHeader";
-import LandingFooter from "./~reusables/components/LandingFooter";
-import { Input } from "./~reusables/atoms/Inputs";
-import { ButtonPrimary } from "./~reusables/atoms/Buttons";
-import { RadioButton } from "./~reusables/atoms/RadioButton";
+import { heading_2 } from "../../~reusables/variables/font-sizes";
+import { source_sans_pro } from "../../~reusables/variables/font-family";
+import { medium_space_1 } from "../../~reusables/variables/spacing";
+import LandingHeader from "../../~reusables/components/LandingHeader";
+import LandingFooter from "../../~reusables/components/LandingFooter";
+import { Input } from "../../~reusables/atoms/Inputs";
+import { ButtonPrimary } from "../../~reusables/atoms/Buttons";
+import { RadioButton } from "../../~reusables/atoms/RadioButton";
 
 class Register extends React.Component {
   static propTypes = {
@@ -105,15 +105,28 @@ class Register extends React.Component {
   };
   render() {
     if (!isEmpty(this.props.auth)) {
-      this.props.history.push("/home");
+      this.props.history.push("/profile");
     }
     return (
       <StyledRegister>
         <LandingHeader />
         <form onSubmit={this.handleRegister}>
           <h1>Register for your Account</h1>
-          <Input placeholder="Name" name="name" value={this.state.fullName} onChange={this.onChangeHandler} />
-          <Input placeholder="Email" name="email" value={this.state.email} onChange={this.onChangeHandler} />
+
+          <Input
+            placeholder="Name"
+            name="name"
+            value={this.state.fullName}
+            onChange={this.onChangeHandler}
+          />
+          <Input
+            placeholder="Email"
+            name="email"
+            type="email"
+            value={this.state.email}
+            onChange={this.onChangeHandler}
+          />
+
           <Input
             placeholder="Password"
             name="password"
@@ -192,6 +205,6 @@ const StyledRegister = styled.div`
     flex-direction: column;
     align-items: center;
     margin: 0 auto;
-    padding: 0 ${medium_space_1};
+    padding: ${medium_space_1};
   }
 `;

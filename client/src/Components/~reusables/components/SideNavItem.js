@@ -24,6 +24,7 @@ const StyledNavItem = styled.div`
 
     i {
         margin-right: ${small_space};
+        vertical-align: middle;
     }
 
     .active-nav {

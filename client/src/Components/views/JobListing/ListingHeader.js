@@ -1,18 +1,13 @@
 import React from "react";
 import styled from "styled-components";
-import { light_grey, black } from "../~reusables/variables/colors";
-import { medium_space_3 } from "../~reusables/variables/spacing";
-import { Dropdown } from "../~reusables/atoms/Dropdowns";
-import { tablet_max_width } from "../~reusables/variables/media-queries";
+import { light_grey, black } from "../../~reusables/variables/colors";
+import { medium_space_3 } from "../../~reusables/variables/spacing";
+import { tablet_max_width } from "../../~reusables/variables/media-queries";
 
-const MatchHeader = () => {
+const ListingHeader = () => {
   return (
     <StyleMH>
-      {/* Needs a conditional checking for company or candidate */}
-      <h1>Matches</h1>
-      <Dropdown>
-        <option value="">Full Stack Web Developer</option>
-      </Dropdown>
+      <h1>Add Listing</h1>
     </StyleMH>
   );
 };
@@ -44,4 +39,4 @@ const StyleMH = styled.div`
   }
 `;
 
-export default MatchHeader;
+export default ListingHeader;

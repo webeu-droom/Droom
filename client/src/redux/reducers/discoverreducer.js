@@ -1,5 +1,5 @@
 import * as types from "../actions";
-import listingsData from '../../mock'
+import listingsData from '../../Components/data/mock'
 
 const initialState = {
   listings: listingsData,
