@@ -7,8 +7,18 @@ import { firestoreConnect, firebaseConnect } from "react-redux-firebase";
 import MatchHeader from "./MatchHeader";
 import MatchCard from "./MatchCard";
 
-const MatchBody = (props) => {
-  console.log(props)
+const MatchBody = props => {
+  console.log(props);
+  let fetchedCompanies, fetchedJobListings, fetchedUsers;
+  if (props.companies) {
+    fetchedCompanies = Object.values(props.companies);
+  }
+  if (props.jobListings) {
+    fetchedJobListings = Object.values(props.jobListings);
+  }
+  if (props.users) {
+    fetchedUsers = Object.values(props.users);
+  }
 
   let userOrCompId;
   if (props.company) {
@@ -17,29 +27,26 @@ const MatchBody = (props) => {
     userOrCompId = props.user.id;
   }
 
-  console.log(userOrCompId);
-  console.log(props);
   let matches;
-  if(props.matches) {
-    matches = Object.values(props.matches)
-    if(props.company){
-      matches = props.matches.filter(match => match.companyId === userOrCompId)
-    } else if(props.user) {
-      matches = props.matches.filter(match => match.userId === userOrCompId)
+  if (props.matches) {
+    matches = Object.values(props.matches);
+    if (props.company) {
+      matches = props.matches.filter(match => match.companyId === userOrCompId);
+    } else if (props.user) {
+      matches = props.matches.filter(match => match.userId === userOrCompId);
     }
   }
 
   // If I'm a company, pull the corresponding user's data
-  let users, listings;
-  if(props.company && props.matches) {
-    matches.forEach(user => {
-      let foundUser = 
-    })
+  let users = [];
+  let listings = [];
+  if (props.company && props.matches && fetchedUsers) {
+    matches.forEach(match => {
+      let foundUser = fetchedUsers.find(user => user.id === match.userId);
+      users = [...users, { user: foundUser, matchId: match.id }];
+    });
   }
   // If I'm a user, check the company's listing data to see if I'm a liked user
-
-  console.log(matches);
-  sds
 
   return (
     <StyledMatchBody>
@@ -47,7 +54,19 @@ const MatchBody = (props) => {
 
       {/* If Employee, Render Employee Body Components */}
       <div className="match-cards">
-      <MatchCard
+        {props.company &&
+          users.map(user => {
+            return (
+              <MatchCard
+                matchesId={user.matchId}
+                name={user.user.name}
+                message={user.user.biography}
+                title={user.user.title}
+                location={user.user.location}
+              />
+            );
+          })}
+        {/* <MatchCard
         matchesId="123"
         image="https://randomuser.me/api/portraits/men/86.jpg"
         name="Felix Hawke"
@@ -78,7 +97,7 @@ const MatchBody = (props) => {
         message="Individuals making the tech industry more accessible by providing educational opportunities to underserved individuals."
         title="Full Stack Developer"
         location="Dublin, Ireland"
-      />
+      /> */}
       </div>
       {/* If Company, Render Employee Body Components */}
     </StyledMatchBody>
@@ -104,9 +123,9 @@ const mapStateToProps = state => {
     company: state.firestore.ordered.currentCompany
       ? state.firestore.ordered.currentCompany[0]
       : "",
-      users: state.firestore.ordered.users,
-      companies: state.firestore.ordered.companies,
-      jobListings: state.firestore.ordered.jobListings,
+    users: state.firestore.ordered.users,
+    companies: state.firestore.ordered.companies,
+    jobListings: state.firestore.ordered.jobListings,
     auth: state.firebase.auth,
     profile: state.firebase.profile
   };
@@ -135,13 +154,13 @@ export default withRouter(
           storeAs: "matches"
         },
         {
-          collection: "users",
+          collection: "users"
         },
         {
-          collection: "companies",
+          collection: "companies"
         },
         {
-          collection: "jobListings",
+          collection: "jobListings"
         },
         {
           collection: "users",

@@ -77,6 +77,7 @@ const StyledMatchCard = styled(animated.div)`
     width: 64px;
     height: 64px;
     margin-right: ${extra_small_space};
+    background-color: ${slate_grey};
 
     img {
       border-radius: inherit;
