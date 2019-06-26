@@ -76,31 +76,43 @@ export const Discover = props => {
     let ref = this.props.firestore.collection("users").doc(this.props.user.id);
     ref
       .update({
-        likedCompanies: this.props.firestore.FieldValue.arrayUnion(this.props.jobListings.id)
+        likedJoblistings: this.props.firestore.FieldValue.arrayUnion(this.props.jobListings.id)
       })
       .then(() => {
-        let ref = this.props.firestore.collection("jobListings").doc(this.props.jobListings.id);
-        ref.get().then(qs => {
-          qs.forEach(doc => {
-            let jobListings = doc.data();
-            if (jobListings.likedUsers.includes(this.props.user.id)) {
-              let id = uuid();
-              let ref = this.props.firestore.collection("matches").doc();
-              ref.set({
-                jobListingsId: jobListings.id,
-                userId: this.props.user.id,
-                jobListingsLocatioin: jobListings.position,
-                userName: this.props.user.name,
-                userLocation: this.props.company.location,
-                jobListingsLocation: jobListings.location
-              });
-            }
+        if (this.props.jobListings.includes(this.props.user.id)) {
+          let ref = this.props.firestore.collection("matches").doc();
+          ref.set({
+            jobListingsId: this.props.jobListings.id,
+            userId: this.props.user.id,
+            jobListingsLocatioin: this.props.jobListings.position,
+            userName: this.props.user.name,
+            userLocation: this.props.company.location,
+            jobListingsLocation: this.props.jobListings.location
           });
-        });
+        }
       });
   };
 
-  const likeUser = () => {};
+  const likeUser = () => {
+    let ref = this.props.firestore.collection("jobListings").doc(this.props.jobListings.id);
+    ref
+      .update({
+        likedCompanies: this.props.firestore.FieldValue.arrayUnion(this.props.user.id)
+      })
+      .then(() => {
+        if (this.props.user.likedJoblistings.includes(this.props.jobListings.id)) {
+          let ref = this.props.firestore.collection("matches").doc();
+          ref.set({
+            jobListingsId: this.props.jobListings.id,
+            userId: this.props.user.id,
+            jobListingsLocatioin: this.props.jobListings.position,
+            userName: this.props.user.name,
+            userLocation: this.props.company.location,
+            jobListingsLocation: this.props.jobListings.location
+          });
+        }
+      });
+  };
 
   return (
     <div>
@@ -129,7 +141,14 @@ const mapStateToProps = state => {
     auth: state.firebase.auth,
     profile: state.firebase.profile,
     company: state.firestore.ordered.currentCompany ? state.firestore.ordered.currentCompany : "",
-    user: state.firestore.ordered.currentUser ? state.firestore.ordered.currentUser : ""
+    user: state.firestore.ordered.currentUser ? state.firestore.ordered.currentUser : "",
+    list: this.props.user
+      ? [
+          this.props.user.likedCompanies.likedJoblistings.map(list => list),
+          this.props.user.dislikedJoblistings.map(list => list)
+        ]
+      : [this.props.company.likedUser.map(list => list), this.props.company.dislikedUser.map(list => list)],
+    collection: this.props.user ? "companies" : "users"
   };
 };
 
@@ -156,6 +175,9 @@ export default compose(
         collection: "companies",
         where: ["companyEmail", "==", `${props.auth.email}`],
         storeAs: "currentCompany"
+      },
+      {
+        collection: ""
       }
     ];
   })
