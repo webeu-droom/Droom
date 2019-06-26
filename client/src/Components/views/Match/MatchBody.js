@@ -1,9 +1,36 @@
 import React from "react";
 import styled from "styled-components";
+import { compose, bindActionCreators } from "redux";
+import { connect } from "react-redux";
+import { withRouter } from "react-router";
+import { firestoreConnect, firebaseConnect } from "react-redux-firebase";
 import MatchHeader from "./MatchHeader";
 import MatchCard from "./MatchCard";
 
-const MatchBody = () => {
+const MatchBody = (props) => {
+
+  let userOrCompId;
+  if (props.company) {
+    userOrCompId = props.company.id;
+  } else if (props.user) {
+    userOrCompId = props.user.id;
+  }
+
+  console.log(userOrCompId);
+  console.log(props);
+  let matches;
+  if(props.matches) {
+    matches = Object.values(props.matches)
+    if(props.company){
+      matches = props.matches.filter(match => match.companyId === userOrCompId)
+    } else if(props.user) {
+      matches = props.matches.filter(match => match.userId === userOrCompId)
+    }
+  }
+
+  console.log(matches);
+
+
   return (
     <StyledMatchBody>
       <MatchHeader />
@@ -58,4 +85,53 @@ const StyledMatchBody = styled.div`
   }
 `;
 
-export default MatchBody;
+const mapStateToProps = state => {
+  return {
+    matches: state.firestore.ordered.matches,
+    user: state.firestore.ordered.currentUser
+      ? state.firestore.ordered.currentUser[0]
+      : "",
+    company: state.firestore.ordered.currentCompany
+      ? state.firestore.ordered.currentCompany[0]
+      : "",
+    auth: state.firebase.auth,
+    profile: state.firebase.profile
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators(
+    {
+      clearFirestore: () => dispatch({ type: "@@reduxFirestore/CLEAR_DATA" })
+    },
+    dispatch
+  );
+};
+
+export default withRouter(
+  compose(
+    connect(
+      mapStateToProps,
+      mapDispatchToProps
+    ),
+    firebaseConnect(),
+    firestoreConnect(props => {
+      return [
+        {
+          collection: "matches",
+          storeAs: "matches"
+        },
+        {
+          collection: "users",
+          where: ["userEmail", "==", `${props.auth.email}`],
+          storeAs: "currentUser"
+        },
+        {
+          collection: "companies",
+          where: ["companyEmail", "==", `${props.auth.email}`],
+          storeAs: "currentCompany"
+        }
+      ];
+    })
+  )(MatchBody)
+);
