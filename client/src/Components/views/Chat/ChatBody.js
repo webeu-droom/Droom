@@ -1,14 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { compose, bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
-import {
-  firestoreConnect,
-  firebaseConnect,
-  isEmpty,
-  isLoaded
-} from "react-redux-firebase";
+import { firestoreConnect, firebaseConnect } from "react-redux-firebase";
 import ChatHeader from "./ChatHeader";
 import ChatMessage from "./ChatMessage";
 import {
@@ -26,16 +21,31 @@ import { button_text, body_hero } from "../../~reusables/variables/font-sizes";
 import { source_sans_pro } from "../../~reusables/variables/font-family";
 
 const ChatBody = props => {
+  console.log(props);
+  const [textMessage, setTextMessage] = useState("");
   // props passed from firestore and route
   const chatId = props.match.params.id;
   let messages;
+
   if (props.messages) {
     messages = Object.values(props.messages);
     messages.sort((x, y) => {
       return x.createdAt.seconds - y.createdAt.seconds;
     });
   }
+
   const activeUserOrComp = props.profile.name;
+
+  const sendMessage = () => {
+    const ref = props.firestore.collection("messages");
+    ref.add({
+      createdAt: + new Date(),
+      createdById: activeUserOrComp,
+      matchId: chatId,
+      messageBody: textMessage
+    });
+    console.log('executed')
+  }
 
   return (
     <StyledListingBody>
@@ -53,9 +63,13 @@ const ChatBody = props => {
               );
             })}
         </div>
-        <div className="message-input">
+        <div
+          className="message-input"
+          value={textMessage}
+          onChange={e => setTextMessage(e.target.value)}
+        >
           <input placeholder="Type your message here..." />
-          <div>
+          <div onClick={sendMessage}>
             <i className="material-icons">send</i>
           </div>
         </div>
