@@ -8,42 +8,63 @@ import DescriptionList from "./DescriptionList";
 
 class ListingBody extends React.Component {
   state = {
-    isEditing: false,
-    description: this.props.listing.description,
-    location: this.props.listing.location,
-    position: this.props.listing.position
+    isEditing: false
   };
-
   onChangeHandler = e => {
-    this.setState({ [e.target.name]: e.target.value });
+    if (!this.state.location) {
+      this.setState({ [e.target.name]: e.target.value });
+    }
+
+    // this.setState({ [e.target.name]: item });
   };
+  componentDidMount() {
+    if (isLoaded(this.props.listing) && !isEmpty(this.props.listing)) {
+      this.setState({ listing: this.props.listing });
+    }
+  }
   editDescription = e => {
     let newArray = this.state.description;
     newArray[e.target.id] = e.target.value;
     this.setState({ description: newArray });
   };
   render() {
+    if (!isLoaded(this.props.listing) || isEmpty(this.props.listing)) {
+      return <h1>Loading...</h1>;
+    } else if (isLoaded(this.props.listing) && isEmpty(this.props.listing)) {
+      return <h1>404 Not found</h1>;
+    }
+    let list = [];
+    for (let i = 0; i < this.props.listing.description.length; i++) {}
+    console.log(list);
     return (
       <StyledListingBody>
-        <ListingHeader position={this.props.listing.position} />
+        <ListingHeader position={this.state.position} />
         {!this.state.isEditing ? (
           <p>{this.props.listing.position}</p>
         ) : (
-          <input value={this.state.position} onChange={this.onChangeHandler} name="position" placeholder="Position" />
+          <input
+            defaultValue={this.props.listing.position}
+            value={this.state.position}
+            onChange={this.onChangeHandler}
+            name="position"
+            placeholder="Position"
+          />
         )}
         {!this.state.isEditing ? (
           <p>{this.props.listing.location}</p>
         ) : (
-          <input value={this.state.location} onChange={this.onChangeHandler} name="location" placeholder="Location" />
+          <input
+            value={this.props.listing.location}
+            onChange={this.onChangeHandler}
+            name="location"
+            placeholder="Location"
+          />
         )}
-        {/* {!this.state.isEditing &&
-          this.props.listing.description.map((desc, idx) => (
-            <DescriptionList isEditing={this.state.isEditing} desc={desc} id={idx} key={idx} />
-          ))} */}
-        {/* {this.state.isEditing &&
-          this.state.description.map((desc, idx) => (
-            <DescriptionList isEditing={this.state.isEditing} desc={desc} id={idx} key={idx} />
-          ))} */}
+        <DescriptionList
+          stateDescription={this.state.description}
+          description={this.props.listing.description}
+          onChange={this.editDescription}
+        />
         <button onClick={() => this.setState({ isEditing: true })}>Edit</button>
       </StyledListingBody>
     );
