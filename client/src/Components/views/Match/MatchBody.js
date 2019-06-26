@@ -6,6 +6,7 @@ import { withRouter } from "react-router";
 import { firestoreConnect, firebaseConnect } from "react-redux-firebase";
 import MatchHeader from "./MatchHeader";
 import MatchCard from "./MatchCard";
+import ComponentLoader from "../../~reusables/components/ComponentLoader";
 
 const MatchBody = props => {
   let fetchedCompanies, fetchedJobListings, fetchedUsers;
@@ -117,6 +118,7 @@ const MatchBody = props => {
               />
             );
           })}
+          {!props.user && !props.company ? <ComponentLoader /> : null}
 
         {/* <MatchCard
         matchesId="123"

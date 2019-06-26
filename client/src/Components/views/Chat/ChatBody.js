@@ -19,6 +19,7 @@ import {
 } from "../../~reusables/variables/spacing";
 import { button_text, body_hero } from "../../~reusables/variables/font-sizes";
 import { source_sans_pro } from "../../~reusables/variables/font-family";
+import ComponentLoader from "../../~reusables/components/ComponentLoader";
 
 const ChatBody = props => {
   const [textMessage, setTextMessage] = useState("");
@@ -67,6 +68,7 @@ const ChatBody = props => {
                 />
               );
             })}
+            {!props.message ? <ComponentLoader /> : null}
         </div>
         <div
           className="message-input"
