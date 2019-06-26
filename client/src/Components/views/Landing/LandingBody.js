@@ -8,7 +8,6 @@ import {
   heading_1,
   body_hero,
   heading_2,
-  body_1
 } from "../../~reusables/variables/font-sizes";
 import { tablet_max_width } from "../../~reusables/variables/media-queries";
 import {

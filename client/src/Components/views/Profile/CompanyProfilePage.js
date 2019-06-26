@@ -19,7 +19,6 @@ import {
   medium_space_1,
   medium_space_3,
   small_space,
-  medium_space_2
 } from "../../~reusables/variables/spacing";
 
 class CompanyProfilePage extends Component {

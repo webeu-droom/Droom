@@ -10,7 +10,6 @@ import { slate_grey, white, black } from "../../~reusables/variables/colors";
 import { source_sans_pro } from "../../~reusables/variables/font-family";
 import { heading_4, body_1 } from "../../~reusables/variables/font-sizes";
 import { useSpring, animated } from "react-spring";
-import { tablet_max_width } from "../../~reusables/variables/media-queries";
 
 const MatchCard = ({ image, message, name, title, location, chatId }) => {
   const [hovered, setHovered] = useState(false);
