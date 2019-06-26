@@ -1,11 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import {
-  medium_space_1,
-  small_space,
-  extra_small_space
-} from "../../~reusables/variables/spacing";
+import { medium_space_1, small_space, extra_small_space } from "../../~reusables/variables/spacing";
 import { slate_grey, white, black } from "../../~reusables/variables/colors";
 import { source_sans_pro } from "../../~reusables/variables/font-family";
 import { heading_4, body_1 } from "../../~reusables/variables/font-sizes";
@@ -16,18 +12,12 @@ const MatchCard = ({ image, message, name, title, location, chatId }) => {
   const hoverEffect = useSpring({
     to: {
       transform: `scale(${hovered ? 1.05 : 1})`,
-      boxShadow: hovered
-        ? "-1px 8px 8px 0px rgba(0, 0, 0, 0.3)"
-        : "0px 0px 0px 0px rgba(0, 0, 0, 0.2)"
+      boxShadow: hovered ? "-1px 8px 8px 0px rgba(0, 0, 0, 0.3)" : "0px 0px 0px 0px rgba(0, 0, 0, 0.2)"
     }
   });
 
   return (
-    <StyledMatchCard
-      style={hoverEffect}
-      onMouseOver={() => setHovered(true)}
-      onMouseOut={() => setHovered(false)}
-    >
+    <StyledMatchCard style={hoverEffect} onMouseOver={() => setHovered(true)} onMouseOut={() => setHovered(false)}>
       <Link to={`/match/chat/${chatId}`}>
         <div className="img">
           <img src={image} alt="" />

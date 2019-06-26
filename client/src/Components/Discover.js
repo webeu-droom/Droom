@@ -6,6 +6,10 @@ import DiscoverCard from "./DiscoverCard";
 import LayoutSidebar from "./~reusables/components/Sidebar";
 import { sidebarIcons, sidebarTexts } from "./data/sidebar";
 import { ButtonPrimary, ButtonTertiary } from "./~reusables/atoms/Buttons";
+import { compose, bindActionCreators } from "redux";
+import { connect } from "react-redux";
+import { firestoreConnect, firebaseConnect } from "react-redux-firebase";
+import uuid from "uuid";
 
 const DiscoverWrapper = styled.div`
   width: 100%;
@@ -46,8 +50,7 @@ export const Discover = props => {
   const listType = props.match.params.type;
 
   useEffect(() => {
-    const stateRender =
-      listType === "jobs" ? listings[0].companies : listings[1].allcandidates;
+    const stateRender = listType === "jobs" ? listings[0].companies : listings[1].allcandidates;
     setList(stateRender);
   }, [listType]);
 
@@ -69,6 +72,36 @@ export const Discover = props => {
     }
   };
 
+  const likeCompany = () => {
+    let ref = this.props.firestore.collection("users").doc(this.props.user.id);
+    ref
+      .update({
+        likedCompanies: this.props.firestore.FieldValue.arrayUnion(this.props.jobListings.id)
+      })
+      .then(() => {
+        let ref = this.props.firestore.collection("jobListings").doc(this.props.jobListings.id);
+        ref.get().then(qs => {
+          qs.forEach(doc => {
+            let jobListings = doc.data();
+            if (jobListings.likedUsers.includes(this.props.user.id)) {
+              let id = uuid();
+              let ref = this.props.firestore.collection("matches").doc();
+              ref.set({
+                jobListingsId: jobListings.id,
+                userId: this.props.user.id,
+                jobListingsLocatioin: jobListings.position,
+                userName: this.props.user.name,
+                userLocation: this.props.company.location,
+                jobListingsLocation: jobListings.location
+              });
+            }
+          });
+        });
+      });
+  };
+
+  const likeUser = () => {};
+
   return (
     <div>
       <DiscoverWrapper>
@@ -81,13 +114,7 @@ export const Discover = props => {
           <Container>
             <ButtonTertiary onClick={leftClick}>REJECT</ButtonTertiary>
             {list.map((arr, index) => {
-              return (
-                <DiscoverCard
-                  data={arr}
-                  key={arr.id}
-                  display={selected === index ? "on" : "off"}
-                />
-              );
+              return <DiscoverCard data={arr} key={arr.id} display={selected === index ? "on" : "off"} />;
             })}
             <ButtonPrimary onClick={rightClick}>APPROVE</ButtonPrimary>
           </Container>
@@ -96,4 +123,40 @@ export const Discover = props => {
     </div>
   );
 };
-export default Discover;
+
+const mapStateToProps = state => {
+  return {
+    auth: state.firebase.auth,
+    profile: state.firebase.profile,
+    company: state.firestore.ordered.currentCompany ? state.firestore.ordered.currentCompany : "",
+    user: state.firestore.ordered.currentUser ? state.firestore.ordered.currentUser : ""
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators({
+    clearFirestore: () => dispatch({ type: "@@reduxFirestore/CLEAR_DATA" })
+  });
+};
+
+export default compose(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  ),
+  firebaseConnect(),
+  firestoreConnect(props => {
+    return [
+      {
+        collection: "users",
+        where: ["userEmail", "==", `${props.auth.email}`],
+        storeAs: "currentUser"
+      },
+      {
+        collection: "companies",
+        where: ["companyEmail", "==", `${props.auth.email}`],
+        storeAs: "currentCompany"
+      }
+    ];
+  })
+)(Discover);
