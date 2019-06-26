@@ -8,6 +8,7 @@ import MatchHeader from "./MatchHeader";
 import MatchCard from "./MatchCard";
 
 const MatchBody = (props) => {
+  console.log(props)
 
   let userOrCompId;
   if (props.company) {
@@ -28,8 +29,17 @@ const MatchBody = (props) => {
     }
   }
 
-  console.log(matches);
+  // If I'm a company, pull the corresponding user's data
+  let users, listings;
+  if(props.company && props.matches) {
+    matches.forEach(user => {
+      let foundUser = 
+    })
+  }
+  // If I'm a user, check the company's listing data to see if I'm a liked user
 
+  console.log(matches);
+  sds
 
   return (
     <StyledMatchBody>
@@ -94,6 +104,9 @@ const mapStateToProps = state => {
     company: state.firestore.ordered.currentCompany
       ? state.firestore.ordered.currentCompany[0]
       : "",
+      users: state.firestore.ordered.users,
+      companies: state.firestore.ordered.companies,
+      jobListings: state.firestore.ordered.jobListings,
     auth: state.firebase.auth,
     profile: state.firebase.profile
   };
@@ -120,6 +133,15 @@ export default withRouter(
         {
           collection: "matches",
           storeAs: "matches"
+        },
+        {
+          collection: "users",
+        },
+        {
+          collection: "companies",
+        },
+        {
+          collection: "jobListings",
         },
         {
           collection: "users",
