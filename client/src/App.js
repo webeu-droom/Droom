@@ -9,7 +9,7 @@ import Register from "./Components/views/Register/Register";
 import Home from "./Components/Home";
 import Profile from "./Components/views/Profile/Profile"
 
-import { Discover } from "./Components/Discover";
+import DiscoverPage from "./Components/views/Discover/DiscoverPage";
 
 import Match from "./Components/views/Match/Match";
 import Chat from "./Components/views/Chat/Chat";
@@ -23,7 +23,7 @@ class App extends React.Component {
         <Route
           exact
           path="/discover/:type?"
-          render={props => <Discover {...props} />}
+          render={props => <DiscoverPage {...props} />}
         />
 
         <Route exact path="/" render={props => <Landing {...props} />} />
