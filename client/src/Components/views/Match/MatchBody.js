@@ -37,16 +37,41 @@ const MatchBody = props => {
     }
   }
 
-  // If I'm a company, pull the corresponding user's data
   let users = [];
   let listings = [];
+
+  // If I'm a company, pull the corresponding user's data that matches one of my listings
   if (props.company && props.matches && fetchedUsers) {
+    let companyListings = fetchedJobListings.filter(listing => listing.companyId === userOrCompId);
+
     matches.forEach(match => {
       let foundUser = fetchedUsers.find(user => user.id === match.userId);
-      users = [...users, { user: foundUser, matchId: match.id }];
+      console.log(foundUser)
+
+      foundUser.likedJobListings.forEach(likedListing => {
+        let matchedUser = companyListings.find(companyListing => companyListing.id === likedListing)
+        if(matchedUser) {
+          users = [...users, { user: foundUser, matchId: match.id }];
+        }
+      })
+
+      
     });
   }
+
   // If I'm a user, check the company's listing data to see if I'm a liked user
+  if(props.user && props.matches && fetchedCompanies && fetchedJobListings) {
+    matches.forEach(match => {
+      let foundCompany = fetchedCompanies.find(company => company.id === match.companyId);
+      let foundListings = fetchedJobListings.filter(listing => listing.companyId === foundCompany.id);
+       foundListings.forEach(listing => {
+         let matchedListing = listing.likedUser.find(user => user === userOrCompId);
+         if(matchedListing) {
+           listings = [...listings, {listing: listing, matchId: match.id, associatedCompany: foundCompany}]
+         }
+       })
+    })
+  }
 
   return (
     <StyledMatchBody>
@@ -61,10 +86,21 @@ const MatchBody = props => {
                 matchesId={user.matchId}
                 name={user.user.name}
                 message={user.user.biography}
-                title={user.user.title}
+                title={user.user.position}
                 location={user.user.location}
               />
             );
+          })}
+          {props.user && listings.map(listing => {
+            return (
+              <MatchCard 
+                matchesId={listing.matchId}
+                name={listing.associatedCompany.name}
+                message={listing.associatedCompany.companyDescription}
+                title={listing.listing.position}
+                location={listing.listing.location}
+              />
+            )
           })}
         {/* <MatchCard
         matchesId="123"
