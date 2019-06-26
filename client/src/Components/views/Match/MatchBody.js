@@ -46,7 +46,6 @@ const MatchBody = props => {
 
     matches.forEach(match => {
       let foundUser = fetchedUsers.find(user => user.id === match.userId);
-      console.log(foundUser)
 
       foundUser.likedJobListings.forEach(likedListing => {
         let matchedUser = companyListings.find(companyListing => companyListing.id === likedListing)
@@ -54,8 +53,6 @@ const MatchBody = props => {
           users = [...users, { user: foundUser, matchId: match.id }];
         }
       })
-
-      
     });
   }
 
