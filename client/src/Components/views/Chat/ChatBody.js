@@ -1,5 +1,14 @@
 import React from "react";
 import styled from "styled-components";
+import { compose, bindActionCreators } from "redux";
+import { connect } from "react-redux";
+import { withRouter } from "react-router";
+import {
+  firestoreConnect,
+  firebaseConnect,
+  isEmpty,
+  isLoaded
+} from "react-redux-firebase";
 import ChatHeader from "./ChatHeader";
 import ChatMessage from "./ChatMessage";
 import {
@@ -19,7 +28,19 @@ import {
 } from "../../~reusables/variables/font-sizes";
 import { source_sans_pro } from "../../~reusables/variables/font-family";
 
-const ChatBody = () => {
+const ChatBody = (props) => {
+  // props passed from firestore and route
+  const chatId = props.match.params.id;
+  let messages;
+  if(props.messages){
+    messages = Object.values(props.messages);
+    messages.sort((x, y) => {
+      return x.createdAt.seconds - y.createdAt.seconds;
+    })
+  }
+  const activeUserOrComp = props.profile.name;
+  console.log(chatId, messages, activeUserOrComp);
+
   return (
     <StyledListingBody>
       <ChatHeader />
@@ -155,4 +176,40 @@ const StyledListingBody = styled.div`
   }
 `;
 
-export default ChatBody;
+const mapStateToProps = state => {
+  console.log(state)
+  return {
+    messages: state.firestore.ordered.messages,
+    auth: state.firebase.auth,
+    profile: state.firebase.profile,
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators(
+    {
+      clearFirestore: () => dispatch({ type: "@@reduxFirestore/CLEAR_DATA" })
+    },
+    dispatch
+  );
+};
+
+export default withRouter(
+  compose(
+    connect(
+      mapStateToProps,
+      mapDispatchToProps
+    ),
+    firebaseConnect(),
+    firestoreConnect(props => {
+      console.log(props.match.params.id)
+      return [
+        {
+          collection: "messages",
+          where: ["matchId", "==", `${props.match.params.id}`],
+          storeAs: 'messages'
+        },
+      ];
+    })
+  )(ChatBody)
+);
