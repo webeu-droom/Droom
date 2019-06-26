@@ -46,6 +46,26 @@ const ChatBody = () => {
             image="https://randomuser.me/api/portraits/men/86.jpg"
             message="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
           />
+          <ChatMessage
+            isUser={true}
+            image="https://randomuser.me/api/portraits/men/86.jpg"
+            message="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+          />
+          <ChatMessage
+            isUser={true}
+            image="https://randomuser.me/api/portraits/men/86.jpg"
+            message="Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+          />
+          <ChatMessage
+            isUser={false}
+            image="https://randomuser.me/api/portraits/men/86.jpg"
+            message="Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+          />
+          <ChatMessage
+            isUser={false}
+            image="https://randomuser.me/api/portraits/men/86.jpg"
+            message="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+          />
         </div>
         <div className="message-input">
           <input placeholder="Type your message here..." />
@@ -64,33 +84,35 @@ const StyledListingBody = styled.div`
   width: 100%;
 
   .chat-window {
-    height: 500px;
+    height: 75vh;
     border: 1px solid ${slate_grey};
     border-radius: 8px;
     margin: ${medium_space_1};
   }
 
   .messages {
-    height: 440px;
+    height: 80%;
     padding: ${small_space};
+    overflow: scroll;
   }
 
   .message-input {
-    height: 60px;
-    margin: 0 ${small_space};
+    height: 12%;
+    margin: 0 ${small_space} 0 ${small_space};
     border-top: 1px solid ${slate_grey};
-
     display: flex;
     align-items: center;
 
     input {
+      outline: none;
       font-size: ${button_text};
       font-family: ${source_sans_pro};
       height: 40px;
       width: 100%;
       font-size: 16px;
-      color: ${slate_grey};
+      color: ${black};
       border: none;
+      background: transparent;
     }
 
     > div {
@@ -109,6 +131,27 @@ const StyledListingBody = styled.div`
         vertical-align: -15%;
         text-align: center;
       }
+    }
+  }
+
+  @media only screen and (max-width: 500px) {
+    .chat-window {
+      border: none;
+      margin: ${extra_small_space};
+    }
+
+    .messages {
+      height: 95%;
+      padding: ${extra_small_space};
+    }
+
+    .message-input {
+      background-color: ${white};
+      bottom: 0;
+      position: fixed;
+      width: 95%;
+      margin: 0;
+      z-index: 10;
     }
   }
 `;
