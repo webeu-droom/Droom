@@ -24,7 +24,7 @@ const ChatBody = props => {
   console.log(props);
   const [textMessage, setTextMessage] = useState("");
   // props passed from firestore and route
-  const chatId = props.match.params.id;
+  const matchId = props.match.params.id;
   let messages;
 
   if (props.messages) {
@@ -34,17 +34,19 @@ const ChatBody = props => {
     });
   }
 
-  const activeUserOrComp = props.profile.name;
+  const userOrCompId = props.company ? props.company.id : props.user.id;
+  console.log(userOrCompId)
 
   const sendMessage = () => {
+    if(textMessage){
     const ref = props.firestore.collection("messages");
     ref.add({
       createdAt: + new Date(),
-      createdById: activeUserOrComp,
-      matchId: chatId,
+      createdById: userOrCompId,
+      matchId: matchId,
       messageBody: textMessage
     });
-    console.log('executed')
+  }
   }
 
   return (
@@ -57,7 +59,7 @@ const ChatBody = props => {
               return (
                 <ChatMessage
                   key={idx}
-                  isUser={message.createdById === activeUserOrComp}
+                  isUser={message.createdById === userOrCompId}
                   message={message.messageBody}
                 />
               );
@@ -159,6 +161,12 @@ const StyledListingBody = styled.div`
 const mapStateToProps = state => {
   return {
     messages: state.firestore.ordered.messages,
+    user: state.firestore.ordered.currentUser
+      ? state.firestore.ordered.currentUser[0]
+      : "",
+    company: state.firestore.ordered.currentCompany
+      ? state.firestore.ordered.currentCompany[0]
+      : "",
     auth: state.firebase.auth,
     profile: state.firebase.profile
   };
@@ -186,6 +194,16 @@ export default withRouter(
           collection: "messages",
           where: ["matchId", "==", `${props.match.params.id}`],
           storeAs: "messages"
+        },
+        {
+          collection: "users",
+          where: ["userEmail", "==", `${props.auth.email}`],
+          storeAs: "currentUser"
+        },
+        {
+          collection: "companies",
+          where: ["companyEmail", "==", `${props.auth.email}`],
+          storeAs: "currentCompany"
         }
       ];
     })
