@@ -44,7 +44,7 @@ const ChatBody = props => {
     if (textMessage) {
       const ref = props.firestore.collection("messages");
       ref.add({
-        createdAt: +new Date(),
+        createdAt: new Date(),
         createdById: userOrCompId,
         matchId: matchId,
         messageBody: textMessage
