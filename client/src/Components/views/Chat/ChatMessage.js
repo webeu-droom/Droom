@@ -8,7 +8,8 @@ import {
   white,
   blue,
   faded_blue,
-  black
+  black,
+  slate_grey
 } from "../../~reusables/variables/colors";
 import { body_1 } from "../../~reusables/variables/font-sizes";
 import { source_sans_pro } from "../../~reusables/variables/font-family";
@@ -60,6 +61,7 @@ const YourMessage = styled.div`
     width: 48px;
     height: 48px;
     margin-left: ${extra_small_space};
+    background-color: ${slate_grey};
 
     img {
       border-radius: inherit;
@@ -97,6 +99,7 @@ const TheirMessage = styled.div`
     }
 
     .their-img {
+      background-color: ${slate_grey};
     border-radius: 50%;
     border: 3px solid ${white};
     width: 48px;

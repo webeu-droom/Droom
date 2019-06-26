@@ -22,70 +22,36 @@ import {
   small_space,
   extra_small_space
 } from "../../~reusables/variables/spacing";
-import {
-  button_text,
-  body_hero
-} from "../../~reusables/variables/font-sizes";
+import { button_text, body_hero } from "../../~reusables/variables/font-sizes";
 import { source_sans_pro } from "../../~reusables/variables/font-family";
 
-const ChatBody = (props) => {
+const ChatBody = props => {
   // props passed from firestore and route
   const chatId = props.match.params.id;
   let messages;
-  if(props.messages){
+  if (props.messages) {
     messages = Object.values(props.messages);
     messages.sort((x, y) => {
       return x.createdAt.seconds - y.createdAt.seconds;
-    })
+    });
   }
   const activeUserOrComp = props.profile.name;
-  console.log(chatId, messages, activeUserOrComp);
 
   return (
     <StyledListingBody>
       <ChatHeader />
       <div className="chat-window">
         <div className="messages">
-          <ChatMessage
-            isUser={true}
-            image="https://randomuser.me/api/portraits/men/86.jpg"
-            message="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-          />
-          <ChatMessage
-            isUser={true}
-            image="https://randomuser.me/api/portraits/men/86.jpg"
-            message="Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-          />
-          <ChatMessage
-            isUser={false}
-            image="https://randomuser.me/api/portraits/men/86.jpg"
-            message="Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-          />
-          <ChatMessage
-            isUser={false}
-            image="https://randomuser.me/api/portraits/men/86.jpg"
-            message="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-          />
-          <ChatMessage
-            isUser={true}
-            image="https://randomuser.me/api/portraits/men/86.jpg"
-            message="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-          />
-          <ChatMessage
-            isUser={true}
-            image="https://randomuser.me/api/portraits/men/86.jpg"
-            message="Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-          />
-          <ChatMessage
-            isUser={false}
-            image="https://randomuser.me/api/portraits/men/86.jpg"
-            message="Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-          />
-          <ChatMessage
-            isUser={false}
-            image="https://randomuser.me/api/portraits/men/86.jpg"
-            message="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-          />
+          {props.messages &&
+            messages.map((message, idx) => {
+              return (
+                <ChatMessage
+                  key={idx}
+                  isUser={message.createdById === activeUserOrComp}
+                  message={message.messageBody}
+                />
+              );
+            })}
         </div>
         <div className="message-input">
           <input placeholder="Type your message here..." />
@@ -177,11 +143,10 @@ const StyledListingBody = styled.div`
 `;
 
 const mapStateToProps = state => {
-  console.log(state)
   return {
     messages: state.firestore.ordered.messages,
     auth: state.firebase.auth,
-    profile: state.firebase.profile,
+    profile: state.firebase.profile
   };
 };
 
@@ -202,13 +167,12 @@ export default withRouter(
     ),
     firebaseConnect(),
     firestoreConnect(props => {
-      console.log(props.match.params.id)
       return [
         {
           collection: "messages",
           where: ["matchId", "==", `${props.match.params.id}`],
-          storeAs: 'messages'
-        },
+          storeAs: "messages"
+        }
       ];
     })
   )(ChatBody)
