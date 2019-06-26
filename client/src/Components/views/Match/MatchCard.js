@@ -11,7 +11,7 @@ import { source_sans_pro } from "../../~reusables/variables/font-family";
 import { heading_4, body_1 } from "../../~reusables/variables/font-sizes";
 import { useSpring, animated } from "react-spring";
 
-const MatchCard = ({ image, message, name, title, location, chatId }) => {
+const MatchCard = ({ image, message, name, title, location, matchesId }) => {
   const [hovered, setHovered] = useState(false);
   const hoverEffect = useSpring({
     to: {
@@ -28,7 +28,7 @@ const MatchCard = ({ image, message, name, title, location, chatId }) => {
       onMouseOver={() => setHovered(true)}
       onMouseOut={() => setHovered(false)}
     >
-      <Link to={`/match/chat/${chatId}`}>
+      <Link to={`/match/chat/${matchesId}`}>
         <div className="img">
           <img src={image} alt="" />
         </div>

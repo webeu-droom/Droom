@@ -7,7 +7,7 @@ import { tablet_max_width } from "../../~reusables/variables/media-queries";
 const ChatHeader = () => {
   return (
     <StyleCH>
-      <h1>Add Listing</h1>
+      <h1>Chat</h1>
     </StyleCH>
   );
 };
