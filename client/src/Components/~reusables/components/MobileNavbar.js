@@ -27,9 +27,10 @@ const StyledMN = styled.nav`
     display: flex;
     justify-content: space-evenly;
     width: 100%;
-    padding-bottom: ${small_space}
+    padding-bottom: ${small_space};
     box-shadow: 0px 1px 5px rgba(151, 162, 185, 0.1), 0px 3px 4px rgba(151, 162, 185, 0.06), 0px 2px 4px rgba(151, 162, 185, 0.07);
 
+    z-index: 10;
     top: 0;
     position: sticky;
   }
