@@ -90,7 +90,6 @@ const MatchBody = props => {
     <StyledMatchBody>
       <MatchHeader />
 
-      {/* If Employee, Render Employee Body Components */}
       <div className="match-cards">
         {props.company &&
           users.map((user, idx) => {
@@ -118,6 +117,7 @@ const MatchBody = props => {
               />
             );
           })}
+
         {/* <MatchCard
         matchesId="123"
         image="https://randomuser.me/api/portraits/men/86.jpg"
@@ -125,33 +125,9 @@ const MatchBody = props => {
         message="We're a group of highly-motivated individuals making the tech industry more accessible by providing educational opportunities to underserved individuals."
         title="Full Stack Developer"
         location="Dublin, Ireland"
-      />
-      <MatchCard
-        matchesId="2"
-        image="https://randomuser.me/api/portraits/men/86.jpg"
-        name="Felix Hawke"
-        message="Accessible by providing educational opportunities to underserved individuals."
-        title="Full Stack Developer"
-        location="Dublin, Ireland"
-      />
-      <MatchCard
-        matchesId="3"
-        image="https://randomuser.me/api/portraits/men/86.jpg"
-        name="Felix Hawke"
-        message="We're a group of highly-motivated individuals making the tech industry more accessible by providing educational opportunities to underserved individuals."
-        title="Full Stack Developer"
-        location="Dublin, Ireland"
-      />
-      <MatchCard
-        matchesId="4"
-        image="https://randomuser.me/api/portraits/men/86.jpg"
-        name="Felix Hawke"
-        message="Individuals making the tech industry more accessible by providing educational opportunities to underserved individuals."
-        title="Full Stack Developer"
-        location="Dublin, Ireland"
       /> */}
+
       </div>
-      {/* If Company, Render Employee Body Components */}
     </StyledMatchBody>
   );
 };
