@@ -68,7 +68,7 @@ const ChatBody = props => {
                 />
               );
             })}
-            {!props.message ? <ComponentLoader /> : null}
+            {!props.messages ? <ComponentLoader /> : null}
         </div>
         <div
           className="message-input"
