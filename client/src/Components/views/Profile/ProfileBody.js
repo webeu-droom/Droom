@@ -27,7 +27,7 @@ class ProfileBody extends React.Component {
         biography: this.props.user.biography,
         education: this.props.user.education
       });
-    } else {
+    } else if (this.props.company) {
       this.setState({
         name: this.props.company.name,
         description: this.props.company.companyDescription,
@@ -39,6 +39,7 @@ class ProfileBody extends React.Component {
     console.log("hello");
     this.props.firebase.logout().then(() => {
       this.props.clearFirestore();
+      this.props.history.push("/login");
     });
   };
 
@@ -52,9 +53,17 @@ class ProfileBody extends React.Component {
       <StyledMatchBody>
         <ProfileHeader handleLogout={this.handleLogout} />
         <div>
-          {this.props.user && <UserProfilePage user={this.props.user} handleLogout={this.handleLogout} />}
+          {this.props.user && (
+            <UserProfilePage
+              user={this.props.user}
+              handleLogout={this.handleLogout}
+            />
+          )}
           {this.props.company && (
-            <CompanyProfilePage company={this.props.company} handleLogout={this.handleLogout} />
+            <CompanyProfilePage
+              company={this.props.company}
+              handleLogout={this.handleLogout}
+            />
           )}
           {!this.props.user && !this.props.company ? <ComponentLoader /> : null}
         </div>
