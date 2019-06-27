@@ -59,7 +59,7 @@ const MatchBody = props => {
   if (props.company && props.matches && fetchedUsers && companyJobListings) {
     matches.forEach(match => {
       let foundUser = fetchedUsers.find(user => user.id === match.userId);
-      foundUser.likedJoblistings.forEach(likedListing => {
+      foundUser.likedJobListings.forEach(likedListing => {
         let matchedUser = companyJobListings.find(
           companyListing => companyListing.id === likedListing
         );
@@ -128,7 +128,10 @@ const MatchBody = props => {
               />
             );
           })}
-        {(!props.user && !props.company) || (!fetchedJobListings || !fetchedUsers) ? <ComponentLoader /> : null}
+        {(!props.user && !props.company) ||
+        (!fetchedJobListings || !fetchedUsers) ? (
+          <ComponentLoader />
+        ) : null}
         {(props.user && listings.length < 1 && fetchedJobListings) ||
         (props.company && users.length < 1 && fetchedUsers) ? (
           <div className="filler-message">
