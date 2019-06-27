@@ -5,36 +5,30 @@ import { compose, bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
 
-import {
-  firestoreConnect,
-  firebaseConnect,
-  isEmpty,
-  isLoaded
-} from "react-redux-firebase";
+import { firestoreConnect, firebaseConnect } from "react-redux-firebase";
 
-
-import DiscoverContent from './DiscoverContent';
+import DiscoverContent from "./DiscoverContent";
 import LayoutSidebar from "../../~reusables/components/Sidebar";
 import { sidebarIcons, sidebarTexts } from "../../data/sidebar";
 import MobileNavbar from "../../~reusables/components/MobileNavbar";
 import { tablet_max_width } from "../../~reusables/variables/media-queries";
 
-export const DiscoverPage = (props) => {
+export const DiscoverPage = props => {
   const { company, user, history } = props;
 
-  useEffect(()=>{
-    if(user !== undefined) {
-      history.push('/discover/jobs')
-    } else if(company !== undefined) {
-      history.push('/discover/candidates')
+  useEffect(() => {
+    if (user !== undefined) {
+      history.push("/discover/jobs");
+    } else if (company !== undefined) {
+      history.push("/discover/candidates");
     }
-  },[company, user, history])
-  
+  }, [company, user, history]);
+
   return (
     <StyledMatch>
       <LayoutSidebar icons={sidebarIcons} texts={sidebarTexts} />
       <MobileNavbar icons={sidebarIcons} texts={sidebarTexts} />
-      <DiscoverContent props={props}/>
+      <DiscoverContent props={props} />
     </StyledMatch>
   );
 };
@@ -52,15 +46,9 @@ const mapStateToProps = state => {
   return {
     auth: state.firebase.auth,
     profile: state.firebase.profile,
-    user: state.firestore.ordered.currentUser
-      ? state.firestore.ordered.currentUser[0]
-      : "",
-    company: state.firestore.ordered.currentCompany
-      ? state.firestore.ordered.currentCompany[0]
-      : "",
-    matches: state.firestore.ordered.matches
-      ? state.firestore.ordered.matches
-      : []
+    user: state.firestore.ordered.currentUser ? state.firestore.ordered.currentUser[0] : "",
+    company: state.firestore.ordered.currentCompany ? state.firestore.ordered.currentCompany[0] : "",
+    matches: state.firestore.ordered.matches ? state.firestore.ordered.matches : []
   };
 };
 
