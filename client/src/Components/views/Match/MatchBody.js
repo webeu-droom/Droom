@@ -56,10 +56,10 @@ const MatchBody = props => {
   let listings = [];
 
   // If I'm a company, pull the corresponding user's data that matches one of my listings
-  if (props.company && props.matches && fetchedUsers) {
+  if (props.company && props.matches && fetchedUsers && companyJobListings) {
     matches.forEach(match => {
       let foundUser = fetchedUsers.find(user => user.id === match.userId);
-      foundUser.likedJobListings.forEach(likedListing => {
+      foundUser.likedJoblistings.forEach(likedListing => {
         let matchedUser = companyJobListings.find(
           companyListing => companyListing.id === likedListing
         );
@@ -128,9 +128,9 @@ const MatchBody = props => {
               />
             );
           })}
-        {!props.user && !props.company ? <ComponentLoader /> : null}
-        {(props.user && listings.length < 1) ||
-        (props.company && users.length < 1) ? (
+        {(!props.user && !props.company) || (!fetchedJobListings || !fetchedUsers) ? <ComponentLoader /> : null}
+        {(props.user && listings.length < 1 && fetchedJobListings) ||
+        (props.company && users.length < 1 && fetchedUsers) ? (
           <div className="filler-message">
             <h3>Nothing to see here - yet</h3>
             <p>

@@ -19,15 +19,3 @@ const firebaseConfig = {
 };
 export default firebaseConfig;
 
-// const firebaseConfig = {
-//   apiKey: "AIzaSyD5GeVZJ00Ggrc8tRPFibJpCAGvLXO_0g4",
-//   authDomain: "droom-test.firebaseapp.com",
-//   databaseURL: "https://droom-test.firebaseio.com",
-//   projectId: "droom-test",
-//   storageBucket: "droom-test.appspot.com",
-//   messagingSenderId: "698995312782",
-//   appId: "1:698995312782:web:801defbf980e8047"
-//  };
-
-//  export default firebaseConfig;
-

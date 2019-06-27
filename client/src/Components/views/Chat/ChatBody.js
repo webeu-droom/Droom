@@ -70,7 +70,7 @@ const ChatBody = props => {
             })}
           {!props.messages ? <ComponentLoader /> : null}
           {(props.user && messages.length < 1) ||
-          (props.company && messages.length < 1) ? (
+          (props.messages && messages.length < 1) ? (
             <div className="filler-message">
               <h3>Nothing to see here - yet</h3>
               <p>Why not send the first message?</p>
