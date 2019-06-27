@@ -24,9 +24,7 @@ class ListingBody extends React.Component {
     requirements: []
   };
   onChangeHandler = e => {
-    if (!this.state.location) {
-      this.setState({ [e.target.name]: e.target.value });
-    }
+    this.setState({ [e.target.name]: e.target.value });
   };
   componentDidMount() {
     if (isLoaded(this.props.listing) && !isEmpty(this.props.listing)) {
@@ -35,19 +33,28 @@ class ListingBody extends React.Component {
   }
   updateListing = e => {
     // e.preventDefault();
-    let item = {
-      requirements: this.state.requirements,
-      location: this.state.location,
-      position: this.state.position,
-      description: this.state.description
-    };
+    // let item = {
+    //   requirements: this.state.requirements,
+    //   location: this.state.location,
+    //   position: this.state.position,
+    //   description: this.state.description
+    // };
     let ref = this.props.firestore.collection("jobListings").doc(this.props.listing.id);
     ref
       .update({
-        item
+        requirements: this.state.requirements,
+        location: this.state.location,
+        position: this.state.position,
+        description: this.state.description
       })
       .then(() => {
         this.setState({ isEditing: false });
+      })
+      // .then(() => {
+      //   this.props.clearFirestore();
+      // })
+      .catch(err => {
+        console.log("This is the error:", err);
       });
     // this.props.history.push("/profile");
   };
@@ -74,6 +81,7 @@ class ListingBody extends React.Component {
     } else if (isLoaded(this.props.listing) && isEmpty(this.props.listing)) {
       return <h1>404 Not found</h1>;
     }
+    console.log(this.props.listing);
     return (
       <StyledListingBody>
         <ListingHeader position={this.state.position} />
@@ -91,21 +99,16 @@ class ListingBody extends React.Component {
                 placeholder="Position"
               />
             )}
-            {this.props.listing.description
-              ? this.props.listing.description.map((desc, idx) => (
-                  <>
-                    <p className="label">Description {idx + 1}</p>
-                    <DescriptionList
-                      desc={desc}
-                      id={idx}
-                      key={idx}
-                      stateDesc={this.state.description}
-                      isEditing={this.state.isEditing}
-                      editDescription={this.editArray}
-                    />
-                  </>
-                ))
-              : null}
+            {this.props.listing.description.map((desc, idx) => (
+              <DescriptionList
+                key={idx}
+                desc={desc}
+                id={idx}
+                stateDesc={this.state.description}
+                isEditing={this.state.isEditing}
+                editDescription={this.editArray}
+              />
+            ))}
           </section>
           <section className="right">
             <p className="label">Location</p>
@@ -119,19 +122,15 @@ class ListingBody extends React.Component {
                 placeholder="Location"
               />
             )}
-
             {this.props.listing.requirements.map((req, idx) => (
-              <>
-                <p className="label">Requirement {idx + 1}</p>
-                <RequitementList
-                  req={req}
-                  id={idx}
-                  key={idx}
-                  stateReq={this.state.requirements}
-                  isEditing={this.state.isEditing}
-                  editRequirements={this.editArray}
-                />
-              </>
+              <RequitementList
+                key={idx}
+                req={req}
+                id={idx}
+                stateReq={this.state.requirements}
+                isEditing={this.state.isEditing}
+                editRequirements={this.editArray}
+              />
             ))}
             <ButtonSecondary className="edit" onClick={this.editProfile}>
               Edit

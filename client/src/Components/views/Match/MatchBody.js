@@ -34,9 +34,7 @@ const MatchBody = props => {
   if (props.matches) {
     matches = Object.values(props.matches);
     if (props.company && props.jobListings) {
-      companyJobListings = fetchedJobListings.filter(
-        listing => listing.companyId === userOrCompId
-      );
+      companyJobListings = fetchedJobListings.filter(listing => listing.companyId === userOrCompId);
 
       matches = props.matches.filter(match => {
         let foundListing = companyJobListings.find(listing => {
@@ -46,7 +44,6 @@ const MatchBody = props => {
         if (foundListing) {
           return match.jobListingId === foundListing.id;
         }
-        
       });
     } else if (props.user) {
       matches = props.matches.filter(match => match.userId === userOrCompId);
@@ -61,9 +58,7 @@ const MatchBody = props => {
     matches.forEach(match => {
       let foundUser = fetchedUsers.find(user => user.id === match.userId);
       foundUser.likedJobListings.forEach(likedListing => {
-        let matchedUser = companyJobListings.find(
-          companyListing => companyListing.id === likedListing
-        );
+        let matchedUser = companyJobListings.find(companyListing => companyListing.id === likedListing);
         if (matchedUser) {
           users = [...users, { user: foundUser, matchId: match.id }];
         }
@@ -75,13 +70,9 @@ const MatchBody = props => {
   if (props.user && props.matches && fetchedCompanies && fetchedJobListings) {
     matches.forEach(match => {
       fetchedJobListings.forEach(listing => {
-        let matchedListing = listing.likedUser.find(
-          user => user === userOrCompId
-        );
+        let matchedListing = listing.likedUser.find(user => user === userOrCompId);
         if (matchedListing) {
-          let foundCompany = fetchedCompanies.find(
-            company => company.id === listing.companyId
-          );
+          let foundCompany = fetchedCompanies.find(company => company.id === listing.companyId);
           listings = [
             ...listings,
             {
@@ -97,10 +88,7 @@ const MatchBody = props => {
 
   return (
     <StyledMatchBody>
-      <MatchHeader
-        company={props.company}
-        companyListings={companyJobListings}
-      />
+      <MatchHeader company={props.company} companyListings={companyJobListings} />
 
       <div className="match-cards">
         {props.company &&
@@ -129,18 +117,12 @@ const MatchBody = props => {
               />
             );
           })}
-        {(!props.user && !props.company) ||
-        (!fetchedJobListings || !fetchedUsers) ? (
-          <ComponentLoader />
-        ) : null}
+        {(!props.user && !props.company) || (!fetchedJobListings || !fetchedUsers) ? <ComponentLoader /> : null}
         {(props.user && listings.length < 1 && fetchedJobListings) ||
         (props.company && users.length < 1 && fetchedUsers) ? (
           <div className="filler-message">
             <h3>Nothing to see here - yet</h3>
-            <p>
-              From interviews to job offers and a whole lot more, this is where
-              the magic happens.
-            </p>
+            <p>From interviews to job offers and a whole lot more, this is where the magic happens.</p>
           </div>
         ) : null}
         {/* <MatchCard
@@ -188,12 +170,8 @@ const StyledMatchBody = styled.div`
 const mapStateToProps = state => {
   return {
     matches: state.firestore.ordered.matches,
-    user: state.firestore.ordered.currentUser
-      ? state.firestore.ordered.currentUser[0]
-      : "",
-    company: state.firestore.ordered.currentCompany
-      ? state.firestore.ordered.currentCompany[0]
-      : "",
+    user: state.firestore.ordered.currentUser ? state.firestore.ordered.currentUser[0] : "",
+    company: state.firestore.ordered.currentCompany ? state.firestore.ordered.currentCompany[0] : "",
     users: state.firestore.ordered.users,
     companies: state.firestore.ordered.companies,
     jobListings: state.firestore.ordered.jobListings,
