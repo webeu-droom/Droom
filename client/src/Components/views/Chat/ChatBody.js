@@ -41,7 +41,8 @@ const ChatBody = props => {
     userOrCompId = props.user.id;
   }
 
-  const sendMessage = () => {
+  const sendMessage = event => {
+    event.preventDefault();
     if (textMessage) {
       const ref = props.firestore.collection("messages");
       ref.add({
@@ -50,6 +51,7 @@ const ChatBody = props => {
         matchId: matchId,
         messageBody: textMessage
       });
+      setTextMessage("");
     }
   };
 
@@ -77,16 +79,17 @@ const ChatBody = props => {
             </div>
           ) : null}
         </div>
-        <div
-          className="message-input"
-          value={textMessage}
-          onChange={e => setTextMessage(e.target.value)}
-        >
-          <input placeholder="Type your message here..." />
-          <div onClick={sendMessage}>
+        <form className="message-input" onSubmit={e => sendMessage(e)}>
+          <input
+            value={textMessage}
+            onChange={e => setTextMessage(e.target.value)}
+            required
+            placeholder="Type your message here..."
+          />
+          <button>
             <i className="material-icons">send</i>
-          </div>
-        </div>
+          </button>
+        </form>
       </div>
     </StyledListingBody>
   );
@@ -141,7 +144,8 @@ const StyledListingBody = styled.div`
       background: transparent;
     }
 
-    > div {
+    > button {
+      outline: none;
       margin-left: ${extra_small_space};
       box-shadow: 0px 1px 5px rgba(151, 162, 185, 0.2),
         0px 3px 4px rgba(151, 162, 185, 0.12),
