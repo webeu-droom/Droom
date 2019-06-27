@@ -1,5 +1,15 @@
 import React from "react";
 import styled from "styled-components";
+import { compose, bindActionCreators } from "redux";
+import { connect } from "react-redux";
+import { withRouter } from "react-router";
+
+import {
+  firestoreConnect,
+  firebaseConnect,
+  isEmpty,
+  isLoaded
+} from "react-redux-firebase";
 import ProfileImage from "./ProfileImage";
 import SideNavItem from "./SideNavItem";
 import { tablet_max_width } from "../variables/media-queries";
@@ -12,12 +22,17 @@ Replace hardcoded name and image with that of the user/company
 Icons and icon text are decided by the parent component i.e. Match/Discover etc
 */
 
-const SidebarContainer = ({ icons, texts }) => {
+const SidebarContainer = ({ icons, texts, sidebarUser, sidebarCompany }) => {
+  let name;
+  if(sidebarUser) {
+    name = sidebarUser.name
+  } else if(sidebarCompany) {
+    name = sidebarCompany.name
+  }
   return (
     <StyledSidebar>
       <ProfileImage
-        name="Felix Hawke"
-        image="https://randomuser.me/api/portraits/men/86.jpg"
+        name={name}
       />
       <div className="nav-items">
         <SideNavItem icon={icons.search} text={texts.search} path="/discover" />
@@ -63,4 +78,48 @@ const StyledSidebar = styled.aside`
   }
 `;
 
-export default SidebarContainer;
+const mapStateToProps = state => {
+  return {
+    auth: state.firebase.auth,
+    profile: state.firebase.profile,
+    sidebarUser: state.firestore.ordered.sidebarUser
+      ? state.firestore.ordered.sidebarUser[0]
+      : "",
+      sidebarCompany: state.firestore.ordered.sidebarCompany
+      ? state.firestore.ordered.sidebarCompany[0]
+      : "",
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators(
+    {
+      clearFirestore: () => dispatch({ type: "@@reduxFirestore/CLEAR_DATA" })
+    },
+    dispatch
+  );
+};
+
+export default withRouter(
+  compose(
+    connect(
+      mapStateToProps,
+      mapDispatchToProps
+    ),
+    firebaseConnect(),
+    firestoreConnect(props => {
+      return [
+        {
+          collection: "users",
+          where: ["userEmail", "==", `${props.auth.email}`],
+          storeAs: "sidebarUser"
+        },
+        {
+          collection: "companies",
+          where: ["companyEmail", "==", `${props.auth.email}`],
+          storeAs: "sidebarCompany"
+        }
+      ];
+    })
+  )(SidebarContainer)
+);
