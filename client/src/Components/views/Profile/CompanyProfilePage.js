@@ -108,10 +108,7 @@ class CompanyProfilePage extends Component {
           </ButtonPrimary>
         </section>
         {this.state.showPopup ? (
-          <Popup
-            text={this.state.error}
-            closePopup={this.togglePopup}
-          />
+          <Popup text={this.state.error} closePopup={this.togglePopup} />
         ) : null}
         <section className="right">
           <p className="label">Job Listings</p>

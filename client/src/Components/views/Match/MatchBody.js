@@ -110,15 +110,11 @@ const MatchBody = props => {
 
   return (
     <StyledMatchBody>
-<<<<<<< HEAD
-      <MatchHeader company={props.company} companyListings={companyJobListings} />
-=======
       <MatchHeader
         company={props.company}
         companyListings={companyJobListings}
         filterJobListings={filterJobListings}
       />
->>>>>>> 612b8c1669f1d778ca97ca2069f8b6c513027d85
 
       <div className="match-cards">
         {props.company && filteredUsers
