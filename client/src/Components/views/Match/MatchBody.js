@@ -71,7 +71,14 @@ const MatchBody = props => {
   if (props.user && props.matches && fetchedCompanies && fetchedJobListings) {
     matches.forEach(match => {
       fetchedJobListings.forEach(listing => {
-        let matchedListing = listing.likedUser.find(user => user === userOrCompId);
+        console.log(listing)
+        let matchedListing;
+        if(listing.likedUser){
+          matchedListing = listing.likedUser.find(user => user === userOrCompId);
+        }
+        if(listing.likedCandidates) {
+          matchedListing = listing.likedCandidates.find(user => user === userOrCompId);
+        }
         if (matchedListing) {
           let foundCompany = fetchedCompanies.find(company => company.id === listing.companyId);
           listings = [
