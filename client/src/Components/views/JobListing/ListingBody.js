@@ -4,6 +4,7 @@ import ListingHeader from "./ListingHeader";
 import { compose, bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { firestoreConnect, isEmpty, isLoaded } from "react-redux-firebase";
+import { withRouter } from "react-router-dom";
 import DescriptionList from "./DescriptionList";
 import RequitementList from "./RequitementList";
 import {
@@ -54,6 +55,7 @@ class ListingBody extends React.Component {
       .then(() => {
         this.setState({ isEditing: false });
       });
+    this.props.history.push("/profile");
   };
 
   editProfile = e => {
@@ -102,6 +104,7 @@ class ListingBody extends React.Component {
                 <DescriptionList
                   desc={desc}
                   id={idx}
+                  key={idx}
                   stateDesc={this.state.description}
                   isEditing={this.state.isEditing}
                   editDescription={this.editArray}
@@ -128,13 +131,16 @@ class ListingBody extends React.Component {
                 <RequitementList
                   req={req}
                   id={idx}
+                  key={idx}
                   stateReq={this.state.requirements}
                   isEditing={this.state.isEditing}
                   editRequirements={this.editArray}
                 />
               </>
             ))}
-            <ButtonSecondary className="edit" onClick={this.editProfile}>Edit</ButtonSecondary>
+            <ButtonSecondary className="edit" onClick={this.editProfile}>
+              Edit
+            </ButtonSecondary>
             <ButtonPrimary onClick={this.updateListing}>Save</ButtonPrimary>
           </section>
         </div>
@@ -230,18 +236,20 @@ const mapDispatchToProps = dispatch => {
   });
 };
 
-export default compose(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  ),
-  firestoreConnect(props => {
-    return [
-      {
-        collection: "jobListings",
-        doc: `${props.id}`,
-        storeAs: "currentListing"
-      }
-    ];
-  })
-)(ListingBody);
+export default withRouter(
+  compose(
+    connect(
+      mapStateToProps,
+      mapDispatchToProps
+    ),
+    firestoreConnect(props => {
+      return [
+        {
+          collection: "jobListings",
+          doc: `${props.id}`,
+          storeAs: "currentListing"
+        }
+      ];
+    })
+  )(ListingBody)
+);
