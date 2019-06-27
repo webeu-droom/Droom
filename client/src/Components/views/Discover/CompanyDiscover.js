@@ -1,15 +1,25 @@
 import React from "react";
 import { compose } from "redux";
-import { firestoreConnect } from "react-redux-firebase";
+import { firestoreConnect, isLoaded } from "react-redux-firebase";
 import { connect } from "react-redux";
-import DiscoverTop from "./CompanyDiscoverTop";
+import DiscoverTop from "./DiscoverTop";
+import CompanyDiscoverContent from "./CompanyDiscoverContent";
 
 class CompanyDiscover extends React.Component {
+  state = {
+    currentJob: 0
+  };
+
+  changeJoblisting = e => {
+    this.setState({ currentDiscover: e.target.value });
+  };
   render() {
     return (
       <div>
-        <CompanyDiscoverTop />
-        <p>CompanyDiscoverContent</p>
+        <DiscoverTop jobListings={this.props.jobListings} />
+        {isLoaded(this.props.jobListings) && (
+          <CompanyDiscoverContent jobListing={this.props.jobListings[this.state.currentJob]} />
+        )}
       </div>
     );
   }
@@ -17,7 +27,7 @@ class CompanyDiscover extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    jobListing: state.firestore.ordered.jobListings ? state.firestore.ordered.jobListings : []
+    jobListings: state.firestore.ordered.jobListings ? state.firestore.ordered.jobListings : []
   };
 };
 
