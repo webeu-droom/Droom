@@ -7,7 +7,7 @@ import { firebaseConnect, withFirestore } from "react-redux-firebase";
 import Login from "./Components/views/Login/Login";
 import Register from "./Components/views/Register/Register";
 import Home from "./Components/Home";
-import Profile from "./Components/views/Profile/Profile"
+import Profile from "./Components/views/Profile/Profile";
 
 import DiscoverPage from "./Components/views/Discover/DiscoverPage";
 
@@ -20,32 +20,16 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <Route
-          exact
-          path="/discover/:type?"
-          render={props => <DiscoverPage {...props} />}
-        />
+        <Route exact path="/discover/:type?" render={props => <DiscoverPage {...props} />} />
 
         <Route exact path="/" render={props => <Landing {...props} />} />
         <Route exact path="/login" render={props => <Login {...props} />} />
-        <Route
-          exact
-          path="/register"
-          render={props => <Register {...props} />}
-        />
+        <Route exact path="/register" render={props => <Register {...props} />} />
         <Route exact path="/home" render={props => <Home {...props} />} />
         <Route exact path="/profile" render={props => <Profile {...props} />} />
         <Route exact path="/match" render={props => <Match {...props} />} />
-        <Route
-          exact
-          path="/match/chat/:id"
-          render={props => <Chat {...props} />}
-        />
-        <Route
-          exact
-          path="/profile/listing/:id"
-          render={props => <Listing {...props} />}
-        />
+        <Route exact path="/match/chat/:id" render={props => <Chat {...props} />} />
+        <Route exact path="/profile/listing/:id" render={props => <Listing {...props} />} />
       </div>
     );
   }
