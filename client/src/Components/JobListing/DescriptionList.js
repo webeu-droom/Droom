@@ -6,7 +6,7 @@ export default function DescriptionList(props) {
       {!props.isEditing ? (
         <p>{props.desc}</p>
       ) : (
-        <input defaultValue={props.desc} value={props.stateDesc} onChange={props.editDescription} id={props.id} />
+        <input value={props.stateDesc[props.id]} onChange={props.editDescription} id={props.id} name="description" />
       )}
     </div>
   );

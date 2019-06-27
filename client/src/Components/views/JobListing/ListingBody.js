@@ -5,25 +5,53 @@ import { compose, bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { firestoreConnect, isEmpty, isLoaded } from "react-redux-firebase";
 import DescriptionList from "../../JobListing/DescriptionList";
+import RequitementList from "../../JobListing/RequitementList";
 
 class ListingBody extends React.Component {
   state = {
-    isEditing: false
+    isEditing: "",
+    position: "",
+    description: [],
+    location: "",
+    requirements: ""
   };
   onChangeHandler = e => {
     if (!this.state.location) {
       this.setState({ [e.target.name]: e.target.value });
     }
-
-    // this.setState({ [e.target.name]: item });
   };
   componentDidMount() {
     if (isLoaded(this.props.listing) && !isEmpty(this.props.listing)) {
       this.setState({ listing: this.props.listing });
     }
   }
-  editDescription = e => {
-    console.log(e.target);
+  updateListing = e => {
+    let item = {
+      requirements: this.state.requirements,
+      location: this.state.location,
+      position: this.state.position,
+      description: this.state.description
+    };
+    let ref = this.props.firestore.collection("jobListings").doc(this.props.listing.id);
+    ref
+      .update({
+        item
+      })
+      .then(() => {
+        this.setState({ isEditing: false });
+      });
+  };
+
+  editProfile = e => {
+    e.preventDefault();
+    let { location, description, requirements, position } = this.props.listing;
+    this.setState({ location, description, requirements, position, isEditing: true });
+  };
+  editArray = e => {
+    let newArray = this.state[e.target.name];
+    newArray[e.target.id] = e.target.value;
+    console.log(newArray);
+    this.setState({ [e.target.name]: newArray });
   };
   render() {
     if (!isLoaded(this.props.listing) || isEmpty(this.props.listing)) {
@@ -31,9 +59,6 @@ class ListingBody extends React.Component {
     } else if (isLoaded(this.props.listing) && isEmpty(this.props.listing)) {
       return <h1>404 Not found</h1>;
     }
-    let list = [];
-    for (let i = 0; i < this.props.listing.description.length; i++) {}
-    console.log(list);
     return (
       <StyledListingBody>
         <ListingHeader position={this.state.position} />
@@ -41,7 +66,7 @@ class ListingBody extends React.Component {
           <p>{this.props.listing.position}</p>
         ) : (
           <input
-            defaultValue={this.props.listing.position}
+            // defaultValue={this.props.listing.position}
             value={this.state.position}
             onChange={this.onChangeHandler}
             name="position"
@@ -62,12 +87,22 @@ class ListingBody extends React.Component {
           <DescriptionList
             desc={desc}
             id={idx}
-            stateDesc={this.state.description[idx].value}
+            stateDesc={this.state.description}
             isEditing={this.state.isEditing}
-            editDescription={this.editDescription}
+            editDescription={this.editArray}
           />
         ))}
-        <button onClick={() => this.setState({ isEditing: true })}>Edit</button>
+        {this.props.listing.requirements.map((req, idx) => (
+          <RequitementList
+            req={req}
+            id={idx}
+            stateReq={this.state.requirements}
+            isEditing={this.state.isEditing}
+            editRequirements={this.editArray}
+          />
+        ))}
+        <button onClick={this.editProfile}>Edit</button>
+        <button onClick={this.updateListing}>Save</button>
       </StyledListingBody>
     );
   }
