@@ -5,12 +5,7 @@ import { compose, bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
 
-import {
-  firestoreConnect,
-  firebaseConnect,
-  isEmpty,
-  isLoaded
-} from "react-redux-firebase";
+import { firestoreConnect, firebaseConnect } from "react-redux-firebase";
 
 import DiscoverContent from "./DiscoverContent";
 import LayoutSidebar from "../../~reusables/components/Sidebar";
@@ -51,22 +46,9 @@ const mapStateToProps = state => {
   return {
     auth: state.firebase.auth,
     profile: state.firebase.profile,
-    user: state.firestore.ordered.currentUser
-      ? state.firestore.ordered.currentUser[0]
-      : "",
-    company: state.firestore.ordered.currentCompany
-      ? state.firestore.ordered.currentCompany[0]
-      : "",
-    matches: state.firestore.ordered.matches
-      ? state.firestore.ordered.matches
-      : [],
-    candidates: state.firestore.ordered.candidates
-      ? state.firestore.ordered.candidates
-      : "",
-    companies: state.firestore.ordered.companies
-      ? state.firestore.ordered.companies
-      : "",
-    jobs: state.firestore.ordered.jobs ? state.firestore.ordered.jobs : []
+    user: state.firestore.ordered.currentUser ? state.firestore.ordered.currentUser[0] : "",
+    company: state.firestore.ordered.currentCompany ? state.firestore.ordered.currentCompany[0] : "",
+    matches: state.firestore.ordered.matches ? state.firestore.ordered.matches : []
   };
 };
 

@@ -1,26 +1,26 @@
 import React from "react";
 import styled from "styled-components";
-import ListingBody from "./ListingBody";
+import CreateListingBody from "./CreateListingBody";
 import LayoutSidebar from "../../~reusables/components/Sidebar";
 import { sidebarIcons, sidebarTexts } from "../../data/sidebar";
 import MobileNavbar from "../../~reusables/components/MobileNavbar";
 import { tablet_max_width } from "../../~reusables/variables/media-queries";
 
-const Listing = props => {
+const CreateListing = () => {
   return (
-    <StyledListing>
+    <StyledMatch>
       <LayoutSidebar icons={sidebarIcons} texts={sidebarTexts} />
       <MobileNavbar icons={sidebarIcons} texts={sidebarTexts} />
-      <ListingBody id={props.match.params.id}></ListingBody>
-    </StyledListing>
+      <CreateListingBody>Page Specific Content</CreateListingBody>
+    </StyledMatch>
   );
 };
 
-const StyledListing = styled.div`
+const StyledMatch = styled.div`
   display: flex;
   @media only screen and (max-width: ${tablet_max_width}) {
     flex-direction: column;
   }
 `;
 
-export default Listing;
+export default CreateListing;

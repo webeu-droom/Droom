@@ -90,13 +90,6 @@ class Register extends React.Component {
   handleRegister = event => {
     event.preventDefault();
     const { name, email, password } = this.state;
-    const INITIAL_STATE = {
-      email: "",
-      password: "",
-      name: "",
-      createCompany: false,
-      createUser: false
-    };
     this.props.firebase.createUser({ email, password }, { name, email }).then(() => {
       this.props.firebase.login({ email, password }).then(res => {
         this.saveUserToDatabase(res);
@@ -113,12 +106,7 @@ class Register extends React.Component {
         <form onSubmit={this.handleRegister}>
           <h1>Register for your Account</h1>
 
-          <Input
-            placeholder="Name"
-            name="name"
-            value={this.state.fullName}
-            onChange={this.onChangeHandler}
-          />
+          <Input placeholder="Name" name="name" value={this.state.fullName} onChange={this.onChangeHandler} />
           <Input
             placeholder="Email"
             name="email"

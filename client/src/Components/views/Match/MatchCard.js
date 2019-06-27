@@ -8,14 +8,18 @@ import {
 } from "../../~reusables/variables/spacing";
 import { slate_grey, white, black } from "../../~reusables/variables/colors";
 import { source_sans_pro } from "../../~reusables/variables/font-family";
-import { heading_4, body_1 } from "../../~reusables/variables/font-sizes";
+import {
+  heading_4,
+  body_1,
+  body_2
+} from "../../~reusables/variables/font-sizes";
 import { useSpring, animated } from "react-spring";
 
 const MatchCard = ({ image, message, name, title, location, matchesId }) => {
   const [hovered, setHovered] = useState(false);
   const hoverEffect = useSpring({
     to: {
-      transform: `scale(${hovered ? 1.05 : 1})`,
+      transform: `scale(${hovered ? 1.02 : 1})`,
       boxShadow: hovered
         ? "-1px 8px 8px 0px rgba(0, 0, 0, 0.3)"
         : "0px 0px 0px 0px rgba(0, 0, 0, 0.2)"
@@ -36,7 +40,7 @@ const MatchCard = ({ image, message, name, title, location, matchesId }) => {
           <div className="header">
             <h4>{name}</h4>
             <p>{title}</p>
-            <p>{location}</p>
+            <p className="location">{location}</p>
           </div>
           <p className="message">{message}</p>
         </div>
@@ -47,6 +51,7 @@ const MatchCard = ({ image, message, name, title, location, matchesId }) => {
 
 const StyledMatchCard = styled(animated.div)`
   flex: 1 1 500px;
+  max-width: 1000px;
   border: 1px solid ${slate_grey};
   border-radius: 2px;
   margin: ${medium_space_1} ${medium_space_1} 0 ${medium_space_1};
@@ -77,6 +82,7 @@ const StyledMatchCard = styled(animated.div)`
     width: 64px;
     height: 64px;
     margin-right: ${extra_small_space};
+    background-color: ${slate_grey};
 
     img {
       border-radius: inherit;
@@ -104,7 +110,31 @@ const StyledMatchCard = styled(animated.div)`
       }
     }
   }
+
+  @media only screen and (max-width: 500px) {
+    margin: ${small_space} ${extra_small_space} 0 ${extra_small_space};
+    .content {
+      p {
+        font-size: ${body_2};
+      }
+      .message {
+        max-width: 60vw;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+      }
+
+      .header {
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+
+        .location {
+          display: none;
+        }
+      }
+    }
+  }
 `;
 
 export default MatchCard;
-

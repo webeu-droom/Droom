@@ -5,14 +5,28 @@ import { medium_space_3 } from "../../~reusables/variables/spacing";
 import { Dropdown } from "../../~reusables/atoms/Dropdowns";
 import { tablet_max_width } from "../../~reusables/variables/media-queries";
 
-const MatchHeader = () => {
+const MatchHeader = ({ company, companyListings, filterJobListings }) => {
+  const onChangeDropdown = input => {
+    filterJobListings(input.target.value);
+  };
+
   return (
     <StyleMH>
-      {/* Needs a conditional checking for company or candidate */}
       <h1>Matches</h1>
-      <Dropdown>
-        <option value="">Full Stack Web Developer</option>
-      </Dropdown>
+      {company && (
+        <Dropdown onChange={onChangeDropdown}>
+          <option value="all-listings">All Listings</option>
+          {companyListings
+            ? companyListings.map((listing, idx) => {
+                return (
+                  <option key={idx} value={listing.id}>
+                    {listing.position}
+                  </option>
+                );
+              })
+            : null}
+        </Dropdown>
+      )}
     </StyleMH>
   );
 };

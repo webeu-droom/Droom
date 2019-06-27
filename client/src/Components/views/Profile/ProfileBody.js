@@ -13,6 +13,7 @@ import {
 } from "react-redux-firebase";
 import UserProfilePage from "./UserProfilePage";
 import CompanyProfilePage from "./CompanyProfilePage";
+import ComponentLoader from "../../~reusables/components/ComponentLoader";
 
 class ProfileBody extends React.Component {
   componentDidMount() {
@@ -55,6 +56,7 @@ class ProfileBody extends React.Component {
           {this.props.company && (
             <CompanyProfilePage company={this.props.company} handleLogout={this.handleLogout} />
           )}
+          {!this.props.user && !this.props.company ? <ComponentLoader /> : null}
         </div>
       </StyledMatchBody>
     );
