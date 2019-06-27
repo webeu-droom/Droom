@@ -17,27 +17,24 @@ import { faded_blue } from "../variables/colors";
 import { medium_space_1 } from "../variables/spacing";
 import logo from "../assets/grey-logo.png";
 
-/*
-Replace hardcoded name and image with that of the user/company
-Icons and icon text are decided by the parent component i.e. Match/Discover etc
-*/
-
 const SidebarContainer = ({ icons, texts, sidebarUser, sidebarCompany }) => {
-  let name;
-  if(sidebarUser) {
-    name = sidebarUser.name
-  } else if(sidebarCompany) {
-    name = sidebarCompany.name
+  let name = '';
+  if (sidebarUser) {
+    name = sidebarUser.name;
+  } else if (sidebarCompany) {
+    name = sidebarCompany.name;
   }
   return (
     <StyledSidebar>
-      <ProfileImage
-        name={name}
-      />
+      <ProfileImage name={name} />
       <div className="nav-items">
         <SideNavItem icon={icons.search} text={texts.search} path="/discover" />
         <SideNavItem icon={icons.match} text={texts.match} path="/match" />
-        <SideNavItem icon={icons.settings} text={texts.settings} path="/profile" />
+        <SideNavItem
+          icon={icons.settings}
+          text={texts.settings}
+          path="/profile"
+        />
       </div>
       <div className="empty-div" />
       <div className="grey-logo">
@@ -65,12 +62,12 @@ const StyledSidebar = styled.aside`
   }
 
   .grey-logo {
-      margin: 0 auto;
-      width: 70%;
+    margin: 0 auto;
+    width: 70%;
 
-      img {
-          width: 100%;
-      }
+    img {
+      width: 100%;
+    }
   }
 
   @media only screen and (max-width: ${tablet_max_width}) {
@@ -85,9 +82,9 @@ const mapStateToProps = state => {
     sidebarUser: state.firestore.ordered.sidebarUser
       ? state.firestore.ordered.sidebarUser[0]
       : "",
-      sidebarCompany: state.firestore.ordered.sidebarCompany
+    sidebarCompany: state.firestore.ordered.sidebarCompany
       ? state.firestore.ordered.sidebarCompany[0]
-      : "",
+      : ""
   };
 };
 
