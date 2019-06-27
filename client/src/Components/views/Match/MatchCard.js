@@ -51,6 +51,7 @@ const MatchCard = ({ image, message, name, title, location, matchesId }) => {
 
 const StyledMatchCard = styled(animated.div)`
   flex: 1 1 500px;
+  max-width: 1000px;
   border: 1px solid ${slate_grey};
   border-radius: 2px;
   margin: ${medium_space_1} ${medium_space_1} 0 ${medium_space_1};
