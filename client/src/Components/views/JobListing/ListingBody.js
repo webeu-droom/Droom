@@ -4,7 +4,7 @@ import ListingHeader from "./ListingHeader";
 import { compose, bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { firestoreConnect, isEmpty, isLoaded } from "react-redux-firebase";
-import DescriptionList from "./DescriptionList";
+import DescriptionList from "../../JobListing/DescriptionList";
 
 class ListingBody extends React.Component {
   state = {
@@ -23,9 +23,7 @@ class ListingBody extends React.Component {
     }
   }
   editDescription = e => {
-    let newArray = this.state.description;
-    newArray[e.target.id] = e.target.value;
-    this.setState({ description: newArray });
+    console.log(e.target);
   };
   render() {
     if (!isLoaded(this.props.listing) || isEmpty(this.props.listing)) {
@@ -60,11 +58,15 @@ class ListingBody extends React.Component {
             placeholder="Location"
           />
         )}
-        <DescriptionList
-          stateDescription={this.state.description}
-          description={this.props.listing.description}
-          onChange={this.editDescription}
-        />
+        {this.props.listing.description.map((desc, idx) => (
+          <DescriptionList
+            desc={desc}
+            id={idx}
+            stateDesc={this.state.description[idx].value}
+            isEditing={this.state.isEditing}
+            editDescription={this.editDescription}
+          />
+        ))}
         <button onClick={() => this.setState({ isEditing: true })}>Edit</button>
       </StyledListingBody>
     );
