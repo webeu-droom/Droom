@@ -50,6 +50,8 @@ const DetailSection = styled.div`
 `;
 
 const DiscoverCard = ({ data, display }) => {
+  const infoHeader = data.education ? "Education" : "Requirements";
+  const infoHeader2 = data.experience ? "Experience" : "Description";
   return (
     <Wrap>
       <Card display={display}>
@@ -61,25 +63,30 @@ const DiscoverCard = ({ data, display }) => {
         </ImageWrap>
 
         <SubHeader>{data.name}</SubHeader>
-        {/* <p>{data.email}</p>
-            <p>{data.location}</p>
+        <p>{data.email}</p>
+        <p>{data.location}</p>
 
-            <DetailSection>
-              <SubHeader>About</SubHeader>
-              <p>{data.about}</p>
-            </DetailSection>
+        <DetailSection>
+          <SubHeader>Biography</SubHeader>
+          <p>{data.bio}</p>
+        </DetailSection>
 
-            <DetailSection>
-              <SubHeader>{infoHeader}</SubHeader>
-              <p>{info}</p>
-            </DetailSection>
-            <DetailSection>
-              <SubHeader>Description</SubHeader>
-              <ul>
-                <li>{item.experience || item.company}</li>
-                <li>{item.description}</li>
-              </ul>
-            </DetailSection> */}
+        <DetailSection>
+          <SubHeader>{infoHeader2}</SubHeader>
+          <div>
+            {data.description.map((info, index) => {
+              return <p key={index}>{info}</p>;
+            })}
+          </div>
+        </DetailSection>
+        <DetailSection>
+          <SubHeader>{infoHeader}</SubHeader>
+          <div>
+            {data.requirements.map((info, index) => {
+              return <p key={index}>{info}</p>;
+            })}
+          </div>
+        </DetailSection>
       </Card>
     </Wrap>
   );

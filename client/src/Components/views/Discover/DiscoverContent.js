@@ -38,7 +38,12 @@ const DiscoverContent = ({ props }) => {
     arr1.map(job => {
       return arr2.map(coy => {
         if (coy.id === job.companyId) {
-          sortData.push({ ...job, name: coy.name });
+          sortData.push({
+            ...job,
+            name: coy.name,
+            email: coy.companyEmail,
+            bio: coy.companyDescription
+          });
         }
       });
     });
