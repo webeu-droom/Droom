@@ -10,20 +10,24 @@ class CreateListingBody extends React.Component {
   state = {
     position: "",
     location: "",
-    description: ["None"]
+    description: ["None"],
+    requirements: ["None"]
   };
   addDescription = () => {
-    this.setState(st => ({ description: [...st.description, "None"] }));
+    this.setState(st => ({ description: [...st.description, "None other description"] }));
   };
   onChangeHandler = e => {
     this.setState({ [e.target.name]: e.target.value });
   };
 
-  descriptionChange = e => {
-    let newArray = this.state.description;
-    console.log(newArray);
+  arrayChange = e => {
+    let newArray = this.state[e.target.name];
     newArray[e.target.id] = e.target.value;
-    this.setState({ description: newArray });
+    this.setState({ [e.target.name]: newArray });
+  };
+
+  addRequirements = () => {
+    this.setState(st => ({ requirements: [...st.requirements, "None other requirements"] }));
   };
 
   createListing = e => {
@@ -36,6 +40,7 @@ class CreateListingBody extends React.Component {
         location: this.state.location,
         description: this.state.description,
         companyId: this.props.company.id,
+        requirements: this.state.requirements,
         likedCandidates: [],
         notlikedCandidates: []
       })
@@ -45,29 +50,40 @@ class CreateListingBody extends React.Component {
   };
 
   render() {
-  return (
-    <StyledMatchBody>
-      <CreateListingHeader />
-      <div>
-        <input name="position" onChange={this.onChangeHandler} placeholder="Position" />
-        <input name="location" onChange={this.onChangeHandler} placeholder="Location" />
-        {this.state.description.map((desc, idx) => (
-          <input
-            key={idx}
-            name="description"
-            value={desc}
-            id={idx}
-            onChange={this.descriptionChange}
-            placeholder="Description"
-          />
-        ))}
-        <button onClick={this.addDescription}>Add description</button>
-        <button onClick={this.createListing}>Create Listing</button>
-      </div>
-    </StyledMatchBody>
-  );
+    return (
+      <StyledMatchBody>
+        <CreateListingHeader />
+        <div>
+          <input name="position" onChange={this.onChangeHandler} placeholder="Position" />
+          <input name="location" onChange={this.onChangeHandler} placeholder="Location" />
+          {this.state.description.map((desc, idx) => (
+            <input
+              key={idx}
+              name="description"
+              value={desc}
+              id={idx}
+              onChange={this.arrayChange}
+              placeholder="Description"
+            />
+          ))}
+          <button onClick={this.addDescription}>Add description</button>
+          {this.state.requirements.map((req, idx) => (
+            <input
+              key={idx}
+              name="requirements"
+              value={req}
+              id={idx}
+              onChange={this.arrayChange}
+              placeholder="Requirements"
+            />
+          ))}
+          <button onClick={this.addRequirements}>Add Requirements</button>
+          <button onClick={this.createListing}>Create Listing</button>
+        </div>
+      </StyledMatchBody>
+    );
   }
-};
+}
 
 const StyledMatchBody = styled.div`
   min-height: 100vh;
@@ -81,7 +97,6 @@ const mapStateToProps = state => {
     company: state.firestore.ordered.currentCompany ? state.firestore.ordered.currentCompany[0] : ""
   };
 };
-
 
 const dispatchStateToProps = dispatch => {
   return bindActionCreators({
