@@ -25,7 +25,7 @@ class Register extends React.Component {
   };
 
   state = {
-    errorMessage: '',
+    errorMessage: "",
     showPopup: false,
     email: "",
     password: "",
@@ -100,14 +100,17 @@ class Register extends React.Component {
     event.preventDefault();
 
     const { name, email, password } = this.state;
-    this.props.firebase.createUser({ email, password }, { name, email }).then(() => {
-      this.props.firebase.login({ email, password }).then(res => {
-        this.saveUserToDatabase(res);
+    this.props.firebase
+      .createUser({ email, password }, { name, email })
+      .then(() => {
+        this.props.firebase.login({ email, password }).then(res => {
+          this.saveUserToDatabase(res);
+        });
       })
-    }).catch((err) => {
-      this.setState({ errorMessage: err.message });
-      this.togglePopup();
-    });;
+      .catch(err => {
+        this.setState({ errorMessage: err.message });
+        this.togglePopup();
+      });
   };
   render() {
     if (!isEmpty(this.props.auth)) {
@@ -122,7 +125,12 @@ class Register extends React.Component {
         <form onSubmit={this.handleRegister}>
           <h1>Register for your Account</h1>
 
-          <Input placeholder="Name" name="name" value={this.state.fullName} onChange={this.onChangeHandler} />
+          <Input
+            placeholder="Name"
+            name="name"
+            value={this.state.fullName}
+            onChange={this.onChangeHandler}
+          />
           <Input
             placeholder="Email"
             name="email"
