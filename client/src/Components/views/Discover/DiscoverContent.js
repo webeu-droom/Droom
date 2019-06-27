@@ -30,7 +30,7 @@ const CardWrap = styled.div`
 `;
 
 const DiscoverContent = ({ props }) => {
-  const { jobs, companies, candidates } = props;
+  const { jobs, companies, candidates, auth, company, user } = props;
   const [list, setList] = useState([]);
   const [selected, setSelected] = useState(0);
   const listType = props.match.params.type;
@@ -56,24 +56,35 @@ const DiscoverContent = ({ props }) => {
     const stateRender = listType === "jobs" ? cleanData : candidates;
     setList(stateRender);
   }, [candidates, companies, jobs, listType]);
-
-  let lastCard = list.length - 1;
-
+  console.log(props);
   const leftClick = () => {
-    if (selected === 0) {
-      setSelected(lastCard);
-    } else {
-      setSelected(selected - 1);
+    let dataSet;
+    if (selected === 0 && list) {
+      if (company !== undefined && company.companyEmail === auth.email) {
+        dataSet = processedData(jobs, [...companies]);
+        dataSet.map(data => {
+          if (data.email === auth.email) {
+            console.log("^^^^^^^^^", data);
+            data.dislikedUser.push(list[0]);
+            list.splice(selected, 1);
+            console.log(list.dislikedUser, "++++++", list);
+          }
+        });
+      }
+      if (user !== undefined && user.userEmail === auth.email) {
+        dataSet = candidates;
+        dataSet.map(data => {
+          if (data.userEmail === auth.email) {
+            data.dislikedJoblistings.push(list[0]);
+            list.splice(selected, 1);
+            console.log(list.dislikedJoblistings, "++++++", list);
+          }
+        });
+      }
     }
   };
 
-  const rightClick = () => {
-    if (selected === lastCard) {
-      setSelected(0);
-    } else {
-      setSelected(selected + 1);
-    }
-  };
+  const rightClick = () => {};
 
   const handleKeyPress = event => {
     if (event.key === "ArrowLeft") {
@@ -104,6 +115,7 @@ const DiscoverContent = ({ props }) => {
             <DiscoverCard
               data={arr}
               key={arr.id}
+              index={index}
               display={selected === index ? "on" : "off"}
               handleKeyPress={handleKeyPress}
             />
