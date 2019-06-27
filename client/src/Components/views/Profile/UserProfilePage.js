@@ -3,6 +3,7 @@ import { isEmpty, firestoreConnect, withFirestore } from "react-redux-firebase";
 import { compose, bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import styled from "styled-components";
+import Popup from "../../~reusables/components/Popup";
 import ExperienceField from "./ExperienceField";
 import {
   medium_space_1,
@@ -24,6 +25,7 @@ import { tablet_max_width } from "../../~reusables/variables/media-queries";
 
 class UserProfilePage extends React.Component {
   state = {
+    showPopup: false,
     editingProfile: false,
     name: this.props.user.name,
     title: this.props.user.title,
@@ -38,6 +40,13 @@ class UserProfilePage extends React.Component {
   onChangeHandler = e => {
     this.setState({ [e.target.name]: e.target.value });
   };
+
+  togglePopup = () => {
+    this.setState({
+      showPopup: !this.state.showPopup
+    });
+  };
+
   componentDidMount() {
     if (isEmpty(this.props.user.title)) {
       this.setState({ editingProfile: true });
@@ -70,6 +79,7 @@ class UserProfilePage extends React.Component {
         .then(() => this.setState({ editingProfile: false }));
     } else {
       this.setState({ error: "Please fill out everything" });
+      this.togglePopup();
     }
   };
 
@@ -124,6 +134,9 @@ class UserProfilePage extends React.Component {
             Add Experience
           </TextButton>
         </section>
+        {this.state.showPopup ? (
+          <Popup text={this.state.error} closePopup={this.togglePopup} />
+        ) : null}
         <section className="right">
           <p className="label">Location</p>
           {!this.state.editingProfile ? (

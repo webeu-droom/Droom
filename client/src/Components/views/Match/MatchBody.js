@@ -71,7 +71,12 @@ const MatchBody = props => {
   if (props.user && props.matches && fetchedCompanies && fetchedJobListings) {
     matches.forEach(match => {
       fetchedJobListings.forEach(listing => {
-        let matchedListing = listing.likedUser.find(user => user === userOrCompId);
+        console.log(listing)
+        let matchedListing;
+        if(listing.likedUser){
+          matchedListing = listing.likedUser.find(user => user === userOrCompId);
+        }
+
         if (matchedListing) {
           let foundCompany = fetchedCompanies.find(company => company.id === listing.companyId);
           listings = [
@@ -110,15 +115,11 @@ const MatchBody = props => {
 
   return (
     <StyledMatchBody>
-<<<<<<< HEAD
-      <MatchHeader company={props.company} companyListings={companyJobListings} />
-=======
       <MatchHeader
         company={props.company}
         companyListings={companyJobListings}
         filterJobListings={filterJobListings}
       />
->>>>>>> 612b8c1669f1d778ca97ca2069f8b6c513027d85
 
       <div className="match-cards">
         {props.company && filteredUsers

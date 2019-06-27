@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { firestoreConnect, isEmpty } from "react-redux-firebase";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import Popup from "../../~reusables/components/Popup";
 import ListingSummary from "./ListingSummary";
 import {
   ButtonSecondary,
@@ -29,13 +30,21 @@ class CompanyProfilePage extends Component {
     description: !isEmpty(this.props.company.description)
       ? this.props.company.description
       : "None",
-    error: null
+    error: null,
+    showPopup: false
   };
   componentDidMount() {
     if (isEmpty(this.props.company.companyDescription)) {
       this.setState({ editingProfile: true });
     }
   }
+
+  togglePopup = () => {
+    this.setState({
+      showPopup: !this.state.showPopup
+    });
+  };
+
   onChangeHandler = e => {
     this.setState({ [e.target.name]: e.target.value });
   };
@@ -52,7 +61,8 @@ class CompanyProfilePage extends Component {
         })
         .then(() => this.setState({ editingProfile: false }));
     } else {
-      this.setState({ error: "Please fill out everything" });
+      this.setState({ error: "Please fill out your profile" });
+      this.togglePopup();
     }
   };
   render() {
@@ -97,6 +107,9 @@ class CompanyProfilePage extends Component {
             Save
           </ButtonPrimary>
         </section>
+        {this.state.showPopup ? (
+          <Popup text={this.state.error} closePopup={this.togglePopup} />
+        ) : null}
         <section className="right">
           <p className="label">Job Listings</p>
 
@@ -111,11 +124,6 @@ class CompanyProfilePage extends Component {
                 );
               })
             : null}
-
-          {/* <ListingSummary title="Full Stack Software Developer" listingId="1" />
-          <ListingSummary title="Front-End Developer" listingId="2" />
-          <ListingSummary title="Back-End Developer" listingId="3" /> */}
-
           {this.props.jobListing &&
             this.props.jobListing.map(job => <div>{job}</div>)}
           <Link to="/profile/listing">
