@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import { compose, bindActionCreators } from "redux";
 import { connect } from "react-redux";
@@ -46,6 +46,7 @@ const MatchBody = props => {
         if (foundListing) {
           return match.jobListingId === foundListing.id;
         }
+        
       });
     } else if (props.user) {
       matches = props.matches.filter(match => match.userId === userOrCompId);
