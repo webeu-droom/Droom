@@ -82,6 +82,7 @@ const mapStateToProps = state => {
   };
 };
 
+
 const dispatchStateToProps = dispatch => {
   return bindActionCreators({
     clearFirestore: () => dispatch({ type: "@@reduxFirestore/CLEAR_DATA" })
