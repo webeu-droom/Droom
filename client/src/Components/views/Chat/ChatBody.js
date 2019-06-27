@@ -23,7 +23,6 @@ import ComponentLoader from "../../~reusables/components/ComponentLoader";
 
 const ChatBody = props => {
   const [textMessage, setTextMessage] = useState("");
-  // props passed from firestore and route
   const matchId = props.match.params.id;
   let messages = [];
 

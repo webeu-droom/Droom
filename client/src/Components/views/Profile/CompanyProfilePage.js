@@ -56,7 +56,10 @@ class CompanyProfilePage extends Component {
     }
   };
   render() {
-    console.log(this.props.jobListings)
+    let jobListings = [];
+    if(this.props.company) {
+      jobListings = this.props.jobListings.filter(listing => listing.companyId === this.props.company.id)
+    }
     return (
       <StyledCompany>
         <section>
@@ -95,7 +98,7 @@ class CompanyProfilePage extends Component {
         <section className="right">
           <p className="label">Job Listings</p>
 
-          {this.props.jobListings.length > 0 ? this.props.jobListings.map(listing => {
+          {this.props.jobListings.length > 0 ? jobListings.map(listing => {
             return <ListingSummary key={listing.id} listingId={listing.id} title={listing.position} />
           }) : null}
 
