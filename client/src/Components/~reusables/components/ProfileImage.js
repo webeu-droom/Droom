@@ -16,6 +16,10 @@ const ProfileImage = ({name, image}) => {
 
 const StyledImage = styled.div`
     margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 
     div {
         border-radius: 50%;
@@ -31,6 +35,7 @@ const StyledImage = styled.div`
     }
 
     p {
+        text-align: center;
         color: ${black};
         font-size: ${body_1}
     }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { compose, bindActionCreators } from "redux";
 import { connect } from "react-redux";
@@ -11,6 +11,7 @@ import { black } from "../../~reusables/variables/colors";
 import { source_sans_pro } from "../../~reusables/variables/font-family";
 
 const MatchBody = props => {
+  const [filteredUsers, setFilteredUsers] = useState("");
   let fetchedCompanies, fetchedJobListings, fetchedUsers;
   if (props.companies) {
     fetchedCompanies = Object.values(props.companies);
@@ -86,24 +87,65 @@ const MatchBody = props => {
     });
   }
 
+  const filterJobListings = listingId => {
+    if (listingId === "all-listings") {
+      setFilteredUsers("");
+    } else {
+      setFilteredUsers([]);
+      matches.forEach(match => {
+        if (users) {
+          let foundUser = users.find(user => user.user.id === match.userId);
+          if (foundUser) {
+            foundUser.user.likedJobListings.forEach(likedListing => {
+              let matchedUser = likedListing === listingId;
+              if (matchedUser) {
+                setFilteredUsers([...filteredUsers, { foundUser }]);
+              }
+            });
+          }
+        }
+      });
+    }
+  };
+
   return (
     <StyledMatchBody>
+<<<<<<< HEAD
       <MatchHeader company={props.company} companyListings={companyJobListings} />
+=======
+      <MatchHeader
+        company={props.company}
+        companyListings={companyJobListings}
+        filterJobListings={filterJobListings}
+      />
+>>>>>>> 612b8c1669f1d778ca97ca2069f8b6c513027d85
 
       <div className="match-cards">
-        {props.company &&
-          users.map((user, idx) => {
-            return (
-              <MatchCard
-                key={idx}
-                matchesId={user.matchId}
-                name={user.user.name}
-                message={user.user.biography}
-                title={user.user.position}
-                location={user.user.location}
-              />
-            );
-          })}
+        {props.company && filteredUsers
+          ? filteredUsers.map((user, idx) => {
+              return (
+                <MatchCard
+                  key={idx}
+                  matchesId={user.matchId}
+                  name={user.foundUser.user.name}
+                  message={user.foundUser.user.biography}
+                  title={user.foundUser.user.position}
+                  location={user.foundUser.user.location}
+                />
+              );
+            })
+          : users.map((user, idx) => {
+              return (
+                <MatchCard
+                  key={idx}
+                  matchesId={user.matchId}
+                  name={user.user.name}
+                  message={user.user.biography}
+                  title={user.user.position}
+                  location={user.user.location}
+                />
+              );
+            })}
         {props.user &&
           listings.map((listing, idx) => {
             return (
