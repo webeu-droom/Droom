@@ -15,8 +15,8 @@ const Wrap = styled.div`
   background: #ffffff;
 `;
 const ImageWrap = styled.div`
-display: flex;
-justify-content: center;
+  display: flex;
+  justify-content: center;
 `;
 const Card = styled.div`
   /* Background */
@@ -50,25 +50,18 @@ const DetailSection = styled.div`
 `;
 
 const DiscoverCard = ({ data, display }) => {
-  const infoHeader = data.qualifications ? "Qualifications" : "Category";
-  const info = data.qualifications ? data.qualifications : data.category;
-  const listView = data.jobs ? data.jobs : data.experience;
-
   return (
     <Wrap>
-      {listView.map((item, index) => {
-        return (
-          <Card key={index} display={display}>
-            <ImageWrap>
-            <ProfileImage
-              name={data.name}
-              image="https://randomuser.me/api/portraits/men/86.jpg"
-            />
-            </ImageWrap>
-            
+      <Card display={display}>
+        <ImageWrap>
+          <ProfileImage
+            name={data.name}
+            image="https://randomuser.me/api/portraits/men/86.jpg"
+          />
+        </ImageWrap>
 
-            <SubHeader>{item.title}</SubHeader>
-            <p>{data.email}</p>
+        <SubHeader>{data.name}</SubHeader>
+        {/* <p>{data.email}</p>
             <p>{data.location}</p>
 
             <DetailSection>
@@ -86,10 +79,8 @@ const DiscoverCard = ({ data, display }) => {
                 <li>{item.experience || item.company}</li>
                 <li>{item.description}</li>
               </ul>
-            </DetailSection>
-          </Card>
-        );
-      })}
+            </DetailSection> */}
+      </Card>
     </Wrap>
   );
 };

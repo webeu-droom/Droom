@@ -12,29 +12,28 @@ import {
   isLoaded
 } from "react-redux-firebase";
 
-
-import DiscoverContent from './DiscoverContent';
+import DiscoverContent from "./DiscoverContent";
 import LayoutSidebar from "../../~reusables/components/Sidebar";
 import { sidebarIcons, sidebarTexts } from "../../data/sidebar";
 import MobileNavbar from "../../~reusables/components/MobileNavbar";
 import { tablet_max_width } from "../../~reusables/variables/media-queries";
 
-export const DiscoverPage = (props) => {
+export const DiscoverPage = props => {
   const { company, user, history } = props;
 
-  useEffect(()=>{
-    if(user !== undefined) {
-      history.push('/discover/jobs')
-    } else if(company !== undefined) {
-      history.push('/discover/candidates')
+  useEffect(() => {
+    if (user !== undefined) {
+      history.push("/discover/jobs");
+    } else if (company !== undefined) {
+      history.push("/discover/candidates");
     }
-  },[company, user, history])
-  
+  }, [company, user, history]);
+
   return (
     <StyledMatch>
       <LayoutSidebar icons={sidebarIcons} texts={sidebarTexts} />
       <MobileNavbar icons={sidebarIcons} texts={sidebarTexts} />
-      <DiscoverContent props={props}/>
+      <DiscoverContent props={props} />
     </StyledMatch>
   );
 };
@@ -60,7 +59,14 @@ const mapStateToProps = state => {
       : "",
     matches: state.firestore.ordered.matches
       ? state.firestore.ordered.matches
-      : []
+      : [],
+    candidates: state.firestore.ordered.candidates
+      ? state.firestore.ordered.candidates
+      : "",
+    companies: state.firestore.ordered.companies
+      ? state.firestore.ordered.companies
+      : "",
+    jobs: state.firestore.ordered.jobs ? state.firestore.ordered.jobs : []
   };
 };
 
@@ -91,6 +97,18 @@ export default withRouter(
           collection: "companies",
           where: ["companyEmail", "==", `${props.auth.email}`],
           storeAs: "currentCompany"
+        },
+        {
+          collection: "jobListings",
+          storeAs: "jobs"
+        },
+        {
+          collection: "users",
+          storeAs: "candidates"
+        },
+        {
+          collection: "companies",
+          storeAs: "companies"
         }
       ];
     })
