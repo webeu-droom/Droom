@@ -6,7 +6,6 @@ import { Dropdown } from "../../~reusables/atoms/Dropdowns";
 import { tablet_max_width } from "../../~reusables/variables/media-queries";
 
 const MatchHeader = ({ company, companyListings }) => {
-  console.log(company, companyListings)
   return (
     <StyleMH>
       <h1>Matches</h1>

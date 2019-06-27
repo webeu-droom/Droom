@@ -15,7 +15,7 @@ import Match from "./Components/views/Match/Match";
 import Chat from "./Components/views/Chat/Chat";
 import Landing from "./Components/views/Landing/Landing";
 import Listing from "./Components/views/JobListing/Listing";
-import CreateListing from "./Components/views/JobListing/CreateListing";
+import CreateListing from "./Components/views/CreateListing/CreateListing";
 
 class App extends React.Component {
   render() {

@@ -98,7 +98,7 @@ class ListingBody extends React.Component {
                 placeholder="Position"
               />
             )}
-            {this.props.listing.description.map((desc, idx) => (
+            {this.props.listing.description ? this.props.listing.description.map((desc, idx) => (
               <>
                 <p className="label">Description {idx + 1}</p>
                 <DescriptionList
@@ -110,7 +110,7 @@ class ListingBody extends React.Component {
                   editDescription={this.editArray}
                 />
               </>
-            ))}
+            )) : null}
           </section>
           <section className="right">
             <p className="label">Location</p>
@@ -125,7 +125,7 @@ class ListingBody extends React.Component {
               />
             )}
 
-            {this.props.listing.requirements.map((req, idx) => (
+            {this.props.listing.requirements ? this.props.listing.requirements.map((req, idx) => (
               <>
                 <p className="label">Requirement {idx + 1}</p>
                 <RequitementList
@@ -137,7 +137,7 @@ class ListingBody extends React.Component {
                   editRequirements={this.editArray}
                 />
               </>
-            ))}
+            )) : null}
             <ButtonSecondary className="edit" onClick={this.editProfile}>
               Edit
             </ButtonSecondary>
