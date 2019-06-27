@@ -58,8 +58,8 @@ class CreateListingBody extends React.Component {
         description: this.state.description,
         companyId: this.props.company.id,
         requirements: this.state.requirements,
-        likedCandidates: [],
-        notlikedCandidates: []
+        likedUser: [],
+        dislikedUser: []
       })
       .then(() => {
         console.log("It is working");
