@@ -17,7 +17,6 @@ import ComponentLoader from "../../~reusables/components/ComponentLoader";
 
 class ProfileBody extends React.Component {
   componentDidMount() {
-    console.log(this.props);
     if (this.props.user) {
       this.setState({
         name: this.props.user.name,
@@ -44,9 +43,9 @@ class ProfileBody extends React.Component {
   };
 
   render() {
-    if (isLoaded(this.props.auth) && isEmpty(this.props.auth)) {
-      this.props.history.push("/login");
-    }
+    // if (isLoaded(this.props.auth) && isEmpty(this.props.auth)) {
+    //   this.props.history.push("/login");
+    // }
     console.log(isEmpty(this.props.auth));
 
     return (
