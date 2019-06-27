@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { compose, bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { firestoreConnect, isEmpty } from "react-redux-firebase";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import ListingSummary from "./ListingSummary";
 import {
@@ -19,7 +19,7 @@ import { tablet_max_width } from "../../~reusables/variables/media-queries";
 import {
   medium_space_1,
   medium_space_3,
-  small_space,
+  small_space
 } from "../../~reusables/variables/spacing";
 
 class CompanyProfilePage extends Component {
@@ -57,8 +57,10 @@ class CompanyProfilePage extends Component {
   };
   render() {
     let jobListings = [];
-    if(this.props.company) {
-      jobListings = this.props.jobListings.filter(listing => listing.companyId === this.props.company.id)
+    if (this.props.company) {
+      jobListings = this.props.jobListings.filter(
+        listing => listing.companyId === this.props.company.id
+      );
     }
     return (
       <StyledCompany>
@@ -98,9 +100,17 @@ class CompanyProfilePage extends Component {
         <section className="right">
           <p className="label">Job Listings</p>
 
-          {this.props.jobListings.length > 0 ? jobListings.map(listing => {
-            return <ListingSummary key={listing.id} listingId={listing.id} title={listing.position} />
-          }) : null}
+          {this.props.jobListings.length > 0
+            ? jobListings.map(listing => {
+                return (
+                  <ListingSummary
+                    key={listing.id}
+                    listingId={listing.id}
+                    title={listing.position}
+                  />
+                );
+              })
+            : null}
 
           {/* <ListingSummary title="Full Stack Software Developer" listingId="1" />
           <ListingSummary title="Front-End Developer" listingId="2" />
@@ -108,7 +118,9 @@ class CompanyProfilePage extends Component {
 
           {this.props.jobListing &&
             this.props.jobListing.map(job => <div>{job}</div>)}
-          <Link to="/profile/listing"><TextButton className="text-button">Add Job Listing</TextButton></Link>
+          <Link to="/profile/listing">
+            <TextButton className="text-button">Add Job Listing</TextButton>
+          </Link>
           <ButtonTertiary
             className="logout-button-mobile"
             onClick={this.props.handleLogout}
@@ -183,11 +195,11 @@ const StyledCompany = styled.div`
 
   a {
     text-decoration: none;
-    color: ${black}
+    color: ${black};
   }
   .text-button {
     margin-bottom: ${small_space};
-    color: ${blue}
+    color: ${blue};
   }
 
   .logout-button-mobile {
