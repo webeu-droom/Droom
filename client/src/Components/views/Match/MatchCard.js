@@ -19,7 +19,7 @@ const MatchCard = ({ image, message, name, title, location, matchesId }) => {
   const [hovered, setHovered] = useState(false);
   const hoverEffect = useSpring({
     to: {
-      transform: `scale(${hovered ? 1.05 : 1})`,
+      transform: `scale(${hovered ? 1.02 : 1})`,
       boxShadow: hovered
         ? "-1px 8px 8px 0px rgba(0, 0, 0, 0.3)"
         : "0px 0px 0px 0px rgba(0, 0, 0, 0.2)"

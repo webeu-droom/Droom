@@ -124,11 +124,6 @@ class CompanyProfilePage extends Component {
                 );
               })
             : null}
-
-          {/* <ListingSummary title="Full Stack Software Developer" listingId="1" />
-          <ListingSummary title="Front-End Developer" listingId="2" />
-          <ListingSummary title="Back-End Developer" listingId="3" /> */}
-
           {this.props.jobListing &&
             this.props.jobListing.map(job => <div>{job}</div>)}
           <Link to="/profile/listing">
