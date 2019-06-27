@@ -7,7 +7,7 @@ import { tablet_max_width } from "../../~reusables/variables/media-queries";
 const ListingHeader = () => {
   return (
     <StyleMH>
-      <h1>Add Listing</h1>
+      <h1>Listing</h1>
     </StyleMH>
   );
 };

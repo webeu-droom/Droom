@@ -15,13 +15,13 @@ import Match from "./Components/views/Match/Match";
 import Chat from "./Components/views/Chat/Chat";
 import Landing from "./Components/views/Landing/Landing";
 import Listing from "./Components/views/JobListing/Listing";
+import CreateListing from "./Components/views/JobListing/CreateListing";
 
 class App extends React.Component {
   render() {
     return (
       <div>
         <Route exact path="/discover/:type?" render={props => <DiscoverPage {...props} />} />
-
         <Route exact path="/" render={props => <Landing {...props} />} />
         <Route exact path="/login" render={props => <Login {...props} />} />
         <Route exact path="/register" render={props => <Register {...props} />} />
@@ -29,6 +29,7 @@ class App extends React.Component {
         <Route exact path="/profile" render={props => <Profile {...props} />} />
         <Route exact path="/match" render={props => <Match {...props} />} />
         <Route exact path="/match/chat/:id" render={props => <Chat {...props} />} />
+        <Route exact path="/profile/listing/" render={props => <CreateListing {...props} />} />
         <Route exact path="/profile/listing/:id" render={props => <Listing {...props} />} />
       </div>
     );

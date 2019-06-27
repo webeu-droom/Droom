@@ -11,7 +11,7 @@ const Listing = props => {
     <StyledListing>
       <LayoutSidebar icons={sidebarIcons} texts={sidebarTexts} />
       <MobileNavbar icons={sidebarIcons} texts={sidebarTexts} />
-      <ListingBody id={props.match.params.id}>Page Specific Content</ListingBody>
+      <ListingBody id={props.match.params.id}></ListingBody>
     </StyledListing>
   );
 };
