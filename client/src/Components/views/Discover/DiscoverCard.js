@@ -62,7 +62,7 @@ const DiscoverCard = ({ data, display }) => {
           />
         </ImageWrap>
 
-        <SubHeader>{data.name}</SubHeader>
+        <SubHeader>{data.position}</SubHeader>
         <p>{data.email}</p>
         <p>{data.location}</p>
 
