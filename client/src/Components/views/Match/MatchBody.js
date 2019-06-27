@@ -91,7 +91,7 @@ const MatchBody = props => {
 
   return (
     <StyledMatchBody>
-      <MatchHeader />
+      <MatchHeader company={props.company} />
 
       <div className="match-cards">
         {props.company &&
@@ -131,7 +131,7 @@ const MatchBody = props => {
             </p>
           </div>
         ) : null}
-        <MatchCard
+        {/* <MatchCard
         matchesId="123"
         image="https://randomuser.me/api/portraits/men/86.jpg"
         name="Felix Hawke"
@@ -146,7 +146,7 @@ const MatchBody = props => {
         message="We're a group of highly-motivated individuals making the tech industry more accessible by providing educational opportunities to underserved individuals."
         title="Full Stack Developer"
         location="Dublin, Ireland"
-      />
+      /> */}
       </div>
     </StyledMatchBody>
   );
