@@ -7,6 +7,8 @@ import { firestoreConnect, firebaseConnect } from "react-redux-firebase";
 import MatchHeader from "./MatchHeader";
 import MatchCard from "./MatchCard";
 import ComponentLoader from "../../~reusables/components/ComponentLoader";
+import { black } from "../../~reusables/variables/colors";
+import { source_sans_pro } from "../../~reusables/variables/font-family";
 
 const MatchBody = props => {
   let fetchedCompanies, fetchedJobListings, fetchedUsers;
@@ -118,17 +120,33 @@ const MatchBody = props => {
               />
             );
           })}
-          {!props.user && !props.company ? <ComponentLoader /> : null}
-
-        {/* <MatchCard
+        {!props.user && !props.company ? <ComponentLoader /> : null}
+        {(props.user && listings.length < 1) ||
+        (props.company && users.length < 1) ? (
+          <div className="filler-message">
+            <h3>Nothing to see here - yet</h3>
+            <p>
+              From interviews to job offers and a whole lot more, this is where
+              the magic happens.
+            </p>
+          </div>
+        ) : null}
+        <MatchCard
         matchesId="123"
         image="https://randomuser.me/api/portraits/men/86.jpg"
         name="Felix Hawke"
         message="We're a group of highly-motivated individuals making the tech industry more accessible by providing educational opportunities to underserved individuals."
         title="Full Stack Developer"
         location="Dublin, Ireland"
-      /> */}
-
+      />
+      <MatchCard
+        matchesId="123"
+        image="https://randomuser.me/api/portraits/men/86.jpg"
+        name="Felix Hawke"
+        message="We're a group of highly-motivated individuals making the tech industry more accessible by providing educational opportunities to underserved individuals."
+        title="Full Stack Developer"
+        location="Dublin, Ireland"
+      />
       </div>
     </StyledMatchBody>
   );
@@ -141,6 +159,17 @@ const StyledMatchBody = styled.div`
   .match-cards {
     display: flex;
     flex-wrap: wrap;
+  }
+  .filler-message {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    h3, p {
+      color: ${black}
+      font-family: ${source_sans_pro};
+    }
   }
 `;
 

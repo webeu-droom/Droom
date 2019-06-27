@@ -25,7 +25,7 @@ const ChatBody = props => {
   const [textMessage, setTextMessage] = useState("");
   // props passed from firestore and route
   const matchId = props.match.params.id;
-  let messages;
+  let messages = [];
 
   if (props.messages) {
     messages = Object.values(props.messages);
@@ -68,7 +68,14 @@ const ChatBody = props => {
                 />
               );
             })}
-            {!props.messages ? <ComponentLoader /> : null}
+          {!props.messages ? <ComponentLoader /> : null}
+          {(props.user && messages.length < 1) ||
+          (props.company && messages.length < 1) ? (
+            <div className="filler-message">
+              <h3>Nothing to see here - yet</h3>
+              <p>Why not send the first message?</p>
+            </div>
+          ) : null}
         </div>
         <div
           className="message-input"
@@ -89,6 +96,18 @@ const StyledListingBody = styled.div`
   min-height: 100vh;
   background: white;
   width: 100%;
+
+  .filler-message {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    h3, p {
+      color: ${black}
+      font-family: ${source_sans_pro};
+    }
+  }
 
   .chat-window {
     height: 75vh;
