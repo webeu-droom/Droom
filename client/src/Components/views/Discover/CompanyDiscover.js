@@ -2,12 +2,13 @@ import React from "react";
 import { compose } from "redux";
 import { firestoreConnect } from "react-redux-firebase";
 import { connect } from "react-redux";
+import DiscoverTop from "./CompanyDiscoverTop";
 
 class CompanyDiscover extends React.Component {
   render() {
     return (
       <div>
-        <p>CompanyDiscoverTop</p>
+        <CompanyDiscoverTop />
         <p>CompanyDiscoverContent</p>
       </div>
     );
@@ -26,8 +27,6 @@ export default compose(
     {}
   ),
   firestoreConnect(props => {
-    return [
-      { collection: "jobListings", where: ["companyId", "==", `${this.props.company.id}`], storeAs: "jobListings" }
-    ];
+    return [{ collection: "jobListings", where: ["companyId", "==", `${props.company.id}`], storeAs: "jobListings" }];
   })
 )(CompanyDiscover);

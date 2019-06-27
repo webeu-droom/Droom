@@ -1,12 +1,15 @@
 import React from "react";
 import { compose } from "redux";
 import { connect } from "react-redux";
-import { firebaseConnect, firestoreConnect } from "react-redux-firebase";
+import { firebaseConnect, firestoreConnect, isLoaded } from "react-redux-firebase";
 import CompanyDiscover from "./CompanyDiscover";
 import UserDiscover from "./UserDiscover";
 
 class Discover extends React.Component {
   render() {
+    if (!isLoaded(this.props.company) && this.props.user) {
+      return <h1>Loading</h1>;
+    }
     return (
       <div>
         {this.props.company && <CompanyDiscover company={this.props.company} />}
@@ -20,8 +23,8 @@ const mapStateToProps = state => {
   return {
     auth: state.firebase.auth,
     profile: state.firebase.profile,
-    company: state.firestore.ordered.company ? state.firestore.ordered.company : "",
-    user: state.firestore.ordered.user ? state.firetore.ordered.user : ""
+    company: state.firestore.ordered.company ? state.firestore.ordered.company[0] : "",
+    user: state.firestore.ordered.user ? state.firestore.ordered.user[0] : ""
   };
 };
 
@@ -36,11 +39,12 @@ export default compose(
       {
         collection: "users",
         where: ["userEmail", "==", `${props.auth.email}`],
-        storeAs: "users"
+        storeAs: "user"
       },
       {
         collection: "companies",
-        where: ["companyEmail", "==", `${props.auth.email}`]
+        where: ["companyEmail", "==", `${props.auth.email}`],
+        storeAs: "company"
       }
     ];
   })
