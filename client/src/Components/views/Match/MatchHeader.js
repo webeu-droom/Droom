@@ -5,14 +5,15 @@ import { medium_space_3 } from "../../~reusables/variables/spacing";
 import { Dropdown } from "../../~reusables/atoms/Dropdowns";
 import { tablet_max_width } from "../../~reusables/variables/media-queries";
 
-const MatchHeader = () => {
+const MatchHeader = ({ company, companyListings }) => {
   return (
     <StyleMH>
-      {/* Needs a conditional checking for company or candidate */}
       <h1>Matches</h1>
-      <Dropdown>
-        <option value="">Full Stack Web Developer</option>
-      </Dropdown>
+      {company && (
+        <Dropdown>
+          <option value="">All Listings</option>
+        </Dropdown>
+      )}
     </StyleMH>
   );
 };

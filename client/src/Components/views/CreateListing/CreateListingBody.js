@@ -1,10 +1,12 @@
 import React from "react";
+import styled from "styled-components";
+import CreateListingHeader from "./CreateListingHeader";
 import { compose, bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { firestoreConnect, firebaseConnect } from "react-redux-firebase";
 import uuid from "uuid";
 
-class CreateListing extends React.Component {
+class CreateListingBody extends React.Component {
   state = {
     position: "",
     location: "",
@@ -41,9 +43,11 @@ class CreateListing extends React.Component {
         console.log("It is working");
       });
   };
+
   render() {
-    console.log(this.state.description);
-    return (
+  return (
+    <StyledMatchBody>
+      <CreateListingHeader />
       <div>
         <input name="position" onChange={this.onChangeHandler} placeholder="Position" />
         <input name="location" onChange={this.onChangeHandler} placeholder="Location" />
@@ -60,9 +64,16 @@ class CreateListing extends React.Component {
         <button onClick={this.addDescription}>Add description</button>
         <button onClick={this.createListing}>Create Listing</button>
       </div>
-    );
+    </StyledMatchBody>
+  );
   }
-}
+};
+
+const StyledMatchBody = styled.div`
+  min-height: 100vh;
+  background: white;
+  width: 100%;
+`;
 
 const mapStateToProps = state => {
   return {
@@ -70,6 +81,7 @@ const mapStateToProps = state => {
     company: state.firestore.ordered.currentCompany ? state.firestore.ordered.currentCompany[0] : ""
   };
 };
+
 
 const dispatchStateToProps = dispatch => {
   return bindActionCreators({
@@ -92,4 +104,4 @@ export default compose(
       }
     ];
   })
-)(CreateListing);
+)(CreateListingBody);

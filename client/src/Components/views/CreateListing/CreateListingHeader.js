@@ -4,10 +4,10 @@ import { light_grey, black } from "../../~reusables/variables/colors";
 import { medium_space_3 } from "../../~reusables/variables/spacing";
 import { tablet_max_width } from "../../~reusables/variables/media-queries";
 
-const ListingHeader = () => {
+const CreateListingHeader = () => {
   return (
     <StyleMH>
-      <h1>Listing</h1>
+      <h1>Create Listing</h1>
     </StyleMH>
   );
 };
@@ -39,4 +39,4 @@ const StyleMH = styled.div`
   }
 `;
 
-export default ListingHeader;
+export default CreateListingHeader;

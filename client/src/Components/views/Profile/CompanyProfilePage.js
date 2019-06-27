@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { compose, bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { firestoreConnect, isEmpty } from "react-redux-firebase";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import ListingSummary from "./ListingSummary";
 import {
@@ -13,12 +14,12 @@ import {
 import { Input } from "../../~reusables/atoms/Inputs";
 import { source_sans_pro } from "../../~reusables/variables/font-family";
 import { body_1 } from "../../~reusables/variables/font-sizes";
-import { black, slate_grey } from "../../~reusables/variables/colors";
+import { black, slate_grey, blue } from "../../~reusables/variables/colors";
 import { tablet_max_width } from "../../~reusables/variables/media-queries";
 import {
   medium_space_1,
   medium_space_3,
-  small_space,
+  small_space
 } from "../../~reusables/variables/spacing";
 
 class CompanyProfilePage extends Component {
@@ -55,7 +56,12 @@ class CompanyProfilePage extends Component {
     }
   };
   render() {
-    console.log(this.props.company);
+    let jobListings = [];
+    if (this.props.company) {
+      jobListings = this.props.jobListings.filter(
+        listing => listing.companyId === this.props.company.id
+      );
+    }
     return (
       <StyledCompany>
         <section>
@@ -94,16 +100,27 @@ class CompanyProfilePage extends Component {
         <section className="right">
           <p className="label">Job Listings</p>
 
-          {/* // Listing Summary Array */}
-          <ListingSummary title="Full Stack Software Developer" listingId="1" />
-          <ListingSummary title="Front-End Developer" listingId="2" />
-          <ListingSummary title="Back-End Developer" listingId="3" />
+          {this.props.jobListings.length > 0
+            ? jobListings.map(listing => {
+                return (
+                  <ListingSummary
+                    key={listing.id}
+                    listingId={listing.id}
+                    title={listing.position}
+                  />
+                );
+              })
+            : null}
 
-          {/* // Listing Summary Array */}
+          {/* <ListingSummary title="Full Stack Software Developer" listingId="1" />
+          <ListingSummary title="Front-End Developer" listingId="2" />
+          <ListingSummary title="Back-End Developer" listingId="3" /> */}
 
           {this.props.jobListing &&
             this.props.jobListing.map(job => <div>{job}</div>)}
-          <TextButton className="text-button">Add Job Listing</TextButton>
+          <Link to="/profile/listing">
+            <TextButton className="text-button">Add Job Listing</TextButton>
+          </Link>
           <ButtonTertiary
             className="logout-button-mobile"
             onClick={this.props.handleLogout}
@@ -118,9 +135,9 @@ class CompanyProfilePage extends Component {
 
 const mapStateToProps = state => {
   return {
-    jobListing: state.firestore.ordered.jobListing
-      ? state.firestore.ordered.jobListing
-      : ""
+    jobListings: state.firestore.ordered.jobListings
+      ? state.firestore.ordered.jobListings
+      : []
   };
 };
 const mapDispatchToProps = dispatch => {
@@ -139,9 +156,9 @@ export default compose(
   firestoreConnect(props => {
     return [
       {
-        collection: "jobListing",
+        collection: "jobListings",
         where: ["companyId", "==", `${props.company.id}`],
-        storeAs: "jobListing"
+        storeAs: "jobListings"
       }
     ];
   })
@@ -176,8 +193,13 @@ const StyledCompany = styled.div`
     margin-bottom: ${small_space};
   }
 
+  a {
+    text-decoration: none;
+    color: ${black};
+  }
   .text-button {
     margin-bottom: ${small_space};
+    color: ${blue};
   }
 
   .logout-button-mobile {

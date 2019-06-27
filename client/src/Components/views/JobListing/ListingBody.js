@@ -4,8 +4,21 @@ import ListingHeader from "./ListingHeader";
 import { compose, bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { firestoreConnect, isEmpty, isLoaded } from "react-redux-firebase";
-import DescriptionList from "../../JobListing/DescriptionList";
-import RequitementList from "../../JobListing/RequitementList";
+import { withRouter } from "react-router-dom";
+import DescriptionList from "./DescriptionList";
+import RequitementList from "./RequitementList";
+import {
+  medium_space_1,
+  small_space,
+  medium_space_2,
+  medium_space_3
+} from "../../~reusables/variables/spacing";
+import { source_sans_pro } from "../../~reusables/variables/font-family";
+import { body_1 } from "../../~reusables/variables/font-sizes";
+import { black, slate_grey } from "../../~reusables/variables/colors";
+import { tablet_max_width } from "../../~reusables/variables/media-queries";
+import { Input } from "../../~reusables/atoms/Inputs";
+import { ButtonSecondary, ButtonPrimary } from "../../~reusables/atoms/Buttons";
 
 class ListingBody extends React.Component {
   state = {
@@ -32,7 +45,9 @@ class ListingBody extends React.Component {
       position: this.state.position,
       description: this.state.description
     };
-    let ref = this.props.firestore.collection("jobListings").doc(this.props.listing.id);
+    let ref = this.props.firestore
+      .collection("jobListings")
+      .doc(this.props.listing.id);
     ref
       .update({
         item
@@ -40,12 +55,19 @@ class ListingBody extends React.Component {
       .then(() => {
         this.setState({ isEditing: false });
       });
+    this.props.history.push("/profile");
   };
 
   editProfile = e => {
     e.preventDefault();
     let { location, description, requirements, position } = this.props.listing;
-    this.setState({ location, description, requirements, position, isEditing: true });
+    this.setState({
+      location,
+      description,
+      requirements,
+      position,
+      isEditing: true
+    });
   };
   editArray = e => {
     let newArray = this.state[e.target.name];
@@ -62,47 +84,66 @@ class ListingBody extends React.Component {
     return (
       <StyledListingBody>
         <ListingHeader position={this.state.position} />
-        {!this.state.isEditing ? (
-          <p>{this.props.listing.position}</p>
-        ) : (
-          <input
-            // defaultValue={this.props.listing.position}
-            value={this.state.position}
-            onChange={this.onChangeHandler}
-            name="position"
-            placeholder="Position"
-          />
-        )}
-        {!this.state.isEditing ? (
-          <p>{this.props.listing.location}</p>
-        ) : (
-          <input
-            value={this.props.listing.location}
-            onChange={this.onChangeHandler}
-            name="location"
-            placeholder="Location"
-          />
-        )}
-        {this.props.listing.description.map((desc, idx) => (
-          <DescriptionList
-            desc={desc}
-            id={idx}
-            stateDesc={this.state.description}
-            isEditing={this.state.isEditing}
-            editDescription={this.editArray}
-          />
-        ))}
-        {this.props.listing.requirements.map((req, idx) => (
-          <RequitementList
-            req={req}
-            id={idx}
-            stateReq={this.state.requirements}
-            isEditing={this.state.isEditing}
-            editRequirements={this.editArray}
-          />
-        ))}
-        <button onClick={this.editProfile}>Edit</button>
-        <button onClick={this.updateListing}>Save</button>
+        <div className="body">
+          <section>
+            <p className="label">Position</p>
+            {!this.state.isEditing ? (
+              <p className="divider">{this.props.listing.position}</p>
+            ) : (
+              <Input
+                // defaultValue={this.props.listing.position}
+                value={this.state.position}
+                onChange={this.onChangeHandler}
+                name="position"
+                placeholder="Position"
+              />
+            )}
+            {this.props.listing.description ? this.props.listing.description.map((desc, idx) => (
+              <>
+                <p className="label">Description {idx + 1}</p>
+                <DescriptionList
+                  desc={desc}
+                  id={idx}
+                  key={idx}
+                  stateDesc={this.state.description}
+                  isEditing={this.state.isEditing}
+                  editDescription={this.editArray}
+                />
+              </>
+            )) : null}
+          </section>
+          <section className="right">
+            <p className="label">Location</p>
+            {!this.state.isEditing ? (
+              <p className="divider">{this.props.listing.location}</p>
+            ) : (
+              <Input
+                value={this.props.listing.location}
+                onChange={this.onChangeHandler}
+                name="location"
+                placeholder="Location"
+              />
+            )}
+
+            {this.props.listing.requirements ? this.props.listing.requirements.map((req, idx) => (
+              <>
+                <p className="label">Requirement {idx + 1}</p>
+                <RequitementList
+                  req={req}
+                  id={idx}
+                  key={idx}
+                  stateReq={this.state.requirements}
+                  isEditing={this.state.isEditing}
+                  editRequirements={this.editArray}
+                />
+              </>
+            )) : null}
+            <ButtonSecondary className="edit" onClick={this.editProfile}>
+              Edit
+            </ButtonSecondary>
+            <ButtonPrimary onClick={this.updateListing}>Save</ButtonPrimary>
+          </section>
+        </div>
       </StyledListingBody>
     );
   }
@@ -112,11 +153,80 @@ const StyledListingBody = styled.div`
   min-height: 100vh;
   background: white;
   width: 100%;
+
+  .body {
+    margin: ${medium_space_1};
+    display: flex;
+    justify-content: space-between;
+
+    section {
+      width: 50%;
+      flex-grow: 1;
+      margin-right: ${small_space};
+    }
+
+    p.divider {
+      margin-bottom: ${medium_space_2};
+      border-bottom: 1px solid #eaeaea;
+    }
+
+    .right {
+      margin-left: ${medium_space_3};
+    }
+
+    .edit {
+      margin-right: ${small_space};
+      margin-bottom: ${small_space};
+    }
+
+    .text-button {
+      margin-bottom: ${small_space};
+    }
+
+    .logout-button-mobile {
+      display: none;
+    }
+
+    p {
+      line-height: ${medium_space_3};
+      font-family: ${source_sans_pro};
+      font-size: ${body_1};
+      color: ${black};
+    }
+
+    .label {
+      margin-bottom: ${small_space};
+      line-height: 0;
+      color: ${slate_grey};
+      font-size: ${body_1};
+    }
+
+    @media only screen and (max-width: ${tablet_max_width}) {
+      .logout-button-mobile {
+        display: block;
+        margin-top: ${small_space};
+      }
+    }
+
+    @media only screen and (max-width: 600px) {
+      flex-direction: column;
+
+      section {
+        width: 95%;
+      }
+
+      .right {
+        margin-left: 0;
+      }
+    }
+  }
 `;
 
 const mapStateToProps = state => {
   return {
-    listing: state.firestore.ordered.currentListing ? state.firestore.ordered.currentListing[0] : ""
+    listing: state.firestore.ordered.currentListing
+      ? state.firestore.ordered.currentListing[0]
+      : ""
   };
 };
 
@@ -126,18 +236,20 @@ const mapDispatchToProps = dispatch => {
   });
 };
 
-export default compose(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  ),
-  firestoreConnect(props => {
-    return [
-      {
-        collection: "jobListings",
-        doc: `${props.id}`,
-        storeAs: "currentListing"
-      }
-    ];
-  })
-)(ListingBody);
+export default withRouter(
+  compose(
+    connect(
+      mapStateToProps,
+      mapDispatchToProps
+    ),
+    firestoreConnect(props => {
+      return [
+        {
+          collection: "jobListings",
+          doc: `${props.id}`,
+          storeAs: "currentListing"
+        }
+      ];
+    })
+  )(ListingBody)
+);

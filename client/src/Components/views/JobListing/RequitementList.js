@@ -1,12 +1,13 @@
 import React from "react";
+import { Input } from "../../~reusables/atoms/Inputs";
 
 export default function(props) {
   return (
     <div>
       {!props.isEditing ? (
-        <p>{props.req}</p>
+        <p className="divider">{props.req}</p>
       ) : (
-        <input
+        <Input
           value={props.stateReq[props.id]}
           onChange={props.editRequirements}
           placeholder="Requirements"
