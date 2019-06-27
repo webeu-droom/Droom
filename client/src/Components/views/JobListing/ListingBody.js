@@ -180,7 +180,7 @@ const StyledListingBody = styled.div`
     }
 
     .text-button {
-      margin-bottom: ${small_space};
+      margin-bottom: ${medium_space_1};
     }
 
     .logout-button-mobile {
