@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { compose, bindActionCreators } from "redux";
 import { connect } from "react-redux";
@@ -29,11 +29,24 @@ const MatchBody = props => {
     userOrCompId = props.user.id;
   }
 
+  let companyJobListings;
   let matches;
   if (props.matches) {
     matches = Object.values(props.matches);
-    if (props.company) {
-      matches = props.matches.filter(match => match.companyId === userOrCompId);
+    if (props.company && props.jobListings) {
+      companyJobListings = fetchedJobListings.filter(
+        listing => listing.companyId === userOrCompId
+      );
+
+      matches = props.matches.filter(match => {
+        let foundListing = companyJobListings.find(listing => {
+          return listing.id === match.jobListingId;
+        });
+
+        if (foundListing) {
+          return match.jobListingId === foundListing.id;
+        }
+      });
     } else if (props.user) {
       matches = props.matches.filter(match => match.userId === userOrCompId);
     }
@@ -44,15 +57,10 @@ const MatchBody = props => {
 
   // If I'm a company, pull the corresponding user's data that matches one of my listings
   if (props.company && props.matches && fetchedUsers) {
-    let companyListings = fetchedJobListings.filter(
-      listing => listing.companyId === userOrCompId
-    );
-
     matches.forEach(match => {
       let foundUser = fetchedUsers.find(user => user.id === match.userId);
-
       foundUser.likedJobListings.forEach(likedListing => {
-        let matchedUser = companyListings.find(
+        let matchedUser = companyJobListings.find(
           companyListing => companyListing.id === likedListing
         );
         if (matchedUser) {
@@ -62,20 +70,17 @@ const MatchBody = props => {
     });
   }
 
-  // If I'm a user, check the company's listing data to see if I'm a liked user
+  // If I'm a user, check the job listing data to see if I'm a liked user
   if (props.user && props.matches && fetchedCompanies && fetchedJobListings) {
     matches.forEach(match => {
-      let foundCompany = fetchedCompanies.find(
-        company => company.id === match.companyId
-      );
-      let foundListings = fetchedJobListings.filter(
-        listing => listing.companyId === foundCompany.id
-      );
-      foundListings.forEach(listing => {
+      fetchedJobListings.forEach(listing => {
         let matchedListing = listing.likedUser.find(
           user => user === userOrCompId
         );
         if (matchedListing) {
+          let foundCompany = fetchedCompanies.find(
+            company => company.id === listing.companyId
+          );
           listings = [
             ...listings,
             {
@@ -91,7 +96,10 @@ const MatchBody = props => {
 
   return (
     <StyledMatchBody>
-      <MatchHeader company={props.company} />
+      <MatchHeader
+        company={props.company}
+        companyListings={companyJobListings}
+      />
 
       <div className="match-cards">
         {props.company &&

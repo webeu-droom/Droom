@@ -5,13 +5,14 @@ import { medium_space_3 } from "../../~reusables/variables/spacing";
 import { Dropdown } from "../../~reusables/atoms/Dropdowns";
 import { tablet_max_width } from "../../~reusables/variables/media-queries";
 
-const MatchHeader = ({ company }) => {
+const MatchHeader = ({ company, companyListings }) => {
+  console.log(company, companyListings)
   return (
     <StyleMH>
       <h1>Matches</h1>
       {company && (
         <Dropdown>
-          <option value="">Full Stack Web Developer</option>
+          <option value="">All Listings</option>
         </Dropdown>
       )}
     </StyleMH>
