@@ -3,7 +3,8 @@ import styled from "styled-components";
 import { ButtonPrimary } from "../atoms/Buttons";
 import { source_sans_pro } from "../variables/font-family";
 import { black, faded_blue } from "../variables/colors";
-import { heading_3, heading_4 } from "../variables/font-sizes";
+import { heading_3 } from "../variables/font-sizes";
+import Image from '../assets/popup-background.png'
 
 class Popup extends React.Component {
   render() {
@@ -11,7 +12,7 @@ class Popup extends React.Component {
       <StyledPopup>
         <div className="popup">
           <div className="popup-inner">
-            <h4>{this.props.text}</h4>
+            <h3>{this.props.text}</h3>
             <ButtonPrimary onClick={this.props.closePopup}>OK</ButtonPrimary>
           </div>
         </div>
@@ -27,7 +28,7 @@ const StyledPopup = styled.div`
     text-align: center;
     font-family: ${source_sans_pro};
     color: ${black};
-    font-size: ${heading_4};
+    font-size: ${heading_3};
   }
 
   .popup {
@@ -43,6 +44,8 @@ const StyledPopup = styled.div`
   }
   .popup-inner {
     background: ${faded_blue};
+    background-image: url(${Image});
+    background-size: cover;
     position: absolute;
     left: 25%;
     right: 25%;
