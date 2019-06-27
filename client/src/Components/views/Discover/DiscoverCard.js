@@ -52,6 +52,20 @@ const DetailSection = styled.div`
 const DiscoverCard = ({ data, display }) => {
   const infoHeader = data.education ? "Education" : "Requirements";
   const infoHeader2 = data.experience ? "Experience" : "Description";
+
+  const info2 = data.experience ? data.experience : data.description;
+
+  let dataInfo;
+  if (data.education !== undefined) {
+    dataInfo = <p>{data.education}</p>;
+  }
+
+  if (data.requirements !== undefined) {
+    dataInfo = data.requirements.map((info, index) => (
+      <p key={index}>{info}</p>
+    ));
+  }
+
   return (
     <Wrap>
       <Card display={display}>
@@ -74,18 +88,14 @@ const DiscoverCard = ({ data, display }) => {
         <DetailSection>
           <SubHeader>{infoHeader2}</SubHeader>
           <div>
-            {data.description.map((info, index) => {
+            {info2.map((info, index) => {
               return <p key={index}>{info}</p>;
             })}
           </div>
         </DetailSection>
         <DetailSection>
           <SubHeader>{infoHeader}</SubHeader>
-          <div>
-            {data.requirements.map((info, index) => {
-              return <p key={index}>{info}</p>;
-            })}
-          </div>
+          <div>{dataInfo}</div>
         </DetailSection>
       </Card>
     </Wrap>

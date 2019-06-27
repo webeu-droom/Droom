@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-// import listings from "../../data/mock";
+import Loader from "react-loader-spinner";
+import { blue } from "../../~reusables/variables/colors";
 import { ButtonPrimary, ButtonTertiary } from "../../~reusables/atoms/Buttons";
 import DiscoverHeader from "./DiscoverHeader";
 import DiscoverCard from "./DiscoverCard";
@@ -83,6 +84,16 @@ const DiscoverContent = ({ props }) => {
     }
   };
 
+  if (!list) {
+    return (
+      <StyledMatchBody onKeyDown={handleKeyPress} tabIndex="0">
+        <DiscoverHeader props={props} />
+        <CardWrap>
+          <Loader type="Circles" color={blue} height="500" width="500" />
+        </CardWrap>
+      </StyledMatchBody>
+    );
+  }
   return (
     <StyledMatchBody onKeyDown={handleKeyPress} tabIndex="0">
       <DiscoverHeader props={props} />
@@ -109,8 +120,6 @@ const StyledMatchBody = styled.div`
   background: white;
   width: 100%;
 `;
-
-// export default DiscoverContent;
 
 const mapStateToProps = state => {
   return {
