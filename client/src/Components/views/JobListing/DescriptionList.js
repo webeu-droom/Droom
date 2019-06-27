@@ -4,6 +4,7 @@ import { Input } from "../../~reusables/atoms/Inputs";
 export default function DescriptionList(props) {
   return (
     <div>
+      <p className="label">Description {props.id + 1}</p>
       {!props.isEditing ? (
         <p className="divider">{props.desc}</p>
       ) : (

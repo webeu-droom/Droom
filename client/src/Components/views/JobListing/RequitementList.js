@@ -4,6 +4,7 @@ import { Input } from "../../~reusables/atoms/Inputs";
 export default function(props) {
   return (
     <div>
+      <p className="label">Requirement {props.id + 1}</p>
       {!props.isEditing ? (
         <p className="divider">{props.req}</p>
       ) : (
