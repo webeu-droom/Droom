@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { compose, bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
-import { firestoreConnect, firebaseConnect } from "react-redux-firebase";
+import { firestoreConnect, firebaseConnect, isLoaded, isEmpty } from "react-redux-firebase";
 import ChatHeader from "./ChatHeader";
 import ChatMessage from "./ChatMessage";
 import {
@@ -22,6 +22,10 @@ import { source_sans_pro } from "../../~reusables/variables/font-family";
 import ComponentLoader from "../../~reusables/components/ComponentLoader";
 
 const ChatBody = props => {
+  if (isLoaded(props.auth) && isEmpty(props.auth)) {
+    props.history.push("/login");
+  }
+
   const [textMessage, setTextMessage] = useState("");
   const matchId = props.match.params.id;
   let messages = [];

@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { compose, bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
-import { firestoreConnect, firebaseConnect } from "react-redux-firebase";
+import { firestoreConnect, firebaseConnect, isLoaded, isEmpty } from "react-redux-firebase";
 import MatchHeader from "./MatchHeader";
 import MatchCard from "./MatchCard";
 import ComponentLoader from "../../~reusables/components/ComponentLoader";
@@ -11,6 +11,9 @@ import { black } from "../../~reusables/variables/colors";
 import { source_sans_pro } from "../../~reusables/variables/font-family";
 
 const MatchBody = props => {
+  if (isLoaded(props.auth) && isEmpty(props.auth)) {
+    props.history.push("/login");
+  }
   const [filteredUsers, setFilteredUsers] = useState("");
   let fetchedCompanies, fetchedJobListings, fetchedUsers;
   if (props.companies) {
@@ -131,10 +134,11 @@ const MatchBody = props => {
       <div className="match-cards">
         {props.company && filteredUsers
           ? filteredUsers.map((user, idx) => {
+            console.log(filteredUsers);
               return (
                 <MatchCard
                   key={idx}
-                  matchesId={user.matchId}
+                  matchesId={user.foundUser.matchId}
                   name={user.foundUser.user.name}
                   message={user.foundUser.user.biography}
                   title={user.foundUser.user.position}
