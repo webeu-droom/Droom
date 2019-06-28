@@ -43,9 +43,9 @@ class ProfileBody extends React.Component {
   };
 
   render() {
-    // if (isLoaded(this.props.auth) && isEmpty(this.props.auth)) {
-    //   this.props.history.push("/login");
-    // }
+    if (isLoaded(this.props.auth) && isEmpty(this.props.auth)) {
+      this.props.history.push("/login");
+    }
     console.log(isEmpty(this.props.auth));
 
     return (

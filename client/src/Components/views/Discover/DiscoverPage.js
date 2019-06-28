@@ -5,7 +5,7 @@ import { compose, bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
 
-import { firestoreConnect, firebaseConnect } from "react-redux-firebase";
+import { firestoreConnect, firebaseConnect, isLoaded, isEmpty } from "react-redux-firebase";
 
 import DiscoverContent from "./DiscoverContent";
 import LayoutSidebar from "../../~reusables/components/Sidebar";
@@ -14,6 +14,9 @@ import MobileNavbar from "../../~reusables/components/MobileNavbar";
 import { tablet_max_width } from "../../~reusables/variables/media-queries";
 
 export const DiscoverPage = props => {
+  if (isLoaded(props.auth) && isEmpty(props.auth)) {
+    props.history.push("/login");
+  }
   const { company, user, history } = props;
 
   useEffect(() => {
@@ -23,7 +26,6 @@ export const DiscoverPage = props => {
       history.push("/discover/candidates");
     }
   }, [company, user, history]);
-
   return (
     <StyledMatch>
       <LayoutSidebar icons={sidebarIcons} texts={sidebarTexts} />

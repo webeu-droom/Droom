@@ -4,7 +4,7 @@ import CreateListingHeader from "./CreateListingHeader";
 import { withRouter } from "react-router-dom";
 import { compose, bindActionCreators } from "redux";
 import { connect } from "react-redux";
-import { firestoreConnect, firebaseConnect } from "react-redux-firebase";
+import { firestoreConnect, firebaseConnect, isLoaded, isEmpty } from "react-redux-firebase";
 import uuid from "uuid";
 import { ButtonPrimary, TextButton } from "../../~reusables/atoms/Buttons";
 import {
@@ -68,6 +68,10 @@ class CreateListingBody extends React.Component {
   };
 
   render() {
+    if (isLoaded(this.props.auth) && isEmpty(this.props.auth)) {
+      this.props.history.push("/login");
+    }
+
     return (
       <StyledMatchBody>
         <CreateListingHeader />
