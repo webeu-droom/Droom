@@ -17,7 +17,6 @@ import ComponentLoader from "../../~reusables/components/ComponentLoader";
 
 class ProfileBody extends React.Component {
   componentDidMount() {
-    console.log(this.props);
     if (this.props.user) {
       this.setState({
         name: this.props.user.name,
@@ -27,7 +26,7 @@ class ProfileBody extends React.Component {
         biography: this.props.user.biography,
         education: this.props.user.education
       });
-    } else {
+    } else if (this.props.company) {
       this.setState({
         name: this.props.company.name,
         description: this.props.company.companyDescription,
@@ -39,22 +38,31 @@ class ProfileBody extends React.Component {
     console.log("hello");
     this.props.firebase.logout().then(() => {
       this.props.clearFirestore();
+      this.props.history.push("/login");
     });
   };
 
   render() {
-    if (isLoaded(this.props.auth) && isEmpty(this.props.auth)) {
-      this.props.history.push("/login");
-    }
+    // if (isLoaded(this.props.auth) && isEmpty(this.props.auth)) {
+    //   this.props.history.push("/login");
+    // }
     console.log(isEmpty(this.props.auth));
 
     return (
       <StyledMatchBody>
         <ProfileHeader handleLogout={this.handleLogout} />
         <div>
-          {this.props.user && <UserProfilePage user={this.props.user} handleLogout={this.handleLogout} />}
+          {this.props.user && (
+            <UserProfilePage
+              user={this.props.user}
+              handleLogout={this.handleLogout}
+            />
+          )}
           {this.props.company && (
-            <CompanyProfilePage company={this.props.company} handleLogout={this.handleLogout} />
+            <CompanyProfilePage
+              company={this.props.company}
+              handleLogout={this.handleLogout}
+            />
           )}
           {!this.props.user && !this.props.company ? <ComponentLoader /> : null}
         </div>
