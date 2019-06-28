@@ -5,7 +5,7 @@ import { compose, bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
 
-import { firestoreConnect, firebaseConnect, isLoaded, isEmpty } from "react-redux-firebase";
+import { firestoreConnect, firebaseConnect } from "react-redux-firebase";
 
 import DiscoverContent from "./DiscoverContent";
 import LayoutSidebar from "../../~reusables/components/Sidebar";

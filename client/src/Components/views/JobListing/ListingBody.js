@@ -7,7 +7,7 @@ import { firestoreConnect, isEmpty, isLoaded } from "react-redux-firebase";
 import { withRouter } from "react-router-dom";
 import DescriptionList from "./DescriptionList";
 import RequitementList from "./RequitementList";
-import { medium_space_1, small_space, medium_space_2, medium_space_3 } from "../../~reusables/variables/spacing";
+import { medium_space_1, small_space, medium_space_3 } from "../../~reusables/variables/spacing";
 import { source_sans_pro } from "../../~reusables/variables/font-family";
 import { body_1 } from "../../~reusables/variables/font-sizes";
 import { black, slate_grey } from "../../~reusables/variables/colors";

@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { compose, bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
-import { firestoreConnect, firebaseConnect, isLoaded, isEmpty } from "react-redux-firebase";
+import { firestoreConnect, firebaseConnect } from "react-redux-firebase";
 import MatchHeader from "./MatchHeader";
 import MatchCard from "./MatchCard";
 import ComponentLoader from "../../~reusables/components/ComponentLoader";

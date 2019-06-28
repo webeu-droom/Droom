@@ -4,13 +4,12 @@ import CreateListingHeader from "./CreateListingHeader";
 import { withRouter } from "react-router-dom";
 import { compose, bindActionCreators } from "redux";
 import { connect } from "react-redux";
-import { firestoreConnect, firebaseConnect, isLoaded, isEmpty } from "react-redux-firebase";
+import { firestoreConnect, firebaseConnect } from "react-redux-firebase";
 import uuid from "uuid";
 import { ButtonPrimary, TextButton } from "../../~reusables/atoms/Buttons";
 import {
   medium_space_1,
   small_space,
-  medium_space_2,
   medium_space_3
 } from "../../~reusables/variables/spacing";
 import { source_sans_pro } from "../../~reusables/variables/font-family";
