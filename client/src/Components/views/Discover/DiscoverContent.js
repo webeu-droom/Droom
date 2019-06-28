@@ -18,11 +18,9 @@ justify-content: space between;
     > div {
       width: 100%;
     }
-
     button {
       box-shadow: 0px 1px 5px rgba(151, 162, 185, 0.2), 0px 3px 4px rgba(151, 162, 185, 0.12), 0px 2px 4px rgba(151, 162, 185, 0.14);
     }
-
     .button-left {
       order: 1;
       margin: ${small_space};
