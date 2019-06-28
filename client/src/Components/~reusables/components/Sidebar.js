@@ -7,8 +7,6 @@ import { withRouter } from "react-router";
 import {
   firestoreConnect,
   firebaseConnect,
-  isEmpty,
-  isLoaded
 } from "react-redux-firebase";
 import ProfileImage from "./ProfileImage";
 import SideNavItem from "./SideNavItem";
