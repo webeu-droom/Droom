@@ -11,9 +11,6 @@ import { black } from "../../~reusables/variables/colors";
 import { source_sans_pro } from "../../~reusables/variables/font-family";
 
 const MatchBody = props => {
-  if (isLoaded(props.auth) && isEmpty(props.auth)) {
-    props.history.push("/login");
-  }
   const [filteredUsers, setFilteredUsers] = useState("");
   let fetchedCompanies, fetchedJobListings, fetchedUsers;
   if (props.companies) {

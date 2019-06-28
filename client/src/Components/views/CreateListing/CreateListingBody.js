@@ -68,9 +68,6 @@ class CreateListingBody extends React.Component {
   };
 
   render() {
-    if (isLoaded(this.props.auth) && isEmpty(this.props.auth)) {
-      this.props.history.push("/login");
-    }
 
     return (
       <StyledMatchBody>
