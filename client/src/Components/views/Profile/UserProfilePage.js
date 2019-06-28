@@ -230,7 +230,7 @@ const StyledCandidate = styled.div`
   }
 
   p.divider {
-    margin-bottom: ${medium_space_2};
+    padding-bottom: ${small_space};
     border-bottom: 1px solid #eaeaea;
   }
 
@@ -252,7 +252,7 @@ const StyledCandidate = styled.div`
   }
 
   p {
-    line-height: ${medium_space_3};
+    line-height: ${medium_space_1};
     font-family: ${source_sans_pro};
     font-size: ${body_1};
     color: ${black};
