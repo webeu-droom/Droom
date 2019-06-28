@@ -14,9 +14,6 @@ import MobileNavbar from "../../~reusables/components/MobileNavbar";
 import { tablet_max_width } from "../../~reusables/variables/media-queries";
 
 export const DiscoverPage = props => {
-  if (isLoaded(props.auth) && isEmpty(props.auth)) {
-    props.history.push("/login");
-  }
   const { company, user, history } = props;
 
   useEffect(() => {

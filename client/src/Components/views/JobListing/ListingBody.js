@@ -76,9 +76,6 @@ class ListingBody extends React.Component {
     this.setState({ [e.target.name]: newArray });
   };
   render() {
-    if (isLoaded(this.props.auth) && isEmpty(this.props.auth)) {
-      this.props.history.push("/login");
-    }
     if (!isLoaded(this.props.listing) || isEmpty(this.props.listing)) {
       return <h1>Loading...</h1>;
     } else if (isLoaded(this.props.listing) && isEmpty(this.props.listing)) {

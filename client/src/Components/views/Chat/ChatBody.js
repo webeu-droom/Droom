@@ -22,9 +22,6 @@ import { source_sans_pro } from "../../~reusables/variables/font-family";
 import ComponentLoader from "../../~reusables/components/ComponentLoader";
 
 const ChatBody = props => {
-  if (isLoaded(props.auth) && isEmpty(props.auth)) {
-    props.history.push("/login");
-  }
 
   const [textMessage, setTextMessage] = useState("");
   const matchId = props.match.params.id;

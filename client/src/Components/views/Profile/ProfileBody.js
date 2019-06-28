@@ -43,7 +43,7 @@ class ProfileBody extends React.Component {
   };
 
   render() {
-    if (isLoaded(this.props.auth) && isEmpty(this.props.auth)) {
+    if (isLoaded(this.props.auth) && isEmpty(this.props.auth) && this.props.profile.isEmpty) {
       this.props.history.push("/login");
     }
     console.log(isEmpty(this.props.auth));
@@ -104,15 +104,17 @@ export default withRouter(
     ),
     firebaseConnect(),
     firestoreConnect(props => {
+      console.log(props);
+      let auth = props.auth.email ? props.auth.email : props.profile.email;
       return [
         {
           collection: "users",
-          where: ["userEmail", "==", `${props.auth.email}`],
+          where: ["userEmail", "==", `${auth}`],
           storeAs: "currentUser"
         },
         {
           collection: "companies",
-          where: ["companyEmail", "==", `${props.auth.email}`],
+          where: ["companyEmail", "==", `${auth}`],
           storeAs: "currentCompany"
         }
       ];
