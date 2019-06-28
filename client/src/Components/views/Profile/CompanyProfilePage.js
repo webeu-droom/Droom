@@ -215,7 +215,7 @@ const StyledCompany = styled.div`
   }
 
   p {
-    margin-bottom: ${medium_space_3};
+    line-height: ${medium_space_1};
     font-family: ${source_sans_pro};
     font-size: ${body_1};
     color: ${black};
