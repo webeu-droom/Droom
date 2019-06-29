@@ -5,26 +5,16 @@ import { medium_space_3 } from "../../~reusables/variables/spacing";
 import { Dropdown } from "../../~reusables/atoms/Dropdowns";
 import { tablet_max_width } from "../../~reusables/variables/media-queries";
 
-const DiscoverHeader = ({ props, getFilteredUsers, sortedCoy }) => {
+const DiscoverHeader = ({props}) => {
   const listType = props.match.params.type;
-  const Title = listType === "jobs" ? "Companies" : "Candidates";
-  const dropDownHandler = input => {
-    getFilteredUsers(input.target.value);
-  };
+  const Title =
+      listType === "jobs" ? 'Companies' : 'Candidates';
   return (
     <StyleMH>
+      {/* Needs a conditional checking for company or candidate */}
       <h1>{Title}</h1>
-      <Dropdown onChange={dropDownHandler}>
-        <option value="all-listings">All Job Listings</option>
-        {sortedCoy
-          ? sortedCoy.map((job, index) => {
-              return (
-                <option key={index} value={job.companyId}>
-                  {job.position}
-                </option>
-              );
-            })
-          : null}
+      <Dropdown>
+        <option value="">Full Stack Web Developer</option>
       </Dropdown>
     </StyleMH>
   );
