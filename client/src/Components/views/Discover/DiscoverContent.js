@@ -5,27 +5,49 @@ import { blue } from "../../~reusables/variables/colors";
 import { ButtonPrimary, ButtonTertiary } from "../../~reusables/atoms/Buttons";
 import DiscoverHeader from "./DiscoverHeader";
 import DiscoverCard from "./DiscoverCard";
-import { tablet_max_width } from "../../~reusables/variables/media-queries";
-
 import { compose, bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
-
 import {
   firestoreConnect,
   firebaseConnect,
   isEmpty,
   isLoaded
 } from "react-redux-firebase";
+import { tablet_max_width } from "../../~reusables/variables/media-queries";
+import {
+  medium_space_3,
+  small_space,
+  medium_space_1,
+  extra_small_space
+} from "../../~reusables/variables/spacing";
 
 const CardWrap = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 70%;
-  padding: 0 10rem;
-  @media only screen and (max-width: ${tablet_max_width}) {
-    flex-direction: column;
+  padding: ${medium_space_3};
+  @media only screen and (max-width: 910px) {
+    flex-wrap: wrap;
+    justify-content: space between;
+    > div {
+      width: 100%;
+    }
+    button {
+      box-shadow: 0px 1px 5px rgba(151, 162, 185, 0.2),
+        0px 3px 4px rgba(151, 162, 185, 0.12),
+        0px 2px 4px rgba(151, 162, 185, 0.14);
+    }
+    .button-left {
+      order: 1;
+      margin: ${small_space};
+      margin-right: ${extra_small_space};
+    }
+    .button-right {
+      order: 2;
+      margin: ${small_space};
+      margin-left: ${extra_small_space};
+    }
   }
 `;
 
@@ -115,10 +137,23 @@ const DiscoverContent = ({ props }) => {
       }
     }
   };
-  const leftClick = () => {};
+  let lastCard = list.length - 1;
 
-  const rightClick = () => {};
+  const leftClick = () => {
+    if (selected === 0) {
+      setSelected(lastCard);
+    } else {
+      setSelected(selected - 1);
+    }
+  };
 
+  const rightClick = () => {
+    if (selected === lastCard) {
+      setSelected(0);
+    } else {
+      setSelected(selected + 1);
+    }
+  };
   const handleKeyPress = event => {
     if (event.key === "ArrowLeft") {
       leftClick();
@@ -148,7 +183,9 @@ const DiscoverContent = ({ props }) => {
         getFilteredUsers={getFilteredUsers}
       />
       <CardWrap>
-        <ButtonTertiary onClick={leftClick}>REJECT</ButtonTertiary>
+        <ButtonTertiary className="button-left" onClick={leftClick}>
+          REJECT
+        </ButtonTertiary>
         {list.map((arr, index) => {
           return (
             <DiscoverCard
@@ -160,7 +197,9 @@ const DiscoverContent = ({ props }) => {
             />
           );
         })}
-        <ButtonPrimary onClick={rightClick}>APPROVE</ButtonPrimary>
+        <ButtonPrimary className="button-right" onClick={rightClick}>
+          APPROVE
+        </ButtonPrimary>
       </CardWrap>
     </StyledMatchBody>
   );
