@@ -5,6 +5,7 @@ import { blue } from "../../~reusables/variables/colors";
 import { ButtonPrimary, ButtonTertiary } from "../../~reusables/atoms/Buttons";
 import DiscoverHeader from "./DiscoverHeader";
 import DiscoverCard from "./DiscoverCard";
+
 import { tablet_max_width } from "../../~reusables/variables/media-queries";
 
 import { compose, bindActionCreators } from "redux";

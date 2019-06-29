@@ -23,7 +23,6 @@ export const DiscoverPage = props => {
       history.push("/discover/candidates");
     }
   }, [company, user, history]);
-
   return (
     <StyledMatch>
       <LayoutSidebar icons={sidebarIcons} texts={sidebarTexts} />

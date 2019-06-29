@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { compose, bindActionCreators } from "redux";
 import { firebaseConnect, withFirestore, isEmpty } from "react-redux-firebase";
+import Popup from "../../~reusables/components/Popup";
 import LandingHeader from "../../~reusables/components/LandingHeader";
 import LandingFooter from "../../~reusables/components/LandingFooter";
 import { ButtonPrimary } from "../../~reusables/atoms/Buttons";
@@ -21,8 +22,16 @@ class Login extends React.Component {
     })
   };
   state = {
+    errorMessage: "",
+    showPopup: false,
     email: "",
     password: ""
+  };
+
+  togglePopup = () => {
+    this.setState({
+      showPopup: !this.state.showPopup
+    });
   };
 
   handleLogin = e => {
@@ -34,6 +43,10 @@ class Login extends React.Component {
       })
       .then(() => {
         this.props.history.push("/discover");
+      })
+      .catch(err => {
+        this.setState({ errorMessage: err.message });
+        this.togglePopup();
       });
   };
 
@@ -47,6 +60,9 @@ class Login extends React.Component {
     return (
       <StyledLogin>
         <LandingHeader />
+        {this.state.showPopup ? (
+          <Popup text={this.state.errorMessage} closePopup={this.togglePopup} />
+        ) : null}
         <form onSubmit={this.handleLogin}>
           <h1>Login to your Account</h1>
           <Input

@@ -5,6 +5,7 @@ import { firebaseConnect, withFirestore, isEmpty } from "react-redux-firebase";
 import styled from "styled-components";
 import uuid from "uuid";
 import PropTypes from "prop-types";
+import Popup from "../../~reusables/components/Popup";
 import { heading_2 } from "../../~reusables/variables/font-sizes";
 import { source_sans_pro } from "../../~reusables/variables/font-family";
 import { medium_space_1 } from "../../~reusables/variables/spacing";
@@ -24,11 +25,19 @@ class Register extends React.Component {
   };
 
   state = {
+    errorMessage: "",
+    showPopup: false,
     email: "",
     password: "",
     name: "",
     createCompany: false,
     createUser: false
+  };
+
+  togglePopup = () => {
+    this.setState({
+      showPopup: !this.state.showPopup
+    });
   };
 
   onClickHandler = event => {
@@ -89,12 +98,19 @@ class Register extends React.Component {
 
   handleRegister = event => {
     event.preventDefault();
+
     const { name, email, password } = this.state;
-    this.props.firebase.createUser({ email, password }, { name, email }).then(() => {
-      this.props.firebase.login({ email, password }).then(res => {
-        this.saveUserToDatabase(res);
+    this.props.firebase
+      .createUser({ email, password }, { name, email })
+      .then(() => {
+        this.props.firebase.login({ email, password }).then(res => {
+          this.saveUserToDatabase(res);
+        });
+      })
+      .catch(err => {
+        this.setState({ errorMessage: err.message });
+        this.togglePopup();
       });
-    });
   };
   render() {
     if (!isEmpty(this.props.auth)) {
@@ -103,10 +119,18 @@ class Register extends React.Component {
     return (
       <StyledRegister>
         <LandingHeader />
+        {this.state.showPopup ? (
+          <Popup text={this.state.errorMessage} closePopup={this.togglePopup} />
+        ) : null}
         <form onSubmit={this.handleRegister}>
           <h1>Register for your Account</h1>
 
-          <Input placeholder="Name" name="name" value={this.state.fullName} onChange={this.onChangeHandler} />
+          <Input
+            placeholder="Name"
+            name="name"
+            value={this.state.fullName}
+            onChange={this.onChangeHandler}
+          />
           <Input
             placeholder="Email"
             name="email"

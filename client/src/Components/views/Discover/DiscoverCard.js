@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { slate_grey } from "../../~reusables/variables/colors";
 import { body_2, body_1 } from "../../~reusables/variables/font-sizes";
 import ProfileImage from "../../~reusables/components/ProfileImage";
+import { small_space, extra_small_space } from "../../~reusables/variables/spacing";
 
 const Wrap = styled.div`
   /* Rectangle */
@@ -13,6 +14,17 @@ const Wrap = styled.div`
 
   /* White */
   background: #ffffff;
+
+  p {
+    margin: 0;
+    padding: 0 ${extra_small_space} ${extra_small_space} ${extra_small_space};
+  }
+  .location {
+    padding-top: 0;
+  }
+  .email {
+    padding-bottom: 0;
+  }
 `;
 const ImageWrap = styled.div`
   display: flex;
@@ -34,19 +46,26 @@ const Card = styled.div`
   text-align: center;
   line-height: 20px;
   font-size: ${body_2};
+  box-shadow: 0px 1px 5px rgba(151, 162, 185, 0.3), 0px 3px 4px rgba(151, 162, 185, 0.16), 0px 2px 4px rgba(151, 162, 185, 0.19);
 `;
 
 const SubHeader = styled.div`
   font-size: ${body_1};
   color: ${slate_grey};
+  padding: 4px 0;
 `;
 
 const DetailSection = styled.div`
   border-top: 1px solid ${slate_grey};
   margin: 0 auto;
+  padding: ${extra_small_space} 0;
   text-align: center;
-  line-height: 1.5rem;
+  line-height: 1.2rem;
   font-size: ${body_2};
+
+  ul li {
+    text-align: left;
+  }
 `;
 
 const DiscoverCard = ({ data, display }) => {
@@ -68,6 +87,7 @@ const DiscoverCard = ({ data, display }) => {
 
   return (
     <Wrap>
+
       <Card display={display}>
         <ImageWrap>
           <ProfileImage
