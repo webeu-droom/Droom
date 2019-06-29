@@ -37,7 +37,8 @@ const StyledImage = styled.div`
     p {
         text-align: center;
         color: ${black};
-        font-size: ${body_1}
+        font-size: ${body_1};
+        font-weight: 600;
     }
 `
 

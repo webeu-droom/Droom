@@ -23,7 +23,6 @@ export const DiscoverPage = props => {
       history.push("/discover/candidates");
     }
   }, [company, user, history]);
-
   return (
     <StyledMatch>
       <LayoutSidebar icons={sidebarIcons} texts={sidebarTexts} />
@@ -46,22 +45,9 @@ const mapStateToProps = state => {
   return {
     auth: state.firebase.auth,
     profile: state.firebase.profile,
-    user: state.firestore.ordered.currentUser
-      ? state.firestore.ordered.currentUser[0]
-      : "",
-    company: state.firestore.ordered.currentCompany
-      ? state.firestore.ordered.currentCompany[0]
-      : "",
-    matches: state.firestore.ordered.matches
-      ? state.firestore.ordered.matches
-      : [],
-    jobs: state.firestore.ordered.jobs ? state.firestore.ordered.jobs : [],
-    candidates: state.firestore.ordered.candidates
-      ? state.firestore.ordered.candidates
-      : [],
-    companies: state.firestore.ordered.companies
-      ? state.firestore.ordered.companies
-      : []
+    user: state.firestore.ordered.currentUser ? state.firestore.ordered.currentUser[0] : "",
+    company: state.firestore.ordered.currentCompany ? state.firestore.ordered.currentCompany[0] : "",
+    matches: state.firestore.ordered.matches ? state.firestore.ordered.matches : []
   };
 };
 
@@ -92,18 +78,6 @@ export default withRouter(
           collection: "companies",
           where: ["companyEmail", "==", `${props.auth.email}`],
           storeAs: "currentCompany"
-        },
-        {
-          collection: "jobListings",
-          storeAs: "jobs"
-        },
-        {
-          collection: "users",
-          storeAs: "candidates"
-        },
-        {
-          collection: "companies",
-          storeAs: "companies"
         }
       ];
     })

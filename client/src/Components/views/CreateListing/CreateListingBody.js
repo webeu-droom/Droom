@@ -10,7 +10,6 @@ import { ButtonPrimary, TextButton } from "../../~reusables/atoms/Buttons";
 import {
   medium_space_1,
   small_space,
-  medium_space_2,
   medium_space_3
 } from "../../~reusables/variables/spacing";
 import { source_sans_pro } from "../../~reusables/variables/font-family";
@@ -68,6 +67,7 @@ class CreateListingBody extends React.Component {
   };
 
   render() {
+
     return (
       <StyledMatchBody>
         <CreateListingHeader />
@@ -148,7 +148,7 @@ const StyledMatchBody = styled.div`
     }
 
     p.divider {
-      margin-bottom: ${medium_space_2};
+      padding-bottom: ${small_space};
       border-bottom: 1px solid #eaeaea;
     }
 
@@ -174,7 +174,7 @@ const StyledMatchBody = styled.div`
     }
 
     p {
-      line-height: ${medium_space_3};
+      line-height: ${medium_space_1};
       font-family: ${source_sans_pro};
       font-size: ${body_1};
       color: ${black};
