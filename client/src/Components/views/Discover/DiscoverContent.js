@@ -53,6 +53,7 @@ const CardWrap = styled.div`
 const DiscoverContent = ({props}) => {
   const [list, setList] = useState([]);
   const [selected, setSelected] = useState(0);
+  const [filteredUsers, setFilteredUsers] = useState("");
   const listType = props.match.params.type;
 
   useEffect(() => {
