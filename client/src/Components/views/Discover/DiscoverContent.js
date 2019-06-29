@@ -4,38 +4,22 @@ import listings from "../../data/mock";
 import { ButtonPrimary, ButtonTertiary } from "../../~reusables/atoms/Buttons";
 import DiscoverHeader from "./DiscoverHeader";
 import DiscoverCard from "./DiscoverCard";
-import { compose, bindActionCreators } from "redux";
-import { connect } from "react-redux";
-import { withRouter } from "react-router";
-import {
-  firestoreConnect,
-  firebaseConnect,
-  isEmpty,
-  isLoaded
-} from "react-redux-firebase";
-import { tablet_max_width } from "../../~reusables/variables/media-queries";
-import {
-  medium_space_3,
-  small_space,
-  medium_space_1,
-  extra_small_space
-} from "../../~reusables/variables/spacing";
+import {tablet_max_width} from '../../~reusables/variables/media-queries'
+import { medium_space_3, small_space, medium_space_1, extra_small_space } from "../../~reusables/variables/spacing";
 
 const CardWrap = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: ${medium_space_3};
-  @media only screen and (max-width: 910px) {
-    flex-wrap: wrap;
-    justify-content: space between;
+display: flex;
+justify-content: center;
+align-items: center;
+padding: ${medium_space_3};
+@media only screen and (max-width: 910px) {
+flex-wrap: wrap;
+justify-content: space between;
     > div {
       width: 100%;
     }
     button {
-      box-shadow: 0px 1px 5px rgba(151, 162, 185, 0.2),
-        0px 3px 4px rgba(151, 162, 185, 0.12),
-        0px 2px 4px rgba(151, 162, 185, 0.14);
+      box-shadow: 0px 1px 5px rgba(151, 162, 185, 0.2), 0px 3px 4px rgba(151, 162, 185, 0.12), 0px 2px 4px rgba(151, 162, 185, 0.14);
     }
     .button-left {
       order: 1;
@@ -92,23 +76,18 @@ const DiscoverContent = ({props}) => {
     <StyledMatchBody onKeyDown={handleKeyPress} tabIndex="0">
       <DiscoverHeader props={props}/>
       <CardWrap>
-        <ButtonTertiary className="button-left" onClick={leftClick}>
-          REJECT
-        </ButtonTertiary>
-        {list.map((arr, index) => {
-          return (
-            <DiscoverCard
-              data={arr}
-              key={arr.id}
-              index={index}
-              display={selected === index ? "on" : "off"}
-              handleKeyPress={handleKeyPress}
-            />
-          );
-        })}
-        <ButtonPrimary className="button-right" onClick={rightClick}>
-          APPROVE
-        </ButtonPrimary>
+      <ButtonTertiary className='button-left' onClick={leftClick}>REJECT</ButtonTertiary>
+            {list.map((arr, index) => {
+              return (
+                <DiscoverCard
+                  data={arr}
+                  key={arr.id}
+                  display={selected === index ? "on" : "off"}
+                  handleKeyPress={handleKeyPress}
+                />
+              );
+            })}
+            <ButtonPrimary className='button-right' onClick={rightClick}>APPROVE</ButtonPrimary>
       </CardWrap>
       
     </StyledMatchBody>
