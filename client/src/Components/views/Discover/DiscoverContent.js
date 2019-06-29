@@ -33,6 +33,8 @@ const DiscoverContent = ({ props }) => {
   const { jobs, companies, candidates, auth, company, user } = props;
   const [list, setList] = useState([]);
   const [selected, setSelected] = useState(0);
+  // const [chosenListing, setChosenListing] = useState({});
+  const [filteredUsers, setFilteredUsers] = useState("");
   const listType = props.match.params.type;
   const processedData = (arr1, arr2) => {
     let sortData = [];
@@ -56,7 +58,61 @@ const DiscoverContent = ({ props }) => {
     const stateRender = listType === "jobs" ? cleanData : candidates;
     setList(stateRender);
   }, [candidates, companies, jobs, listType]);
-  console.log(props);
+
+  const companySpecificJobs = processedData(jobs, [...companies]);
+  const sortedCoy = companySpecificJobs.filter(job => {
+    if (company !== undefined && company.companyEmail === auth.email) {
+      return job.companyId === company.id;
+    }
+  });
+  let availableUsers = [];
+  const getFilteredUsers = chosenListing => {
+    if (chosenListing === "all-listings") {
+      if (sortedCoy) {
+        let userSort = sortedCoy.map(coy => {
+          let unLikedUsers = coy.dislikedUser;
+          if (unLikedUsers.length !== 0) {
+            return candidates.map(candidate => {
+              return unLikedUsers.map(user => {
+                if (candidate.id !== user.id) {
+                  availableUsers = [...availableUsers, candidate];
+                }
+                return availableUsers;
+              });
+            });
+          } else {
+            return (availableUsers = [...availableUsers, ...candidates]);
+          }
+        });
+        let unique = new Set(...userSort);
+        let data = [...unique];
+        setList(data);
+      }
+    } else {
+      setFilteredUsers([]);
+      let activeJob = sortedCoy.find(currentJob => {
+        return currentJob.companyId === chosenListing;
+      });
+
+      if (activeJob) {
+        let unLikedUser = Object.values(activeJob.dislikedUser);
+        if (unLikedUser.length === 0) {
+          setList(candidates);
+        } else {
+          let userSort = candidates.map(candidate => {
+            return unLikedUser.map(user => {
+              console.log(user);
+              if (candidate.id !== user.id) {
+                return (availableUsers = [...availableUsers, candidate]);
+              }
+            });
+          });
+          setFilteredUsers([...filteredUsers, ...userSort]);
+          setList(filteredUsers);
+        }
+      }
+    }
+  };
   const leftClick = () => {
     let dataSet;
     if (selected === 0 && list) {
@@ -98,7 +154,7 @@ const DiscoverContent = ({ props }) => {
   if (!list) {
     return (
       <StyledMatchBody onKeyDown={handleKeyPress} tabIndex="0">
-        <DiscoverHeader props={props} />
+        <DiscoverHeader props={props} getFilteredUsers={getFilteredUsers} />
         <CardWrap>
           <Loader type="Circles" color={blue} height="500" width="500" />
         </CardWrap>
@@ -107,7 +163,13 @@ const DiscoverContent = ({ props }) => {
   }
   return (
     <StyledMatchBody onKeyDown={handleKeyPress} tabIndex="0">
-      <DiscoverHeader props={props} />
+      <DiscoverHeader
+        props={props}
+        jobs={jobs}
+        companies={companies}
+        sortedCoy={sortedCoy}
+        getFilteredUsers={getFilteredUsers}
+      />
       <CardWrap>
         <ButtonTertiary onClick={leftClick}>REJECT</ButtonTertiary>
         {list.map((arr, index) => {
