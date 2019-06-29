@@ -24,7 +24,7 @@ const enhancers = [
     userProfile: "authedUsers",
     useFirestoreForProfile: true
   }),
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+  // window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 ];
 
 const composedEnhancers = compose(...enhancers);
