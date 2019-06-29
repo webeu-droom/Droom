@@ -65,7 +65,9 @@ const DiscoverContent = ({ props }) => {
       return job.companyId === company.id;
     }
   });
+
   let availableUsers = [];
+
   const getFilteredUsers = chosenListing => {
     if (chosenListing === "all-listings") {
       if (sortedCoy) {
@@ -113,32 +115,7 @@ const DiscoverContent = ({ props }) => {
       }
     }
   };
-  const leftClick = () => {
-    let dataSet;
-    if (selected === 0 && list) {
-      if (company !== undefined && company.companyEmail === auth.email) {
-        dataSet = processedData(jobs, [...companies]);
-        dataSet.map(data => {
-          if (data.email === auth.email) {
-            console.log("^^^^^^^^^", data);
-            data.dislikedUser.push(list[0]);
-            list.splice(selected, 1);
-            console.log(list.dislikedUser, "++++++", list);
-          }
-        });
-      }
-      if (user !== undefined && user.userEmail === auth.email) {
-        dataSet = candidates;
-        dataSet.map(data => {
-          if (data.userEmail === auth.email) {
-            data.dislikedJoblistings.push(list[0]);
-            list.splice(selected, 1);
-            console.log(list.dislikedJoblistings, "++++++", list);
-          }
-        });
-      }
-    }
-  };
+  const leftClick = () => {};
 
   const rightClick = () => {};
 
