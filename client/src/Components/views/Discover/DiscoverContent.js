@@ -55,7 +55,6 @@ const DiscoverContent = ({ props }) => {
   const { jobs, companies, candidates, auth, company, user } = props;
   const [list, setList] = useState([]);
   const [selected, setSelected] = useState(0);
-  // const [chosenListing, setChosenListing] = useState({});
   const [filteredUsers, setFilteredUsers] = useState("");
   const listType = props.match.params.type;
   const processedData = (arr1, arr2) => {
