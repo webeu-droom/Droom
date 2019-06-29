@@ -70,7 +70,6 @@ const DiscoverContent = ({props}) => {
       setSelected(selected - 1);
     }
   };
-
   const rightClick = () => {
     if (selected === lastCard) {
       setSelected(0);
