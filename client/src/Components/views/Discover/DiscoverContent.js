@@ -90,49 +90,47 @@ const DiscoverContent = ({ props }) => {
   let availableUsers = [];
 
   const getFilteredUsers = chosenListing => {
-    if (chosenListing === "all-listings") {
-      if (sortedCoy) {
-        let userSort = sortedCoy.map(coy => {
-          let unLikedUsers = coy.dislikedUser;
-          if (unLikedUsers.length !== 0) {
-            return candidates.map(candidate => {
-              return unLikedUsers.map(user => {
-                if (candidate.id !== user.id) {
-                  availableUsers = [...availableUsers, candidate];
-                }
-                return availableUsers;
-              });
-            });
+    setFilteredUsers([]);
+    let activeJob = sortedCoy.find(currentJob => {
+      return currentJob.id === chosenListing;
+    });
+    if (activeJob) {
+      let UsersCategory = Object.values(activeJob.dislikedUser);
+      if (UsersCategory.length === 0) {
+        setList(candidates);
+      } else {
+        availableUsers = candidates.filter(candidate => {
+          let candidateToRemove = UsersCategory.find(user => {
+            return candidate.id !== user;
+          });
+          if (candidateToRemove) {
+            return true;
           } else {
-            return (availableUsers = [...availableUsers, ...candidates]);
+            return false;
           }
         });
-        let unique = new Set(...userSort);
-        let data = [...unique];
-        setList(data);
+        setFilteredUsers(availableUsers);
+        setList(filteredUsers);
       }
-    } else {
-      setFilteredUsers([]);
-      let activeJob = sortedCoy.find(currentJob => {
-        return currentJob.companyId === chosenListing;
-      });
+    }
 
-      if (activeJob) {
-        let unLikedUser = Object.values(activeJob.dislikedUser);
-        if (unLikedUser.length === 0) {
-          setList(candidates);
-        } else {
-          let userSort = candidates.map(candidate => {
-            return unLikedUser.map(user => {
-              console.log(user);
-              if (candidate.id !== user.id) {
-                return (availableUsers = [...availableUsers, candidate]);
-              }
-            });
+    if (activeJob) {
+      let UsersCategory = Object.values(activeJob.likedUser);
+      if (UsersCategory.length === 0) {
+        setList(candidates);
+      } else {
+        availableUsers = candidates.filter(candidate => {
+          let candidateToRemove = UsersCategory.find(user => {
+            return candidate.id !== user;
           });
-          setFilteredUsers([...filteredUsers, ...userSort]);
-          setList(filteredUsers);
-        }
+          if (candidateToRemove) {
+            return true;
+          } else {
+            return false;
+          }
+        });
+        setFilteredUsers(availableUsers);
+        setList(filteredUsers);
       }
     }
   };
@@ -170,6 +168,38 @@ const DiscoverContent = ({ props }) => {
         <DiscoverHeader props={props} getFilteredUsers={getFilteredUsers} />
         <CardWrap>
           <Loader type="Circles" color={blue} height="500" width="500" />
+        </CardWrap>
+      </StyledMatchBody>
+    );
+  }
+  if (filteredUsers.length !== 0) {
+    return (
+      <StyledMatchBody onKeyDown={handleKeyPress} tabIndex="0">
+        <DiscoverHeader
+          props={props}
+          jobs={jobs}
+          companies={companies}
+          sortedCoy={sortedCoy}
+          getFilteredUsers={getFilteredUsers}
+        />
+        <CardWrap>
+          <ButtonTertiary className="button-left" onClick={leftClick}>
+            REJECT
+          </ButtonTertiary>
+          {filteredUsers.map((arr, index) => {
+            return (
+              <DiscoverCard
+                data={arr}
+                key={arr.id}
+                index={index}
+                display={selected === index ? "on" : "off"}
+                handleKeyPress={handleKeyPress}
+              />
+            );
+          })}
+          <ButtonPrimary className="button-right" onClick={rightClick}>
+            APPROVE
+          </ButtonPrimary>
         </CardWrap>
       </StyledMatchBody>
     );

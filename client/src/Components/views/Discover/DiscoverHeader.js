@@ -15,11 +15,11 @@ const DiscoverHeader = ({ props, getFilteredUsers, sortedCoy }) => {
     <StyleMH>
       <h1>{Title}</h1>
       <Dropdown onChange={dropDownHandler}>
-        <option value="all-listings">All Job Listings</option>
+        {/* <option value="all-listings">All Job Listings</option> */}
         {sortedCoy
           ? sortedCoy.map((job, index) => {
               return (
-                <option key={index} value={job.companyId}>
+                <option key={index} value={job.id}>
                   {job.position}
                 </option>
               );
