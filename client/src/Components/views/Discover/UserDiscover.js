@@ -87,8 +87,6 @@ const UserDiscover = ({ props }) => {
     }
   });
 
-  console.log(LoggedUser);
-
   let availableCoy = [];
 
   const getFilteredCoy = chosenListing => {
