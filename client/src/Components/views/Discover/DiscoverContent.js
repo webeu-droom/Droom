@@ -98,7 +98,7 @@ const DiscoverContent = ({ props }) => {
     });
 
     setActiveList(activeJob);
-    let array = ['dislikedUser', 'likedUser'];
+    let array = ["dislikedUser", "likedUser"];
     for (let i = 0; i < 2; i++) {
       let filterGroup = availableUsers.length > 0 ? availableUsers : candidates;
 
@@ -118,45 +118,8 @@ const DiscoverContent = ({ props }) => {
         setList(filteredUsers);
       }
     }
-
-
-    // setActiveList(activeJob);
-    // if (activeJob) {
-    //   let UsersCategory = Object.values(activeJob.dislikedUser);
-
-    //   availableUsers = candidates.filter(candidate => {
-    //     let candidateToRemove = UsersCategory.find(user => {
-    //       return candidate.id === user;
-    //     });
-    //     if (candidateToRemove) {
-    //       return false;
-    //     } else {
-    //       return true;
-    //     }
-    //   });
-    //   setFilteredUsers(availableUsers);
-    //   setList(filteredUsers);
-    // }
-    // // console.log("--------", availableUsers);
-    // if (activeJob) {
-    //   let UsersCategory = Object.values(activeJob.likedUser);
-    //   availableUsers = availableUsers.filter(candidate => {
-    //     let candidateToRemove = UsersCategory.find(user => {
-    //       return candidate.id === user;
-    //     });
-    //     if (candidateToRemove) {
-    //       return false;
-    //     } else {
-    //       return true;
-    //     }
-    //   });
-    //   setFilteredUsers(availableUsers);
-    //   setList(filteredUsers);
-    // }
   };
 
-  // let lastCard = list.length - 1;
-  console.log(activeList);
   const leftClick = () => {
     let ref = props.firestore.collection("jobListings").doc(activeList.id);
     ref
@@ -165,7 +128,7 @@ const DiscoverContent = ({ props }) => {
       })
       .then(res => {
         getFilteredUsers(activeList.id);
-      })
+      });
   };
 
   const rightClick = () => {
@@ -176,7 +139,7 @@ const DiscoverContent = ({ props }) => {
       })
       .then(res => {
         getFilteredUsers(activeList.id);
-      })
+      });
   };
 
   const handleKeyPress = event => {
