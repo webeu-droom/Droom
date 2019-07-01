@@ -56,6 +56,7 @@ const DiscoverContent = ({ props }) => {
   const [list, setList] = useState([]);
   const [selected, setSelected] = useState(0);
   const [filteredUsers, setFilteredUsers] = useState("");
+  const [activeList, setActiveList] = useState({});
   const listType = props.match.params.type;
   const processedData = (arr1, arr2) => {
     let sortData = [];
@@ -94,6 +95,7 @@ const DiscoverContent = ({ props }) => {
     let activeJob = sortedCoy.find(currentJob => {
       return currentJob.id === chosenListing;
     });
+    setActiveList(activeJob);
     if (activeJob) {
       let UsersCategory = Object.values(activeJob.dislikedUser);
       if (UsersCategory.length === 0) {
@@ -113,13 +115,13 @@ const DiscoverContent = ({ props }) => {
         setList(filteredUsers);
       }
     }
-
+    // console.log("--------", availableUsers);
     if (activeJob) {
       let UsersCategory = Object.values(activeJob.likedUser);
       if (UsersCategory.length === 0) {
         setList(candidates);
       } else {
-        availableUsers = candidates.filter(candidate => {
+        availableUsers = availableUsers.filter(candidate => {
           let candidateToRemove = UsersCategory.find(user => {
             return candidate.id !== user;
           });
@@ -134,23 +136,27 @@ const DiscoverContent = ({ props }) => {
       }
     }
   };
-
-  let lastCard = list.length - 1;
-
+  // let lastCard = list.length - 1;
+  console.log(activeList);
   const leftClick = () => {
-    if (selected === 0) {
-      setSelected(lastCard);
-    } else {
-      setSelected(selected - 1);
+    console.log(activeList.dislikedUser);
+    if (selected) {
+      setActiveList({
+        ...activeList,
+        dislikedUser: [...activeList.dislikedUser, candidates[selected].id]
+      });
     }
+    getFilteredUsers(activeList.id);
   };
 
   const rightClick = () => {
-    if (selected === lastCard) {
-      setSelected(0);
-    } else {
+    console.log(activeList.likedUser);
+    if (selected) {
+      activeList.likedUser = [...activeList.likedUser, candidates[selected].id];
       setSelected(selected + 1);
     }
+    console.log(activeList.likedUser);
+    getFilteredUsers(activeList.id);
   };
 
   const handleKeyPress = event => {
@@ -161,7 +167,7 @@ const DiscoverContent = ({ props }) => {
       rightClick();
     }
   };
-
+  console.log(activeList.dislikedUser);
   if (!list) {
     return (
       <StyledMatchBody onKeyDown={handleKeyPress} tabIndex="0">
