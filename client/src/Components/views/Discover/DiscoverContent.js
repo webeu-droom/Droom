@@ -21,6 +21,7 @@ import {
   medium_space_1,
   extra_small_space
 } from "../../~reusables/variables/spacing";
+import ComponentLoader from "../../~reusables/components/ComponentLoader";
 
 const CardWrap = styled.div`
   display: flex;
@@ -95,68 +96,87 @@ const DiscoverContent = ({ props }) => {
     let activeJob = sortedCoy.find(currentJob => {
       return currentJob.id === chosenListing;
     });
+
     setActiveList(activeJob);
-    if (activeJob) {
-      let UsersCategory = Object.values(activeJob.dislikedUser);
-      if (UsersCategory.length === 0) {
-        setList(candidates);
-      } else {
-        availableUsers = candidates.filter(candidate => {
+    let array = ['dislikedUser', 'likedUser'];
+    for (let i = 0; i < 2; i++) {
+      let filterGroup = availableUsers.length > 0 ? availableUsers : candidates;
+
+      if (activeJob) {
+        let UsersCategory = Object.values(activeJob[array[i]]);
+        availableUsers = filterGroup.filter(candidate => {
           let candidateToRemove = UsersCategory.find(user => {
-            return candidate.id !== user;
+            return candidate.id === user;
           });
           if (candidateToRemove) {
-            return true;
-          } else {
             return false;
+          } else {
+            return true;
           }
         });
         setFilteredUsers(availableUsers);
         setList(filteredUsers);
       }
     }
-    // console.log("--------", availableUsers);
-    if (activeJob) {
-      let UsersCategory = Object.values(activeJob.likedUser);
-      if (UsersCategory.length === 0) {
-        setList(candidates);
-      } else {
-        availableUsers = availableUsers.filter(candidate => {
-          let candidateToRemove = UsersCategory.find(user => {
-            return candidate.id !== user;
-          });
-          if (candidateToRemove) {
-            return true;
-          } else {
-            return false;
-          }
-        });
-        setFilteredUsers(availableUsers);
-        setList(filteredUsers);
-      }
-    }
+
+
+    // setActiveList(activeJob);
+    // if (activeJob) {
+    //   let UsersCategory = Object.values(activeJob.dislikedUser);
+
+    //   availableUsers = candidates.filter(candidate => {
+    //     let candidateToRemove = UsersCategory.find(user => {
+    //       return candidate.id === user;
+    //     });
+    //     if (candidateToRemove) {
+    //       return false;
+    //     } else {
+    //       return true;
+    //     }
+    //   });
+    //   setFilteredUsers(availableUsers);
+    //   setList(filteredUsers);
+    // }
+    // // console.log("--------", availableUsers);
+    // if (activeJob) {
+    //   let UsersCategory = Object.values(activeJob.likedUser);
+    //   availableUsers = availableUsers.filter(candidate => {
+    //     let candidateToRemove = UsersCategory.find(user => {
+    //       return candidate.id === user;
+    //     });
+    //     if (candidateToRemove) {
+    //       return false;
+    //     } else {
+    //       return true;
+    //     }
+    //   });
+    //   setFilteredUsers(availableUsers);
+    //   setList(filteredUsers);
+    // }
   };
+
   // let lastCard = list.length - 1;
   console.log(activeList);
   const leftClick = () => {
-    console.log(activeList.dislikedUser);
-    if (selected) {
-      setActiveList({
-        ...activeList,
-        dislikedUser: [...activeList.dislikedUser, candidates[selected].id]
-      });
-    }
-    getFilteredUsers(activeList.id);
+    let ref = props.firestore.collection("jobListings").doc(activeList.id);
+    ref
+      .update({
+        dislikedUser: [...activeList.dislikedUser, filteredUsers[selected].id]
+      })
+      .then(res => {
+        getFilteredUsers(activeList.id);
+      })
   };
 
   const rightClick = () => {
-    console.log(activeList.likedUser);
-    if (selected) {
-      activeList.likedUser = [...activeList.likedUser, candidates[selected].id];
-      setSelected(selected + 1);
-    }
-    console.log(activeList.likedUser);
-    getFilteredUsers(activeList.id);
+    let ref = props.firestore.collection("jobListings").doc(activeList.id);
+    ref
+      .update({
+        likedUser: [...activeList.likedUser, filteredUsers[selected].id]
+      })
+      .then(res => {
+        getFilteredUsers(activeList.id);
+      })
   };
 
   const handleKeyPress = event => {
@@ -167,63 +187,14 @@ const DiscoverContent = ({ props }) => {
       rightClick();
     }
   };
-  console.log(activeList.dislikedUser);
-  if (!list) {
+
+  const renderCard = () => {
     return (
-      <StyledMatchBody onKeyDown={handleKeyPress} tabIndex="0">
-        <DiscoverHeader props={props} getFilteredUsers={getFilteredUsers} />
-        <CardWrap>
-          <Loader type="Circles" color={blue} height="500" width="500" />
-        </CardWrap>
-      </StyledMatchBody>
-    );
-  }
-  if (filteredUsers.length !== 0) {
-    return (
-      <StyledMatchBody onKeyDown={handleKeyPress} tabIndex="0">
-        <DiscoverHeader
-          props={props}
-          jobs={jobs}
-          companies={companies}
-          sortedCoy={sortedCoy}
-          getFilteredUsers={getFilteredUsers}
-        />
-        <CardWrap>
-          <ButtonTertiary className="button-left" onClick={leftClick}>
-            REJECT
-          </ButtonTertiary>
-          {filteredUsers.map((arr, index) => {
-            return (
-              <DiscoverCard
-                data={arr}
-                key={arr.id}
-                index={index}
-                display={selected === index ? "on" : "off"}
-                handleKeyPress={handleKeyPress}
-              />
-            );
-          })}
-          <ButtonPrimary className="button-right" onClick={rightClick}>
-            APPROVE
-          </ButtonPrimary>
-        </CardWrap>
-      </StyledMatchBody>
-    );
-  }
-  return (
-    <StyledMatchBody onKeyDown={handleKeyPress} tabIndex="0">
-      <DiscoverHeader
-        props={props}
-        jobs={jobs}
-        companies={companies}
-        sortedCoy={sortedCoy}
-        getFilteredUsers={getFilteredUsers}
-      />
       <CardWrap>
         <ButtonTertiary className="button-left" onClick={leftClick}>
           REJECT
         </ButtonTertiary>
-        {list.map((arr, index) => {
+        {filteredUsers.map((arr, index) => {
           return (
             <DiscoverCard
               data={arr}
@@ -238,6 +209,26 @@ const DiscoverContent = ({ props }) => {
           APPROVE
         </ButtonPrimary>
       </CardWrap>
+    );
+  };
+
+  const renderLoader = () => {
+    if (sortedCoy.length > 0) {
+      getFilteredUsers(sortedCoy[0].id);
+    }
+    return <ComponentLoader />;
+  };
+
+  return (
+    <StyledMatchBody onKeyDown={handleKeyPress} tabIndex="0">
+      <DiscoverHeader
+        props={props}
+        jobs={jobs}
+        companies={companies}
+        sortedCoy={sortedCoy}
+        getFilteredUsers={getFilteredUsers}
+      />
+      {filteredUsers.length !== 0 ? renderCard() : renderLoader()}
     </StyledMatchBody>
   );
 };
