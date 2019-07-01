@@ -53,10 +53,10 @@ const CardWrap = styled.div`
 `;
 
 const UserDiscover = ({ props }) => {
-  const { jobs, companies, candidates, auth, company, user } = props;
+  const { jobs, companies, candidates, auth, user } = props;
   const [list, setList] = useState([]);
   const [selected, setSelected] = useState(0);
-  const [filteredUsers, setFilteredUsers] = useState("");
+  const [filteredCoy, setFilteredCoy] = useState("");
   const [activeList, setActiveList] = useState({});
   const processedData = (arr1, arr2) => {
     let sortData = [];
@@ -81,62 +81,71 @@ const UserDiscover = ({ props }) => {
   }, [companies, jobs]);
 
   const companySpecificJobs = processedData(jobs, [...companies]);
-  const sortedCoy = companySpecificJobs.filter(job => {
-    if (company !== undefined && company.companyEmail === auth.email) {
-      return job.companyId === company.id;
+  const LoggedUser = candidates.filter(candidate => {
+    if (user !== undefined && user.userEmail === auth.email) {
+      return candidate.id === user.id;
     }
   });
 
-  let availableUsers = [];
+  console.log(LoggedUser);
 
-  const getFilteredUsers = chosenListing => {
-    setFilteredUsers([]);
-    let activeJob = sortedCoy.find(currentJob => {
-      return currentJob.id === chosenListing;
+  let availableCoy = [];
+
+  const getFilteredCoy = chosenListing => {
+    setFilteredCoy([]);
+    let activeUser = LoggedUser.find(currentUser => {
+      return currentUser.id === chosenListing;
     });
 
-    setActiveList(activeJob);
-    let array = ["dislikedUser", "likedUser"];
+    setActiveList(activeUser);
+    let array = ["dislikedJobListings", "likedJobListings"];
     for (let i = 0; i < 2; i++) {
-      let filterGroup = availableUsers.length > 0 ? availableUsers : candidates;
+      let filterGroup =
+        availableCoy.length > 0 ? availableCoy : companySpecificJobs;
 
-      if (activeJob) {
-        let UsersCategory = Object.values(activeJob[array[i]]);
-        availableUsers = filterGroup.filter(candidate => {
-          let candidateToRemove = UsersCategory.find(user => {
-            return candidate.id === user;
+      if (activeUser) {
+        let UsersCategory = Object.values(activeUser[array[i]]);
+        availableCoy = filterGroup.filter(coy => {
+          let companyToRemove = UsersCategory.find(user => {
+            return coy.id === user;
           });
-          if (candidateToRemove) {
+          if (companyToRemove) {
             return false;
           } else {
             return true;
           }
         });
-        setFilteredUsers(availableUsers);
-        setList(filteredUsers);
+        setFilteredCoy(availableCoy);
+        setList(filteredCoy);
       }
     }
   };
 
   const leftClick = () => {
-    let ref = props.firestore.collection("jobListings").doc(activeList.id);
+    let ref = props.firestore.collection("users").doc(activeList.id);
     ref
       .update({
-        dislikedUser: [...activeList.dislikedUser, filteredUsers[selected].id]
+        dislikedJobListings: [
+          ...activeList.dislikedJobListings,
+          filteredCoy[selected].id
+        ]
       })
       .then(res => {
-        getFilteredUsers(activeList.id);
+        getFilteredCoy(activeList.id);
       });
   };
 
   const rightClick = () => {
-    let ref = props.firestore.collection("jobListings").doc(activeList.id);
+    let ref = props.firestore.collection("users").doc(activeList.id);
     ref
       .update({
-        likedUser: [...activeList.likedUser, filteredUsers[selected].id]
+        likedJobListings: [
+          ...activeList.likedJobListings,
+          filteredCoy[selected].id
+        ]
       })
       .then(res => {
-        getFilteredUsers(activeList.id);
+        getFilteredCoy(activeList.id);
       });
   };
 
@@ -155,7 +164,7 @@ const UserDiscover = ({ props }) => {
         <ButtonTertiary className="button-left" onClick={leftClick}>
           REJECT
         </ButtonTertiary>
-        {list.map((arr, index) => {
+        {filteredCoy.map((arr, index) => {
           return (
             <DiscoverCard
               data={arr}
@@ -174,21 +183,15 @@ const UserDiscover = ({ props }) => {
   };
 
   const renderLoader = () => {
-    if (sortedCoy.length > 0) {
-      getFilteredUsers(sortedCoy[0].id);
+    if (LoggedUser.length > 0) {
+      getFilteredCoy(LoggedUser[0].id);
     }
     return <ComponentLoader />;
   };
 
   return (
     <StyledMatchBody onKeyDown={handleKeyPress} tabIndex="0">
-      <DiscoverHeader
-        props={props}
-        jobs={jobs}
-        companies={companies}
-        sortedCoy={sortedCoy}
-        getFilteredUsers={getFilteredUsers}
-      />
+      <DiscoverHeader props={props} jobs={jobs} companies={companies} />
       {list.length !== 0 ? renderCard() : renderLoader()}
     </StyledMatchBody>
   );
