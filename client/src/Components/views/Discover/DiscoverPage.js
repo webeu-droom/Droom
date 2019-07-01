@@ -7,7 +7,9 @@ import { withRouter } from "react-router";
 
 import { firestoreConnect, firebaseConnect } from "react-redux-firebase";
 
-import DiscoverContent from "./DiscoverContent";
+// import DiscoverContent from "./DiscoverContent";
+import CompanyDiscover from "./CompanyDiscover";
+import UserDiscover from "./UserDiscover";
 import LayoutSidebar from "../../~reusables/components/Sidebar";
 import { sidebarIcons, sidebarTexts } from "../../data/sidebar";
 import MobileNavbar from "../../~reusables/components/MobileNavbar";
@@ -27,7 +29,9 @@ export const DiscoverPage = props => {
     <StyledMatch>
       <LayoutSidebar icons={sidebarIcons} texts={sidebarTexts} />
       <MobileNavbar icons={sidebarIcons} texts={sidebarTexts} />
-      <DiscoverContent props={props} />
+      {/* <DiscoverContent props={props} /> */}
+      {company && <CompanyDiscover props={props} />}
+      {user && <UserDiscover props={props} />}
     </StyledMatch>
   );
 };
@@ -38,8 +42,6 @@ const StyledMatch = styled.div`
     flex-direction: column;
   }
 `;
-
-// export default DiscoverPage;
 
 const mapStateToProps = state => {
   return {

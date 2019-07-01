@@ -11,7 +11,11 @@ const DiscoverHeader = ({ props, getFilteredUsers, sortedCoy }) => {
   const dropDownHandler = input => {
     getFilteredUsers(input.target.value);
   };
-  return (
+  return listType === "jobs" ? (
+    <StyleMH>
+      <h1>{Title}</h1>
+    </StyleMH>
+  ) : (
     <StyleMH>
       <h1>{Title}</h1>
       <Dropdown onChange={dropDownHandler}>
