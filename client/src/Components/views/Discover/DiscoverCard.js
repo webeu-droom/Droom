@@ -3,7 +3,10 @@ import styled from "styled-components";
 import { slate_grey } from "../../~reusables/variables/colors";
 import { body_2, body_1 } from "../../~reusables/variables/font-sizes";
 import ProfileImage from "../../~reusables/components/ProfileImage";
-import { small_space, extra_small_space } from "../../~reusables/variables/spacing";
+import {
+  small_space,
+  extra_small_space
+} from "../../~reusables/variables/spacing";
 
 const Wrap = styled.div`
   /* Rectangle */
@@ -46,7 +49,8 @@ const Card = styled.div`
   text-align: center;
   line-height: 20px;
   font-size: ${body_2};
-  box-shadow: 0px 1px 5px rgba(151, 162, 185, 0.3), 0px 3px 4px rgba(151, 162, 185, 0.16), 0px 2px 4px rgba(151, 162, 185, 0.19);
+  box-shadow: 0px 1px 5px rgba(151, 162, 185, 0.3),
+    0px 3px 4px rgba(151, 162, 185, 0.16), 0px 2px 4px rgba(151, 162, 185, 0.19);
 `;
 
 const SubHeader = styled.div`
@@ -87,7 +91,6 @@ const DiscoverCard = ({ data, display }) => {
 
   return (
     <Wrap>
-
       <Card display={display}>
         <ImageWrap>
           <ProfileImage
