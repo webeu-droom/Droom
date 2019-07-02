@@ -6,12 +6,13 @@ import { Dropdown } from "../../~reusables/atoms/Dropdowns";
 import { tablet_max_width } from "../../~reusables/variables/media-queries";
 
 const DiscoverHeader = ({ props, getFilteredUsers, sortedCoy }) => {
-  const listType = props.match.params.type;
-  const Title = listType === "jobs" ? "Companies" : "Candidates";
+  console.log(props);
+  const listType = props.location.pathname;
+  const Title = listType === "/discover/jobs" ? "Companies" : "Candidates";
   const dropDownHandler = input => {
     getFilteredUsers(input.target.value);
   };
-  return listType === "jobs" ? (
+  return listType === "/discover/jobs" ? (
     <StyleMH>
       <h1>{Title}</h1>
     </StyleMH>
@@ -19,7 +20,6 @@ const DiscoverHeader = ({ props, getFilteredUsers, sortedCoy }) => {
     <StyleMH>
       <h1>{Title}</h1>
       <Dropdown onChange={dropDownHandler}>
-        {/* <option value="all-listings">All Job Listings</option> */}
         {sortedCoy
           ? sortedCoy.map((job, index) => {
               return (

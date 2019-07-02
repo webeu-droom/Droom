@@ -173,10 +173,19 @@ const CompanyDiscover = ({ props }) => {
   };
 
   const renderLoader = () => {
-    if (sortedCoy.length > 0) {
+    if (
+      sortedCoy.length > 0 &&
+      sortedCoy[0].likedUser.length + sortedCoy[0].dislikedUser.length <
+        candidates.length
+    ) {
       getFilteredUsers(sortedCoy[0].id);
     }
-    return <ComponentLoader />;
+    return (
+      <div>
+        <p>You have viewed all candidates for this job</p>
+        <ComponentLoader />
+      </div>
+    );
   };
 
   return (

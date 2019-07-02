@@ -21,10 +21,7 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <Route
-          path="/discover/:type"
-          render={props => <DiscoverPage {...props} />}
-        />
+        <Route path="/discover" render={props => <DiscoverPage {...props} />} />
         <Route exact path="/" render={props => <Landing {...props} />} />
         <Route exact path="/login" render={props => <Login {...props} />} />
         <Route
