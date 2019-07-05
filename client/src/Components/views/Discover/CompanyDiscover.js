@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import Loader from "react-loader-spinner";
 import { blue } from "../../~reusables/variables/colors";
 import { ButtonPrimary, ButtonTertiary } from "../../~reusables/atoms/Buttons";
 import DiscoverHeader from "./DiscoverHeader";
