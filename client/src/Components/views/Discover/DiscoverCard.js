@@ -1,4 +1,5 @@
 import React from "react";
+import { animated, interpolate } from "react-spring";
 import styled from "styled-components";
 import { slate_grey } from "../../~reusables/variables/colors";
 import { body_2, body_1 } from "../../~reusables/variables/font-sizes";
@@ -32,6 +33,9 @@ const Wrap = styled.div`
 const ImageWrap = styled.div`
   display: flex;
   justify-content: center;
+`;
+const Deck = styled(animated.div)`
+  border: 1px solid ${slate_grey};
 `;
 const Card = styled.div`
   /* Background */
@@ -72,7 +76,7 @@ const DetailSection = styled.div`
   }
 `;
 
-const DiscoverCard = ({ data, display }) => {
+const DiscoverCard = ({ data, display, trans, bind, index }) => {
   const infoHeader = data.education ? "Education" : "Requirements";
   const infoHeader2 = data.experience ? "Experience" : "Description";
 
@@ -90,38 +94,55 @@ const DiscoverCard = ({ data, display }) => {
   }
 
   return (
-    <Wrap>
-      <Card display={display}>
-        <ImageWrap>
-          <ProfileImage
-            name={data.name}
-            image="https://randomuser.me/api/portraits/men/86.jpg"
-          />
-        </ImageWrap>
+    <animated.div
+      key={index}
+      style={{
+        transform: interpolate(
+          [data.x, data.y],
+          (x, y) => `translate3d(${x}px,${y}px,0)`
+        )
+      }}
+    >
+      <Deck
+        {...bind(index)}
+        style={{
+          transform: interpolate([data.rot, data.scale], trans)
+        }}
+      >
+        <Wrap>
+          <Card display={display}>
+            <ImageWrap>
+              <ProfileImage
+                name={data.name}
+                image="https://randomuser.me/api/portraits/men/86.jpg"
+              />
+            </ImageWrap>
 
-        <SubHeader>{data.position}</SubHeader>
-        <p>{data.email}</p>
-        <p>{data.location}</p>
+            <SubHeader>{data.position}</SubHeader>
+            <p>{data.email}</p>
+            <p>{data.location}</p>
 
-        <DetailSection>
-          <SubHeader>Biography</SubHeader>
-          <p>{data.bio}</p>
-        </DetailSection>
+            <DetailSection>
+              <SubHeader>Biography</SubHeader>
+              <p>{data.bio}</p>
+            </DetailSection>
 
-        <DetailSection>
-          <SubHeader>{infoHeader2}</SubHeader>
-          <div>
-            {info2.map((info, index) => {
-              return <p key={index}>{info}</p>;
-            })}
-          </div>
-        </DetailSection>
-        <DetailSection>
-          <SubHeader>{infoHeader}</SubHeader>
-          <div>{dataInfo}</div>
-        </DetailSection>
-      </Card>
-    </Wrap>
+            <DetailSection>
+              <SubHeader>{infoHeader2}</SubHeader>
+              <div>
+                {info2.map((info, index) => {
+                  return <p key={index}>{info}</p>;
+                })}
+              </div>
+            </DetailSection>
+            <DetailSection>
+              <SubHeader>{infoHeader}</SubHeader>
+              <div>{dataInfo}</div>
+            </DetailSection>
+          </Card>
+        </Wrap>
+      </Deck>
+    </animated.div>
   );
 };
 

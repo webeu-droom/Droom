@@ -6,7 +6,6 @@ import { Dropdown } from "../../~reusables/atoms/Dropdowns";
 import { tablet_max_width } from "../../~reusables/variables/media-queries";
 
 const DiscoverHeader = ({ props, getFilteredUsers, sortedCoy }) => {
-  console.log(props);
   const listType = props.location.pathname;
   const Title = listType === "/discover/jobs" ? "Companies" : "Candidates";
   const dropDownHandler = input => {

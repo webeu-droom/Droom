@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import { useSprings } from "react-spring";
+import { useGesture } from "react-with-gesture";
 import { blue } from "../../~reusables/variables/colors";
 import { ButtonPrimary, ButtonTertiary } from "../../~reusables/atoms/Buttons";
 import DiscoverHeader from "./DiscoverHeader";
@@ -74,6 +76,19 @@ const CompanyDiscover = ({ props }) => {
     return sortData;
   };
 
+  const to = i => ({
+    x: 0,
+    y: i * -10,
+    scale: 1,
+    rot: -10 + Math.random() * 20,
+    delay: i * 100
+  });
+  const from = i => ({ rot: 0, scale: 1.5, y: -1000 });
+
+  const trans = (r, s) =>
+    `perspective(1500px) rotateX(30deg) rotateY(${r /
+      10}deg) rotateZ(${r}deg) scale(${s})`;
+
   useEffect(() => {
     setList(candidates);
   }, [candidates]);
@@ -116,6 +131,73 @@ const CompanyDiscover = ({ props }) => {
     }
   };
 
+  const [gone] = useState(() => new Set());
+
+  const [springProps, setSpringProps] = useSprings(filteredUsers.length, i => ({
+    ...to(i),
+    from: from(i)
+  }));
+
+  const bind = useGesture(
+    ({
+      args: [index],
+      down,
+      delta: [xDelta],
+      distance,
+      direction: [xDir],
+      velocity
+    }) => {
+      const trigger = velocity > 0.2;
+
+      const dir = xDir < 0 ? -1 : 1;
+
+      if (!down && trigger) gone.add(index);
+
+      setSpringProps(i => {
+        if (index !== i) return;
+        const isGone = gone.has(index);
+
+        const x = isGone ? (200 + window.innerWidth) * dir : down ? xDelta : 0;
+
+        const rot = xDelta / 100 + (isGone ? dir * 10 * velocity : 0);
+
+        const scale = down ? 1.1 : 1;
+        return {
+          x,
+          rot,
+          scale,
+          delay: undefined,
+          config: { friction: 50, tension: down ? 800 : isGone ? 200 : 500 }
+        };
+      });
+
+      if (!down && gone.size === filteredUsers.length)
+        setTimeout(() => gone.clear() || setSpringProps(i => to(i)), 600);
+    }
+  );
+  const animatedData = (arr1, arr2) => {
+    let sortData = [];
+    if (arr1.length !== 0) {
+      arr1.map(data => {
+        return arr2.map(springProp => {
+          let duplicate = sortData.find(item => {
+            return data.id === item.id;
+          });
+          if (!duplicate) {
+            sortData.push({
+              ...data,
+              x: springProp.x,
+              y: springProp.y,
+              rot: springProp.rot,
+              scale: springProp.scale
+            });
+          }
+        });
+      });
+    }
+    return sortData;
+  };
+  const workingData = animatedData(filteredUsers, springProps);
   const leftClick = () => {
     let ref = props.firestore.collection("jobListings").doc(activeList.id);
     ref
@@ -153,12 +235,14 @@ const CompanyDiscover = ({ props }) => {
         <ButtonTertiary className="button-left" onClick={leftClick}>
           REJECT
         </ButtonTertiary>
-        {filteredUsers.map((arr, index) => {
+        {workingData.map((arr, index) => {
           return (
             <DiscoverCard
               data={arr}
               key={arr.id}
               index={index}
+              bind={bind}
+              trans={trans}
               display={selected === index ? "on" : "off"}
               handleKeyPress={handleKeyPress}
             />
