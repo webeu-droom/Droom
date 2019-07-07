@@ -76,7 +76,7 @@ const DetailSection = styled.div`
   }
 `;
 
-const DiscoverCard = ({ data, display, trans, bind, index }) => {
+const DiscoverCard = ({ data, display, trans, bind, i }) => {
   const infoHeader = data.education ? "Education" : "Requirements";
   const infoHeader2 = data.experience ? "Experience" : "Description";
 
@@ -95,7 +95,7 @@ const DiscoverCard = ({ data, display, trans, bind, index }) => {
 
   return (
     <animated.div
-      key={index}
+      key={i}
       style={{
         transform: interpolate(
           [data.x, data.y],
@@ -104,7 +104,7 @@ const DiscoverCard = ({ data, display, trans, bind, index }) => {
       }}
     >
       <Deck
-        {...bind(index)}
+        {...bind(i)}
         style={{
           transform: interpolate([data.rot, data.scale], trans)
         }}

@@ -240,7 +240,7 @@ const CompanyDiscover = ({ props }) => {
             <DiscoverCard
               data={arr}
               key={arr.id}
-              index={index}
+              i={index}
               bind={bind}
               trans={trans}
               display={selected === index ? "on" : "off"}
